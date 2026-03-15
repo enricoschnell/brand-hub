@@ -534,7 +534,7 @@ function SigPage({ mobile }) {
       `<tr><td style="padding-bottom:16px;"><p style="margin:0;font-size:17px;font-weight:600;color:${c.p};line-height:1.3;">${p.name}</p><p style="margin:4px 0 0;font-size:14px;color:${c.s};line-height:1.4;">${p.role}</p></td></tr>`,
       `<tr><td><table cellpadding="0" cellspacing="0" border="0">${contactRows}</table></td></tr>`,
       hasClosing ? `<tr><td style="padding-top:16px;border-top:1px solid #e5e5e5;">` +
-        (showAddress ? `<p style="margin:0 0 ${showClaim ? "12" : "0"}px;font-size:13px;color:${c.s};line-height:1.5;"><a href="${META.mapsUrl}" style="color:${c.s};text-decoration:none;">${META.legal} &middot; ${META.address.replace(/\n/g," &middot; ")}</a></p>` : "") +
+        (showAddress ? `<p style="margin:0 0 ${showClaim ? "12" : "0"}px;font-size:13px;color:${c.s};line-height:1.5;"><a href="${META.mapsUrl}" style="color:${c.s};text-decoration:none;">${META.legal}<br/>${META.address.replace(/\n/g,"<br/>")}</a></p>` : "") +
         (showClaim ? `<p style="margin:0;font-size:12px;font-weight:400;color:${c.q};letter-spacing:1.2px;text-transform:uppercase;line-height:1;">${META.claim}</p>` : "") +
         `</td></tr>` : "",
       `</table>`,
@@ -554,7 +554,7 @@ function SigPage({ mobile }) {
   const SigRender = ({ m, innerRef }) => {
     const c = SC[m];
     return (
-      <div ref={innerRef} style={{ fontFamily: "Helvetica,Arial,sans-serif", color: c.p }}>
+      <div ref={innerRef} style={{ fontFamily: "Helvetica,Arial,sans-serif", color: c.p, maxWidth: "100%", overflowWrap: "break-word", wordBreak: "break-word" }}>
         {/* ── Wortmarke (standalone, no lockup) ── */}
         <div style={{ marginBottom: 20 }}>
           <Wm fill={c.p} w={logoW} />
@@ -569,7 +569,7 @@ function SigPage({ mobile }) {
           {p.contacts.map((ct, i) => (
             <div key={i} style={{ display: "flex" }}>
               <span style={{ width: 18, flexShrink: 0, color: c.lbl, fontWeight: 500 }}>{ct.label}</span>
-              <a href={ct.href} style={{ color: ct.label === "E" ? c.p : c.s, textDecoration: "none" }}>{ct.value}</a>
+              <a href={ct.href} style={{ color: ct.label === "E" ? c.p : c.s, textDecoration: "none", wordBreak: "break-all" }}>{ct.value}</a>
             </div>
           ))}
         </div>
@@ -579,7 +579,8 @@ function SigPage({ mobile }) {
             {showAddress && (
               <div style={{ fontSize: 13, lineHeight: 1.5, color: c.s, marginBottom: showClaim ? 12 : 0 }}>
                 <a href={META.mapsUrl} style={{ color: c.s, textDecoration: "none" }}>
-                  {META.legal} · {META.address.replace(/\n/g, " · ")}
+                  {META.legal}<br/>
+                  {META.address.split("\n").map((line, i) => <span key={i}>{line}<br/></span>)}
                 </a>
               </div>
             )}
@@ -660,7 +661,7 @@ function SigPage({ mobile }) {
                 </div>
               ))}
             </div>}
-            <div style={{ padding: mobile ? S.md : S.lg, background: mode === "light" ? "#fff" : "#1c1c1e" }}>
+            <div style={{ padding: mobile ? S.md : S.lg, background: mode === "light" ? "#fff" : "#1c1c1e", overflow: "hidden" }}>
               {!mobile && <div style={{ fontSize: 14, lineHeight: 1.8, marginBottom: S.lg, color: mode === "light" ? "#555" : "#9a9da4", fontFamily: "Helvetica,Arial,sans-serif" }}>
                 Sehr geehrter Herr M{"ü"}ller,<br/><br/>anbei das aktuelle Projektupdate.<br/><br/>Mit freundlichen Gr{"ü"}{"ß"}en
               </div>}
