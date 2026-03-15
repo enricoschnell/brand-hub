@@ -1,0 +1,21 @@
+{
+  "name": "CASAGO",
+  "legal": "CASAGO GmbH",
+  "tagline": "Planen. Umsetzen. Leben.",
+  "claim": "PLANEN. UMSETZEN. LEBEN.",
+  "website": "casago.de",
+  "contact": {
+    "address": "Am Queracker 6, D-83134 Prutting",
+    "addressMaps": "https://maps.google.com/?q=Am+Queracker+6,+83134+Prutting",
+    "phone": "+49 8036 908 69 86",
+    "phoneHref": "+4980369086986",
+    "email": "info@casago.de"
+  },
+  "team": [
+    { "name": "Fred Fröhlich", "role": "Geschäftsführer", "email": "fred.froehlich@casago.de", "tel": "+49 8036 908 69 86", "telHref": "+4980369086986" },
+    { "name": "Jane Tsaran", "role": "Hochbau", "email": "jane.tsaran@casago.de", "tel": "+49 8036 908 69 86", "telHref": "+4980369086986" },
+    { "name": "Marco Riede", "role": "Bauingenieurwesen", "email": "marco.riede@casago.de", "tel": "+49 8036 908 69 86", "telHref": "+4980369086986" },
+    { "name": "Stephan Freitag", "role": "Bauingenieurwesen", "email": "stephan.freitag@casago.de", "tel": "+49 8036 908 69 86", "telHref": "+4980369086986" }
+  ],
+  "_note": "Rollen und Durchwahlen für Jane, Marco und Stephan aus Visitenkarte nicht eindeutig — bitte verifizieren. 'Hochbau' und 'Bauingenieurwesen' waren InDesign-Strings."
+}

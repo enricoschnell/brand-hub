@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Fred Fröhlich",
+    "role": "Geschäftsführer",
+    "email": "fred.froehlich@casago.de",
+    "tel": "+49 8036 - 908 69 86",
+    "telHref": "+4980369086986",
+    "mob": "+49 172 - 8 999 111",
+    "mobHref": "+491728999111"
+  },
+  {
+    "name": "Yevheniia Tsaran",
+    "role": "Diplom-Spezialistin für Architektur (UA)",
+    "email": "jane.tsaran@casago.de",
+    "tel": "+49 8036 - 908 69 86",
+    "telHref": "+4980369086986",
+    "mob": null,
+    "mobHref": null
+  },
+  {
+    "name": "Marco Riede",
+    "role": "Head of Planning and Construction",
+    "email": "marco.riede@casago.de",
+    "tel": null,
+    "telHref": null,
+    "mob": "+49 179 105 72 55",
+    "mobHref": "+491791057255"
+  },
+  {
+    "name": "Stephan Freitag",
+    "role": "Leitung Dachbegrünung & Schwammstadtkonzepte",
+    "email": "stephan.freitag@casago.de",
+    "tel": null,
+    "telHref": null,
+    "mob": "+49 151 23 77 55 80",
+    "mobHref": "+4915123775580"
+  }
+]

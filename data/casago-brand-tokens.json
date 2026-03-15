@@ -1,0 +1,61 @@
+{
+  "$metadata": {
+    "brand": "CASAGO",
+    "version": "2.0.0",
+    "source": "Figma pwK8quQDI8F3EzRblXsBK7 (nodes 234:2363, 286:3704, 315:24, 315:45)",
+    "updated": "2026-03-15",
+    "notes": "Complete token set reconciled with Figma + live site. Contrast-audited (WCAG AA). Accent colors added. Signature tokens corrected — #bfc3ca is a dark-bg-only token."
+  },
+  "color": {
+    "background": { "$value": "#f8f8f7", "$type": "color", "$description": "Page background. Warm off-white." },
+    "surface": { "$value": "#ffffff", "$type": "color", "$description": "Cards, panels, elevated areas." },
+    "dark": { "$value": "#20252b", "$type": "color", "$description": "Footer, menu, dark sections. Cool anthracite." },
+    "pageDark": { "$value": "#050c11", "$type": "color", "$description": "Projektseiten full-dark background." },
+    "text": {
+      "primary": { "$value": "#353b43", "$type": "color", "$description": "Headlines, body on light. 11.3:1 on white." },
+      "secondary": { "$value": "#868c95", "$type": "color", "$description": "Descriptions, labels. 3.4:1 on white (AA for bold/large)." },
+      "muted": { "$value": "#cdcdcd", "$type": "color", "$description": "Subtitel, Kategorien on dark backgrounds." },
+      "onDark": { "$value": "#f8f8f7", "$type": "color", "$description": "Primary text on dark backgrounds." },
+      "onDarkMuted": { "$value": "#bfc3ca", "$type": "color", "$description": "Footer section labels on dark. NEVER use on light bg (1.77:1 contrast)." },
+      "onDarkSecondary": { "$value": "#5e5856", "$type": "color", "$description": "Footer nav labels, inactive states on dark." }
+    },
+    "accent": {
+      "cyan": { "$value": "#59eded", "$type": "color", "$description": "Highlight, Kennzahlen, stat values." },
+      "darkTeal": { "$value": "#0b3434", "$type": "color", "$description": "Accent surfaces, stat cards." }
+    },
+    "ui": {
+      "border": { "$value": "#e5e5e5", "$type": "color", "$description": "Light borders, dividers." },
+      "active": { "$value": "#353b43", "$type": "color", "$description": "Active/selected state." },
+      "inactive": { "$value": "#cac7c6", "$type": "color", "$description": "Inactive/disabled state." }
+    },
+    "button": {
+      "ctaBackground": { "$value": "#ffffff", "$type": "color", "$description": "Primary CTA on dark backgrounds." },
+      "ctaText": { "$value": "#141414", "$type": "color", "$description": "CTA button label." },
+      "outlineBorder": { "$value": "#353b43", "$type": "color", "$description": "Secondary outline button border." }
+    },
+    "signature": {
+      "_note": "Two-tier system. Hierarchy via typography, not color. #bfc3ca NEVER on light bg.",
+      "light": { "primary": "#353b43", "secondary": "#868c95" },
+      "dark": { "primary": "#f0f0ee", "secondary": "#9a9da4", "tertiary": "#868c95" }
+    }
+  },
+  "typography": {
+    "fontFamily": { "$value": "Aeonik Pro", "$type": "fontFamily", "$description": "CoType Foundry. Only Regular (400) + Medium (500)." },
+    "scale": [
+      { "name": "Display", "size": 82, "weight": 400, "tracking": "normal" },
+      { "name": "Heading L", "size": 40, "weight": 400, "tracking": "normal" },
+      { "name": "Heading M", "size": 34, "weight": 500, "tracking": "normal" },
+      { "name": "Heading S", "size": 32, "weight": 500, "tracking": "normal" },
+      { "name": "Title", "size": 28, "weight": 400, "tracking": "-0.28px" },
+      { "name": "Body L", "size": 18, "weight": 400, "tracking": "0.36px" },
+      { "name": "Body", "size": 16, "weight": 400, "tracking": "0.32px" },
+      { "name": "Caption", "size": 14, "weight": 400, "tracking": "0.28px" },
+      { "name": "Claim", "size": 14, "weight": 400, "tracking": "0.84px", "transform": "uppercase" }
+    ]
+  },
+  "radius": {
+    "card": { "$value": "6px", "$type": "dimension", "$description": "Website cards." },
+    "buttonOutline": { "$value": "12px", "$type": "dimension", "$description": "Max radius (buttons, brand hub cards)." },
+    "swatch": { "$value": "8px", "$type": "dimension", "$description": "Color swatches." }
+  }
+}
