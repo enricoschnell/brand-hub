@@ -75,7 +75,7 @@ const WmOutline = ({ stroke = "#fff", w = 100 }) => <svg viewBox="0 0 986.77 174
 
 /* ═══ SHARED COMPONENTS ═══ */
 const cardS = { borderRadius: 12, border: `1px solid ${C.border}`, background: C.surface, overflow: "hidden" };
-function Sect({ label, icon, children, last, mobile }) { return <div style={{ paddingBottom: last ? 0 : (mobile ? S.xl : S.xxl) }}>{label && <div style={{ ...T.sectionLabel, marginBottom: mobile ? S.md : 20, display: "flex", alignItems: "center", gap: 6 }}>{icon}{label}</div>}{children}</div>; }
+function Sect({ label, icon, children, last = false, mobile }: { label: any; icon?: any; children: any; last?: any; mobile: any }) { return <div style={{ paddingBottom: last ? 0 : (mobile ? S.xl : S.xxl) }}>{label && <div style={{ ...T.sectionLabel, marginBottom: mobile ? S.md : 20, display: "flex", alignItems: "center", gap: 6 }}>{icon}{label}</div>}{children}</div>; }
 function Pill({ options, value, onChange }) { return <div style={{ display: "inline-flex", gap: 1, background: C.bg, borderRadius: 8, padding: 2, border: `1px solid ${C.border}` }}>{options.map(o => <button key={o.value} onClick={() => onChange(o.value)} style={{ padding: "6px 14px", borderRadius: 6, border: "none", cursor: "pointer", fontFamily: ff, fontSize: 12, fontWeight: 500, display: "flex", alignItems: "center", gap: 4, background: value === o.value ? C.active : "transparent", color: value === o.value ? C.t1 : C.t3, minHeight: 32 }}>{o.icon}{o.label}</button>)}</div>; }
 function PageHeader({ title, desc, mobile }) { return <div style={{ marginBottom: mobile ? S.lg : S.xl }}><h1 style={{ ...T.pageTitle, marginBottom: S.sm }}>{title}</h1><p style={T.pageDesc}>{desc}</p></div>; }
 function FormatChip({ label, sublabel, filename }) {
@@ -128,7 +128,7 @@ function HomePage({ go, mobile }) {
   useEffect(() => {
     if (svgRef.current) {
       const paths = svgRef.current.querySelectorAll("path");
-      const measured = Array.from(paths).map(p => Math.ceil(p.getTotalLength()));
+      const measured = Array.from(paths).map((p: SVGPathElement) => Math.ceil(p.getTotalLength()));
       setLengths(measured);
     }
   }, []);
