@@ -122,7 +122,7 @@ function HomePage({ go, mobile }) {
   /* 0=draw stroke, 1=cross-fade stroke→fill, 2=claim words, 3=buttons */
   const svgRef = useRef(null);
   const [lengths, setLengths] = useState(null);
-  const logoW = mobile ? 280 : 420;
+  const logoW = mobile ? 340 : 620;
 
   /* Measure actual path lengths on mount for pixel-perfect dasharray */
   useEffect(() => {
@@ -136,15 +136,18 @@ function HomePage({ go, mobile }) {
   /* Phase sequencing — deliberate, unhurried */
   useEffect(() => {
     const timers = [
-      setTimeout(() => setPhase(1), 1900),  /* cross-fade begins */
-      setTimeout(() => setPhase(2), 2600),  /* claim appears */
-      setTimeout(() => setPhase(3), 3200),  /* buttons appear */
+      setTimeout(() => setPhase(1), 2400),  /* cross-fade begins (after last letter finishes at ~2.3s) */
+      setTimeout(() => setPhase(2), 3100),  /* claim appears */
+      setTimeout(() => setPhase(3), 3700),  /* buttons appear */
     ];
     return () => timers.forEach(clearTimeout);
   }, []);
 
   /* Reading order stagger: C(3) A(1) S(5) A(2) G(4) O(0) */
   const order = [5, 1, 3, 0, 4, 2];
+  /* Left-to-right position of each path index for fill sweep:
+     C(3)=pos0, A(1)=pos1, S(5)=pos2, A(2)=pos3, G(4)=pos4, O(0)=pos5 */
+  const ltrPos = [5, 1, 3, 0, 4, 2]; /* maps path index → left-to-right position */
   const stagger = 0.14; /* subtle overlap between letters */
   const drawDur = 1.6;
 
@@ -162,7 +165,7 @@ function HomePage({ go, mobile }) {
   return (
     <div style={{
       display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
-      minHeight: mobile ? "65vh" : "80vh", textAlign: "center", padding: mobile ? "40px 0" : 0,
+      flex: 1, width: "100%", textAlign: "center", padding: mobile ? "40px 20px" : 0,
     }}>
       <style>{css}</style>
 
@@ -170,7 +173,7 @@ function HomePage({ go, mobile }) {
       <div style={{
         animation: phase >= 1 ? "breathe 2.4s cubic-bezier(0.37, 0, 0.63, 1) 0.3s 1" : "none",
       }}>
-        <svg ref={svgRef} viewBox="0 0 986.77 174.91" width={logoW} style={{ display: "block", overflow: "visible" }}>
+        <svg ref={svgRef} viewBox="0 0 986.77 174.91" width={logoW} style={{ display: "block", overflow: "visible", maxWidth: "100%" }}>
           {WP.map((d, i) => {
             const len = lengths ? lengths[i] : 2400;
             const delay = order[i] * stagger;
@@ -180,7 +183,7 @@ function HomePage({ go, mobile }) {
                 d={d}
                 fill={C.t1}
                 stroke={C.t1}
-                strokeWidth="0.8"
+                strokeWidth={mobile ? "2.8" : "1.6"}
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 style={{
@@ -191,10 +194,10 @@ function HomePage({ go, mobile }) {
                   animation: lengths ? [
                     /* 1. Draw the stroke */
                     `draw ${drawDur}s cubic-bezier(0.45, 0, 0.15, 1) ${delay}s forwards`,
-                    /* 2. Fade stroke out (cross-fade) */
-                    phase >= 1 ? `strokeOut 0.9s cubic-bezier(0.33, 0, 0.67, 1) ${order[i] * 0.04}s forwards` : "",
-                    /* 3. Fade fill in (cross-fade, starts slightly before stroke-out completes) */
-                    phase >= 1 ? `fillIn 0.7s cubic-bezier(0.33, 0, 0.67, 1) ${order[i] * 0.04}s forwards` : "",
+                    /* 2. Fade stroke out — left-to-right sweep */
+                    phase >= 1 ? `strokeOut 0.7s cubic-bezier(0.33, 0, 0.67, 1) ${ltrPos[i] * 0.08}s forwards` : "",
+                    /* 3. Fade fill in — left-to-right sweep, slightly faster for crisp reveal */
+                    phase >= 1 ? `fillIn 0.5s cubic-bezier(0.33, 0, 0.67, 1) ${ltrPos[i] * 0.08}s forwards` : "",
                   ].filter(Boolean).join(", ") : "none",
                 }}
               />
@@ -690,7 +693,7 @@ export default function App() {
       <Sidebar page={page} go={setPage} mobile={mobile} open={drawerOpen} setOpen={setDrawerOpen} />
       <div style={{ flex: 1, marginLeft: mobile ? 0 : 220, display: "flex", flexDirection: "column" }}>
         {mobile && <MobileHeader onMenu={() => setDrawerOpen(true)} page={page} />}
-        <main style={{ flex: 1, padding: mobile ? "24px 20px 64px" : "40px 48px 96px", maxWidth: 860, width: "100%" }}>
+        <main style={{ flex: 1, padding: page === "home" ? 0 : (mobile ? "24px 20px 64px" : "40px 48px 96px"), maxWidth: page === "home" ? "none" : 860, width: "100%", display: page === "home" ? "flex" : "block" }}>
           {page === "home" && <HomePage go={setPage} mobile={mobile} />}
           {page === "logo" && <LogoPage mobile={mobile} />}
           {page === "colors" && <ColorsPage mobile={mobile} />}
