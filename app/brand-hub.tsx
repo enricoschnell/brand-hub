@@ -136,9 +136,9 @@ function HomePage({ go, mobile }) {
   /* Phase sequencing — deliberate, unhurried */
   useEffect(() => {
     const timers = [
-      setTimeout(() => setPhase(1), 2400),  /* cross-fade begins (after last letter finishes at ~2.3s) */
-      setTimeout(() => setPhase(2), 3100),  /* claim appears */
-      setTimeout(() => setPhase(3), 3700),  /* buttons appear */
+      setTimeout(() => setPhase(1), 2150),  /* cross-fade begins (last letter finishes at ~2.08s) */
+      setTimeout(() => setPhase(2), 2600),  /* claim appears — snappy after fill */
+      setTimeout(() => setPhase(3), 3050),  /* buttons appear */
     ];
     return () => timers.forEach(clearTimeout);
   }, []);
@@ -148,7 +148,8 @@ function HomePage({ go, mobile }) {
   /* Left-to-right position of each path index for fill sweep:
      C(3)=pos0, A(1)=pos1, S(5)=pos2, A(2)=pos3, G(4)=pos4, O(0)=pos5 */
   const ltrPos = [5, 1, 3, 0, 4, 2]; /* maps path index → left-to-right position */
-  const stagger = 0.14; /* subtle overlap between letters */
+  /* Accelerating stagger — letters bunch up toward the end */
+  const staggerDelays = [0, 0.14, 0.26, 0.36, 0.43, 0.48];
   const drawDur = 1.6;
 
   const css = `
@@ -176,7 +177,7 @@ function HomePage({ go, mobile }) {
         <svg ref={svgRef} viewBox="0 0 986.77 174.91" width={logoW} style={{ display: "block", overflow: "visible", maxWidth: "100%" }}>
           {WP.map((d, i) => {
             const len = lengths ? lengths[i] : 2400;
-            const delay = order[i] * stagger;
+            const delay = staggerDelays[order[i]];
             return (
               <path
                 key={i}
@@ -195,9 +196,9 @@ function HomePage({ go, mobile }) {
                     /* 1. Draw the stroke */
                     `draw ${drawDur}s cubic-bezier(0.45, 0, 0.15, 1) ${delay}s forwards`,
                     /* 2. Fade stroke out — left-to-right sweep */
-                    phase >= 1 ? `strokeOut 0.7s cubic-bezier(0.33, 0, 0.67, 1) ${ltrPos[i] * 0.08}s forwards` : "",
-                    /* 3. Fade fill in — left-to-right sweep, slightly faster for crisp reveal */
-                    phase >= 1 ? `fillIn 0.5s cubic-bezier(0.33, 0, 0.67, 1) ${ltrPos[i] * 0.08}s forwards` : "",
+                    phase >= 1 ? `strokeOut 0.45s cubic-bezier(0.33, 0, 0.67, 1) ${ltrPos[i] * 0.05}s forwards` : "",
+                    /* 3. Fade fill in — left-to-right sweep, snappy */
+                    phase >= 1 ? `fillIn 0.35s cubic-bezier(0.33, 0, 0.67, 1) ${ltrPos[i] * 0.05}s forwards` : "",
                   ].filter(Boolean).join(", ") : "none",
                 }}
               />
