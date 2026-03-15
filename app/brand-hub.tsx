@@ -78,15 +78,26 @@ const cardS = { borderRadius: 12, border: `1px solid ${C.border}`, background: C
 function Sect({ label, icon, children, last = false, mobile }: { label: any; icon?: any; children: any; last?: any; mobile: any }) { return <div style={{ paddingBottom: last ? 0 : (mobile ? S.xl : S.xxl) }}>{label && <div style={{ ...T.sectionLabel, marginBottom: mobile ? S.md : 20, display: "flex", alignItems: "center", gap: 6 }}>{icon}{label}</div>}{children}</div>; }
 function Pill({ options, value, onChange }) { return <div style={{ display: "inline-flex", gap: 1, background: C.bg, borderRadius: 8, padding: 2, border: `1px solid ${C.border}` }}>{options.map(o => <button key={o.value} onClick={() => onChange(o.value)} style={{ padding: "6px 14px", borderRadius: 6, border: "none", cursor: "pointer", fontFamily: ff, fontSize: 12, fontWeight: 500, display: "flex", alignItems: "center", gap: 4, background: value === o.value ? C.active : "transparent", color: value === o.value ? C.t1 : C.t3, minHeight: 32 }}>{o.icon}{o.label}</button>)}</div>; }
 function PageHeader({ title, desc, mobile }) { return <div style={{ marginBottom: mobile ? S.lg : S.xl }}><h1 style={{ ...T.pageTitle, marginBottom: S.sm }}>{title}</h1><p style={T.pageDesc}>{desc}</p></div>; }
-function FormatChip({ label, sublabel, filename }) {
+function FormatChip({ label, sublabel, filename, href }: { label: any; sublabel?: any; filename: any; href?: string }) {
+  const available = !!href;
+  const baseStyle = {
+    display: "flex", alignItems: "center", gap: 6, padding: "5px 10px",
+    borderRadius: 8, border: `1px solid ${C.border}`, background: "transparent",
+    fontSize: 12, fontFamily: ff, minHeight: 30, textDecoration: "none",
+  };
+  if (available) {
+    return (
+      <a href={href} download={filename} title={filename} style={{ ...baseStyle, color: C.t2, cursor: "pointer" }}>
+        <LuDownload size={11} />
+        <span style={{ fontWeight: 500, color: C.t1 }}>{label}</span>
+        {sublabel && <span style={{ ...T.caption, fontFamily: monoF }}>{sublabel}</span>}
+      </a>
+    );
+  }
   return (
-    <button onClick={() => {}} title={filename} style={{
-      display: "flex", alignItems: "center", gap: 6, padding: "5px 10px",
-      borderRadius: 8, border: `1px solid ${C.border}`, background: "transparent",
-      color: C.t2, fontSize: 12, fontFamily: ff, cursor: "pointer", minHeight: 30,
-    }}>
+    <button disabled title="Bald verfügbar" style={{ ...baseStyle, color: C.t3, cursor: "not-allowed", opacity: 0.4 }}>
       <LuDownload size={11} />
-      <span style={{ fontWeight: 500, color: C.t1 }}>{label}</span>
+      <span style={{ fontWeight: 500, color: C.t3 }}>{label}</span>
       {sublabel && <span style={{ ...T.caption, fontFamily: monoF }}>{sublabel}</span>}
     </button>
   );
@@ -284,9 +295,11 @@ function LogoPage({ mobile }) {
               <div style={{ padding: `${S.sm + 4}px ${S.md}px`, borderTop: `1px solid ${C.border}` }}>
                 <div style={{ ...T.bodyStrong, marginBottom: S.sm }}>Wortmarke — {v.label}</div>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: S.xs }}>
-                  {digitalFormats.map(f => (
-                    <FormatChip key={f.ext} label={f.label} sublabel={f.sub} filename={fileName(v.label, f.ext)} />
-                  ))}
+                  {digitalFormats.map(f => {
+                    const file = fileName(v.label, f.ext);
+                    const href = (f.ext === "svg" || f.ext === "png") ? `/assets/logos/${file}` : undefined;
+                    return <FormatChip key={f.ext} label={f.label} sublabel={f.sub} filename={file} href={href} />;
+                  })}
                 </div>
               </div>
             </div>
@@ -452,12 +465,12 @@ function TypePage({ mobile }) {
           <p style={{ ...T.body, margin: `0 0 ${S.md}px` }}>Installiere beide Gewichte lokal. Commercial License — nur für CASAGO-Mitarbeiter und beauftragte Dienstleister.</p>
           <div style={{ display: "flex", gap: S.sm, flexWrap: "wrap", marginBottom: S.md }}>
             {fontFiles.map(f => (
-              <FormatChip key={f.file} label={f.label} sublabel={f.sub} filename={f.file} />
+              <FormatChip key={f.file} label={f.label} sublabel={f.sub} filename={f.file} href={`/assets/fonts/${f.file}`} />
             ))}
           </div>
           <div style={{ display: "flex", alignItems: "flex-start", gap: S.sm, padding: S.md, borderRadius: 10, background: C.bg, border: `1px solid ${C.border}` }}>
             <LuInfo size={14} style={{ color: C.t3, marginTop: 2, flexShrink: 0 }} />
-            <p style={{ ...T.caption, margin: 0, lineHeight: 1.6 }}>Downloads werden aktiv, sobald der Brand Hub als Webapp unter brand.casago.de gehostet ist. Bis dahin die Fonts direkt vom Design-Team anfordern.</p>
+            <p style={{ ...T.caption, margin: 0, lineHeight: 1.6 }}>Nach dem Download beide Gewichte lokal installieren. macOS: Doppelklick → „Installieren". Windows: Rechtsklick → „Für alle Benutzer installieren".</p>
           </div>
         </div>
       </Sect>
