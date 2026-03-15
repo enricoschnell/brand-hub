@@ -120,7 +120,7 @@ function Sidebar({ page, go, mobile, open, setOpen }) {
     <nav style={{ flex: 1, padding: "4px 8px", overflow: "auto" }}>
       {nav.map((s, si) => <div key={si}>{s.label && <div style={{ ...T.sectionLabel, padding: "18px 8px 6px" }}>{s.label}</div>}{s.items.map(n => <button key={n.id} onClick={() => handleNav(n.id)} style={{ display: "flex", alignItems: "center", gap: 8, width: "100%", padding: "7px 10px", borderRadius: 7, border: "none", background: page === n.id ? C.active : "transparent", color: page === n.id ? C.t1 : C.t2, ...T.body, fontWeight: page === n.id ? 500 : 400, fontFamily: ff, cursor: "pointer", textAlign: "left", marginBottom: 1, minHeight: 40 }}><span style={{ opacity: page === n.id ? 0.9 : 0.45, display: "flex" }}>{n.icon}</span>{n.label}</button>)}</div>)}
     </nav>
-    <div style={{ padding: "12px 14px", borderTop: `1px solid ${C.border}`, ...T.caption }}>eschnell.design</div>
+    <div style={{ padding: "12px 14px", borderTop: `1px solid ${C.border}`, ...T.caption }}>© CASAGO GmbH</div>
   </>);
   if (mobile) return (<>{open && <div onClick={() => setOpen(false)} style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.6)", zIndex: 40 }} />}<aside style={{ position: "fixed", left: 0, top: 0, height: "100vh", width: 280, background: C.bg, borderRight: `1px solid ${C.border}`, fontFamily: ff, display: "flex", flexDirection: "column", zIndex: 50, transform: open ? "translateX(0)" : "translateX(-100%)", transition: "transform 0.25s cubic-bezier(0.4,0,0.2,1)" }}>{content}</aside></>);
   return <aside style={{ width: 220, background: C.bg, position: "fixed", left: 0, top: 0, height: "100vh", display: "flex", flexDirection: "column", fontFamily: ff, borderRight: `1px solid ${C.border}`, zIndex: 10 }}>{content}</aside>;
@@ -262,7 +262,8 @@ function HomePage({ go, mobile }) {
 /* ═══ LOGO PAGE — Balanced 3-column cards ═══ */
 function LogoPage({ mobile }) {
   const variants = [
-    { id: "black", label: "Black", fill: "#353b43", bg: "#f8f8f7" },
+    { id: "black", label: "Black", fill: "#000000", bg: "#f8f8f7" },
+    { id: "anthrazit", label: "Anthrazit", fill: "#353b43", bg: "#f8f8f7" },
     { id: "white", label: "White", fill: "#ffffff", bg: "#141416" },
     { id: "outline", label: "Outline", bg: "#20252b", isOutline: true },
   ];
@@ -278,7 +279,7 @@ function LogoPage({ mobile }) {
       <PageHeader title="Logo" desc="Freigegebene Wortmarke in allen Varianten und Formaten." mobile={mobile} />
 
       <Sect label="Digital" icon={<LuImage size={12} />} mobile={mobile}>
-        <div style={{ display: "grid", gridTemplateColumns: mobile ? "1fr" : "repeat(3, 1fr)", gap: S.sm + 2 }}>
+        <div style={{ display: "grid", gridTemplateColumns: mobile ? "1fr" : "repeat(4, 1fr)", gap: S.sm + 2 }}>
           {variants.map(v => (
             <div key={v.id} style={cardS}>
               {/* Logo canvas — aspect ratio ~3:1, logo at ~60% width of canvas */}

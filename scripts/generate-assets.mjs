@@ -42,7 +42,8 @@ function svgToPng(svgString, scale = 3) {
 
 // Generate SVGs
 const svgs = [
-  { name: "CASAGO-Wortmarke-Black", svg: buildSvg("#353b43", null, null) },
+  { name: "CASAGO-Wortmarke-Black", svg: buildSvg("#000000", null, null) },
+  { name: "CASAGO-Wortmarke-Anthrazit", svg: buildSvg("#353b43", null, null) },
   { name: "CASAGO-Wortmarke-White", svg: buildSvg("#ffffff", null, null) },
   { name: "CASAGO-Wortmarke-Outline", svg: buildSvg("none", "#ffffff", 3, "-2 -2 990.77 178.91") },
 ];
@@ -63,4 +64,4 @@ const sigPng = svgToPng(svgs[0].svg, 2);
 writeFileSync(join(SIG_DIR, "wortmarke.png"), sigPng);
 console.log(`✓ ${join(SIG_DIR, "wortmarke.png")}`);
 
-console.log("\nDone! Generated 3 SVGs, 3 PNGs, and 1 signature logo.");
+console.log("\nDone! Generated 4 SVGs, 4 PNGs, and 1 signature logo.");
