@@ -45,6 +45,7 @@ const S = { xs: 4, sm: 8, md: 16, lg: 24, xl: 40, xxl: 56 };
 const T = { pageTitle: { fontSize: 24, fontWeight: 600, letterSpacing: "-0.025em", color: C.t1, margin: 0, lineHeight: 1.2 }, pageDesc: { fontSize: 15, color: C.t2, margin: 0, lineHeight: 1.5 }, sectionLabel: { fontSize: 11, fontWeight: 600, color: C.t3, letterSpacing: "0.06em", textTransform: "uppercase", lineHeight: 1 }, body: { fontSize: 13, color: C.t2, lineHeight: 1.5 }, bodyStrong: { fontSize: 13, fontWeight: 500, color: C.t1, lineHeight: 1.4 }, caption: { fontSize: 11, color: C.t3, lineHeight: 1.4 } };
 const ff = "'TikTok Sans Variable','TikTok Sans',system-ui,sans-serif";
 const monoF = "ui-monospace,'SF Mono',Monaco,monospace";
+const brandF = "'Aeonik Pro',Helvetica,Arial,sans-serif";
 
 /* ═══ BRAND DATA ═══ */
 const META = { name: "CASAGO", legal: "CASAGO GmbH", tagline: "Planen. Umsetzen. Leben.", claim: "PLANEN. UMSETZEN. LEBEN.", website: "casago.de", address: "Am Queracker 6\nD-83134 Prutting", mapsUrl: "https://maps.google.com/?q=Am+Queracker+6,+83134+Prutting" };
@@ -279,7 +280,7 @@ function LogoPage({ mobile }) {
       <PageHeader title="Logo" desc="Freigegebene Wortmarke in allen Varianten und Formaten." mobile={mobile} />
 
       <Sect label="Digital" icon={<LuImage size={12} />} mobile={mobile}>
-        <div style={{ display: "grid", gridTemplateColumns: mobile ? "1fr" : "repeat(4, 1fr)", gap: S.sm + 2 }}>
+        <div style={{ display: "grid", gridTemplateColumns: mobile ? "1fr" : "repeat(2, 1fr)", gap: S.sm + 2 }}>
           {variants.map(v => (
             <div key={v.id} style={cardS}>
               {/* Logo canvas — aspect ratio ~3:1, logo at ~60% width of canvas */}
@@ -320,32 +321,62 @@ function LogoPage({ mobile }) {
         </div>
       </Sect>
 
-      {/* ── VERWENDUNG — Separate guide ── */}
-      <div style={{ borderTop: `1px solid ${C.border}`, paddingTop: mobile ? S.xl : S.xxl }}>
-        <div style={{ ...T.sectionLabel, marginBottom: mobile ? S.md : 20, display: "flex", alignItems: "center", gap: 6 }}>
-          <LuBookOpen size={12} /> Verwendung
-        </div>
+      {/* ── VERWENDUNG ── */}
+      <Sect label="Verwendung" icon={<LuBookOpen size={12} />} mobile={mobile} last>
         <p style={{ ...T.body, marginBottom: S.lg, maxWidth: 520 }}>
           Die Wortmarke ist das primäre Erkennungszeichen. Halte die Regeln ein, um eine konsistente Markendarstellung zu gewährleisten.
         </p>
         <div style={{ display: "grid", gridTemplateColumns: mobile ? "1fr" : "1fr 1fr", gap: S.sm + 2 }}>
-          {[
-            { icon: <LuShield size={14} />, t: "Schutzzone", d: "Mindestabstand um das Logo = Höhe des Buchstaben C. Gilt für alle Varianten und Hintergründe." },
-            { icon: <LuMaximize size={14} />, t: "Mindestgröße", d: "Print: mindestens 25mm Breite. Digital: mindestens 80px Breite. Darunter wird das Logo unleserlich." },
-          ].map(r => (
-            <div key={r.t} style={{ borderRadius: 12, border: `1px solid ${C.border}`, background: C.bg, padding: S.lg }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 7, marginBottom: S.md }}>
-                <span style={{ color: C.t2, display: "flex" }}>{r.icon}</span>
-                <span style={T.bodyStrong}>{r.t}</span>
-              </div>
-              <div style={{ height: 72, borderRadius: 10, background: C.surface, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: S.md }}>
-                <div style={{ border: `1.5px dashed ${C.t3}`, borderRadius: 6, padding: "12px 20px" }}><Wm fill={C.t2} w={56} /></div>
-              </div>
-              <p style={{ ...T.body, margin: 0, lineHeight: 1.6 }}>{r.d}</p>
+          {/* Schutzzone — shows clear space with dimension marks */}
+          <div style={{ borderRadius: 12, border: `1px solid ${C.border}`, background: C.bg, padding: S.lg }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 7, marginBottom: S.md }}>
+              <span style={{ color: C.t2, display: "flex" }}><LuShield size={14} /></span>
+              <span style={T.bodyStrong}>Schutzzone</span>
             </div>
-          ))}
+            <div style={{ height: 88, borderRadius: 10, background: C.surface, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: S.md, position: "relative" }}>
+              {/* Clear space visualization: dashed box = clear zone, inner = logo */}
+              <div style={{ position: "relative", padding: "14px 22px", border: `1.5px dashed ${C.t3}`, borderRadius: 6 }}>
+                <Wm fill={C.t2} w={56} />
+                {/* "C" height annotation */}
+                <div style={{ position: "absolute", top: 2, right: -20, bottom: 2, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+                  <div style={{ width: 1, flex: 1, background: C.t3, opacity: 0.5 }} />
+                  <span style={{ fontSize: 9, fontFamily: monoF, color: C.t3, padding: "2px 0", whiteSpace: "nowrap" }}>C</span>
+                  <div style={{ width: 1, flex: 1, background: C.t3, opacity: 0.5 }} />
+                </div>
+              </div>
+            </div>
+            <p style={{ ...T.body, margin: 0, lineHeight: 1.6 }}>Mindestabstand um das Logo = Höhe des Buchstaben C. Gilt für alle Varianten und Hintergründe.</p>
+          </div>
+          {/* Mindestgröße — shows logo at minimum scale with size annotation */}
+          <div style={{ borderRadius: 12, border: `1px solid ${C.border}`, background: C.bg, padding: S.lg }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 7, marginBottom: S.md }}>
+              <span style={{ color: C.t2, display: "flex" }}><LuMaximize size={14} /></span>
+              <span style={T.bodyStrong}>Mindestgröße</span>
+            </div>
+            <div style={{ height: 88, borderRadius: 10, background: C.surface, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: S.md, gap: 32 }}>
+              {/* Minimum size with dimension line below */}
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
+                <Wm fill={C.t2} w={80} />
+                <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                  <div style={{ width: 12, height: 1, background: C.t3, opacity: 0.5 }} />
+                  <span style={{ fontSize: 9, fontFamily: monoF, color: C.t3, whiteSpace: "nowrap" }}>80px</span>
+                  <div style={{ width: 12, height: 1, background: C.t3, opacity: 0.5 }} />
+                </div>
+              </div>
+              {/* Too-small example, struck through */}
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6, opacity: 0.35 }}>
+                <Wm fill={C.t3} w={40} />
+                <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                  <div style={{ width: 8, height: 1, background: C.t3, opacity: 0.5 }} />
+                  <span style={{ fontSize: 9, fontFamily: monoF, color: C.t3, whiteSpace: "nowrap", textDecoration: "line-through" }}>40px</span>
+                  <div style={{ width: 8, height: 1, background: C.t3, opacity: 0.5 }} />
+                </div>
+              </div>
+            </div>
+            <p style={{ ...T.body, margin: 0, lineHeight: 1.6 }}>Print: mindestens 25mm Breite. Digital: mindestens 80px Breite. Darunter wird das Logo unleserlich.</p>
+          </div>
         </div>
-      </div>
+      </Sect>
     </div>
   );
 }
@@ -433,11 +464,11 @@ function TypePage({ mobile }) {
         <div style={{ ...cardS, padding: mobile ? S.lg : S.xl }}>
           <div style={{ display: mobile ? "block" : "flex", gap: 48 }}>
             <div style={{ flex: 1, marginBottom: mobile ? S.lg : 0 }}>
-              <div style={{ fontSize: mobile ? 36 : 48, fontWeight: 500, color: C.t1, letterSpacing: "-0.02em", lineHeight: 1.1, marginBottom: 20 }}>Aeonik Pro</div>
+              <div style={{ fontSize: mobile ? 36 : 48, fontWeight: 500, color: C.t1, letterSpacing: "-0.02em", lineHeight: 1.1, marginBottom: 20, fontFamily: brandF }}>Aeonik Pro</div>
               <p style={{ ...T.body, maxWidth: 400, lineHeight: 1.7, marginBottom: S.lg }}>
                 Primäre Marken-Schrift von CoType Foundry. Zwei Gewichte: Regular (400) für Fließtext und UI, Medium (500) für Headlines und Akzente. Kein Bold, kein SemiBold — die Ruhe der Marke entsteht durch diesen bewussten Verzicht.
               </p>
-              <div style={{ fontSize: 13, color: C.t3, lineHeight: 2, letterSpacing: "0.02em" }}>
+              <div style={{ fontSize: 13, color: C.t3, lineHeight: 2, letterSpacing: "0.02em", fontFamily: brandF }}>
                 ABCDEFGHIJKLMNOPQRSTUVWXYZ<br />
                 abcdefghijklmnopqrstuvwxyz<br />
                 0123456789 .,;:!? äöüß €
@@ -446,11 +477,11 @@ function TypePage({ mobile }) {
             <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
               <div style={{ display: "flex", gap: 32, marginBottom: 32 }}>
                 <div>
-                  <div style={{ fontSize: 72, fontWeight: 400, color: C.t1, lineHeight: 1 }}>Aa</div>
+                  <div style={{ fontSize: 72, fontWeight: 400, color: C.t1, lineHeight: 1, fontFamily: brandF }}>Aa</div>
                   <div style={{ fontSize: 11, fontFamily: monoF, color: C.t3, marginTop: 8 }}>Regular 400</div>
                 </div>
                 <div>
-                  <div style={{ fontSize: 72, fontWeight: 500, color: C.t1, lineHeight: 1 }}>Aa</div>
+                  <div style={{ fontSize: 72, fontWeight: 500, color: C.t1, lineHeight: 1, fontFamily: brandF }}>Aa</div>
                   <div style={{ fontSize: 11, fontFamily: monoF, color: C.t3, marginTop: 8 }}>Medium 500</div>
                 </div>
               </div>
@@ -494,6 +525,7 @@ function TypePage({ mobile }) {
                 </div>
                 <div style={{
                   fontSize: displaySize, fontWeight: t.weight, color: C.t1,
+                  fontFamily: brandF,
                   letterSpacing: t.tracking === "normal" ? undefined : t.tracking,
                   lineHeight: 1.15, textTransform: t.uc ? "uppercase" : undefined,
                   overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
@@ -705,7 +737,7 @@ export default function App() {
   const mobile = useIsMobile();
   return (
     <div style={{ display: "flex", minHeight: "100vh", background: C.bg, fontFamily: ff, color: C.t1 }}>
-      <style>{`@font-face{font-family:'TikTok Sans Variable';font-style:normal;font-display:swap;font-weight:300 900;src:url(https://cdn.jsdelivr.net/fontsource/fonts/tiktok-sans:vf@latest/latin-wght-normal.woff2) format('woff2-variations')}*{box-sizing:border-box}::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.08);border-radius:3px}::selection{background:rgba(255,255,255,0.15)}`}</style>
+      <style>{`@font-face{font-family:'TikTok Sans Variable';font-style:normal;font-display:swap;font-weight:300 900;src:url(https://cdn.jsdelivr.net/fontsource/fonts/tiktok-sans:vf@latest/latin-wght-normal.woff2) format('woff2-variations')}@font-face{font-family:'Aeonik Pro';font-style:normal;font-weight:400;font-display:swap;src:url(/assets/fonts/AeonikPro-Regular.otf) format('opentype')}@font-face{font-family:'Aeonik Pro';font-style:normal;font-weight:500;font-display:swap;src:url(/assets/fonts/AeonikPro-Medium.otf) format('opentype')}*{box-sizing:border-box}::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.08);border-radius:3px}::selection{background:rgba(255,255,255,0.15)}`}</style>
       <Sidebar page={page} go={setPage} mobile={mobile} open={drawerOpen} setOpen={setDrawerOpen} />
       <div style={{ flex: 1, marginLeft: mobile ? 0 : 220, display: "flex", flexDirection: "column", minWidth: 0, overflow: "hidden" }}>
         {mobile && <MobileHeader onMenu={() => setDrawerOpen(true)} page={page} />}
