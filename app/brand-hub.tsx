@@ -573,12 +573,14 @@ function SigPage({ mobile }) {
     ].join("");
   };
 
-  const doCopy = (type) => {
-    if (type === "html") navigator.clipboard.writeText(buildHtml());
-    else if (sigRef.current) {
-      const r = document.createRange(); r.selectNodeContents(sigRef.current);
-      const s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
-      document.execCommand("copy"); s.removeAllRanges();
+  const doCopy = async (type) => {
+    const html = buildHtml();
+    if (type === "html") {
+      await navigator.clipboard.writeText(html);
+    } else {
+      const blob = new Blob([html], { type: "text/html" });
+      const plainBlob = new Blob([html], { type: "text/plain" });
+      await navigator.clipboard.write([new ClipboardItem({ "text/html": blob, "text/plain": plainBlob })]);
     }
     setCopied(type); setTimeout(() => setCopied(null), 2200);
   };
