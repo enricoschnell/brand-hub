@@ -723,6 +723,10 @@ function SigPage({ mobile }) {
               {copied === "html" ? <LuCheck size={14} /> : <LuCode size={14} />}{copied === "html" ? "Kopiert" : "HTML"}
             </button>
           </div>
+          <div style={{ display: "flex", alignItems: "flex-start", gap: S.sm, padding: `${S.sm + 2}px ${S.md}px`, borderRadius: 10, background: C.bg, border: `1px solid ${C.border}` }}>
+            <LuInfo size={13} style={{ color: C.t3, marginTop: 1, flexShrink: 0 }} />
+            <p style={{ ...T.caption, margin: 0, lineHeight: 1.6 }}>Apple Mail: Deaktiviere „Standardschrift für E-Mails verwenden" in den Mail-Einstellungen, damit die Formatierung erhalten bleibt.</p>
+          </div>
           {!mobile && <>
             <button onClick={() => setShowSrc(!showSrc)} style={{ width: "100%", padding: "9px 14px", borderRadius: 10, border: `1px solid ${C.border}`, background: "transparent", cursor: "pointer", fontFamily: ff, fontSize: 12, textAlign: "left", display: "flex", alignItems: "center", gap: 6, color: C.t3, minHeight: 40 }}>
               <span style={{ display: "flex", transform: showSrc ? "rotate(90deg)" : "none", transition: "transform 0.15s" }}><LuChevronRight size={12} /></span>HTML Source
