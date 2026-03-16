@@ -573,14 +573,25 @@ function SigPage({ mobile }) {
     ].join("");
   };
 
-  const doCopy = async (type) => {
+  const doCopy = (type) => {
     const html = buildHtml();
     if (type === "html") {
-      await navigator.clipboard.writeText(html);
+      navigator.clipboard.writeText(html);
     } else {
-      const blob = new Blob([html], { type: "text/html" });
-      const plainBlob = new Blob([html], { type: "text/plain" });
-      await navigator.clipboard.write([new ClipboardItem({ "text/html": blob, "text/plain": plainBlob })]);
+      /* Render clean HTML in a temporary off-screen container, then copy
+         the browser's rich-text interpretation — no dark shell styles. */
+      const el = document.createElement("div");
+      el.innerHTML = html;
+      el.style.cssText = "position:fixed;left:-9999px;top:0;background:#fff;color:#000;font-family:Helvetica,Arial,sans-serif;";
+      document.body.appendChild(el);
+      const range = document.createRange();
+      range.selectNodeContents(el);
+      const sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+      document.execCommand("copy");
+      sel.removeAllRanges();
+      document.body.removeChild(el);
     }
     setCopied(type); setTimeout(() => setCopied(null), 2200);
   };
