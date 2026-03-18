@@ -36,6 +36,10 @@ const LuBookOpen = (p) => <Li {...p}><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-
 const LuPrinter = (p) => <Li {...p}><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></Li>;
 const LuType = (p) => <Li {...p}><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" x2="15" y1="20" y2="20"/><line x1="12" x2="12" y1="4" y2="20"/></Li>;
 const LuInfo = (p) => <Li {...p}><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></Li>;
+const LuPlus = (p) => <Li {...p}><path d="M5 12h14"/><path d="M12 5v14"/></Li>;
+const LuTrash = (p) => <Li {...p}><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></Li>;
+const LuPencil = (p) => <Li {...p}><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/></Li>;
+const LuLock = (p) => <Li {...p}><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></Li>;
 
 function useIsMobile(bp = 768) { const [m, setM] = useState(false); useEffect(() => { const mq = window.matchMedia(`(max-width:${bp-1}px)`); const h = (e) => setM(e.matches); setM(mq.matches); mq.addEventListener("change", h); return () => mq.removeEventListener("change", h); }, [bp]); return m; }
 
@@ -109,7 +113,7 @@ function Sidebar({ page, go, mobile, open, setOpen }) {
   const nav = [
     { items: [{ id: "home", label: "Home", icon: <LuHome size={15} /> }] },
     { label: "Assets", items: [{ id: "logo", label: "Logo", icon: <LuImage size={15} /> }, { id: "colors", label: "Farben", icon: <LuPalette size={15} /> }, { id: "type", label: "Typografie", icon: <LuType size={15} /> }] },
-    { label: "Tools", items: [{ id: "sig", label: "Email Signatur", icon: <LuMail size={15} /> }] },
+    { label: "Tools", items: [{ id: "sig", label: "Email Signatur", icon: <LuMail size={15} /> }, { id: "team", label: "Team", icon: <LuUsers size={15} /> }] },
   ];
   const handleNav = (id) => { go(id); if (mobile) setOpen(false); };
   const content = (<>
@@ -126,7 +130,7 @@ function Sidebar({ page, go, mobile, open, setOpen }) {
   if (mobile) return (<>{open && <div onClick={() => setOpen(false)} style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.6)", zIndex: 40 }} />}<aside style={{ position: "fixed", left: 0, top: 0, height: "100vh", width: 280, background: C.bg, borderRight: `1px solid ${C.border}`, fontFamily: ff, display: "flex", flexDirection: "column", zIndex: 50, transform: open ? "translateX(0)" : "translateX(-100%)", transition: "transform 0.25s cubic-bezier(0.4,0,0.2,1)" }}>{content}</aside></>);
   return <aside style={{ width: 220, background: C.bg, position: "fixed", left: 0, top: 0, height: "100vh", display: "flex", flexDirection: "column", fontFamily: ff, borderRight: `1px solid ${C.border}`, zIndex: 10 }}>{content}</aside>;
 }
-function MobileHeader({ onMenu, page }) { const t = { home: "Home", logo: "Logo", colors: "Farben", type: "Typografie", sig: "Email Signatur" }; return <div style={{ position: "sticky", top: 0, zIndex: 20, background: C.bg, borderBottom: `1px solid ${C.border}`, padding: "0 16px", height: 52, display: "flex", alignItems: "center", gap: 12 }}><button onClick={onMenu} style={{ background: "none", border: "none", color: C.t1, cursor: "pointer", padding: 8, margin: -8, display: "flex", minWidth: 44, minHeight: 44, alignItems: "center", justifyContent: "center" }}><LuMenu size={20} /></button><div style={T.bodyStrong}>{t[page] || "Brand Hub"}</div></div>; }
+function MobileHeader({ onMenu, page }) { const t = { home: "Home", logo: "Logo", colors: "Farben", type: "Typografie", sig: "Email Signatur", team: "Team" }; return <div style={{ position: "sticky", top: 0, zIndex: 20, background: C.bg, borderBottom: `1px solid ${C.border}`, padding: "0 16px", height: 52, display: "flex", alignItems: "center", gap: 12 }}><button onClick={onMenu} style={{ background: "none", border: "none", color: C.t1, cursor: "pointer", padding: 8, margin: -8, display: "flex", minWidth: 44, minHeight: 44, alignItems: "center", justifyContent: "center" }}><LuMenu size={20} /></button><div style={T.bodyStrong}>{t[page] || "Brand Hub"}</div></div>; }
 
 /* ═══ HOME — Cinematic logo draw animation (Herrström/Lit Create style) ═══ */
 function HomePage({ go, mobile }) {
@@ -542,7 +546,7 @@ function TypePage({ mobile }) {
 }
 
 /* ═══ SIGNATURE ═══ */
-function SigPage({ mobile }) {
+function SigPage({ mobile, team = TEAM }) {
   const [pi, setPi] = useState(0);
   const [showClaim, setShowClaim] = useState(true);
   const [showAddress, setShowAddress] = useState(true);
@@ -551,7 +555,7 @@ function SigPage({ mobile }) {
   const [showSrc, setShowSrc] = useState(false);
   const [mode, setMode] = useState("light");
   const sigRef = useRef(null);
-  const p = TEAM[pi];
+  const p = team[pi] || team[0];
   const logoW = LOGO_SIZES[logoSize];
 
   const buildHtml = () => {
@@ -651,7 +655,7 @@ function SigPage({ mobile }) {
           <div style={{ ...cardS, padding: S.md + 4, minWidth: 0 }}>
             <div style={{ ...T.sectionLabel, marginBottom: S.md, display: "flex", alignItems: "center", gap: 5 }}><LuUsers size={11} sw={2} /> Person</div>
             <div style={{ display: mobile ? "flex" : "block", gap: 6, overflowX: mobile ? "auto" : "visible", paddingBottom: mobile ? 4 : 0, margin: mobile ? "0 -4px" : 0 }}>
-              {TEAM.map((t, i) => (
+              {team.map((t, i) => (
                 <button key={i} onClick={() => setPi(i)} style={{
                   display: "flex", alignItems: "center", gap: 10, width: mobile ? "auto" : "100%", flexShrink: 0,
                   padding: "10px 12px", borderRadius: 10,
@@ -747,11 +751,217 @@ function SigPage({ mobile }) {
   );
 }
 
+/* ═══ TEAM ADMIN ═══ */
+function TeamPage({ mobile, team, onRefresh }) {
+  const [pw, setPw] = useState(() => (typeof window !== "undefined" ? sessionStorage.getItem("admin_pw") || "" : ""));
+  const [authed, setAuthed] = useState(false);
+  const [authError, setAuthError] = useState(false);
+  const [editing, setEditing] = useState(null); /* null = list, "new" = add, or employee id */
+  const [form, setForm] = useState({ name: "", role: "", initials: "", contacts: [{ label: "M", value: "", href: "" }, { label: "E", value: "", href: "" }], sort_order: 0 });
+  const [saving, setSaving] = useState(false);
+
+  const authHeaders = { "Content-Type": "application/json", "x-admin-password": pw };
+
+  const doLogin = async () => {
+    try {
+      const res = await fetch("/api/auth/check", { method: "POST", headers: { "x-admin-password": pw } });
+      if (res.status === 401) { setAuthError(true); return; }
+      sessionStorage.setItem("admin_pw", pw);
+      setAuthed(true);
+      setAuthError(false);
+    } catch {
+      setAuthError(true);
+    }
+  };
+
+  const autoHref = (label, value) => {
+    const clean = value.replace(/[\s\-]/g, "");
+    if (label === "E") return `mailto:${value.trim()}`;
+    return `tel:+${clean.replace(/^\+/, "")}`;
+  };
+
+  const startEdit = (emp) => {
+    setForm({ name: emp.name, role: emp.role, initials: emp.initials, contacts: emp.contacts.map(c => ({ ...c })), sort_order: emp.sort_order ?? 0 });
+    setEditing(emp.id);
+  };
+
+  const startNew = () => {
+    setForm({ name: "", role: "", initials: "", contacts: [{ label: "M", value: "", href: "" }, { label: "E", value: "", href: "" }], sort_order: team.length });
+    setEditing("new");
+  };
+
+  const save = async () => {
+    setSaving(true);
+    const body = { ...form, contacts: form.contacts.filter(c => c.value.trim()).map(c => ({ ...c, href: autoHref(c.label, c.value) })) };
+    const url = editing === "new" ? "/api/employees" : `/api/employees/${editing}`;
+    const method = editing === "new" ? "POST" : "PUT";
+    await fetch(url, { method, headers: authHeaders, body: JSON.stringify(body) });
+    setSaving(false);
+    setEditing(null);
+    onRefresh();
+  };
+
+  const remove = async (id) => {
+    if (!confirm("Mitarbeiter wirklich löschen?")) return;
+    await fetch(`/api/employees/${id}`, { method: "DELETE", headers: authHeaders });
+    onRefresh();
+  };
+
+  const updateContact = (idx, key, val) => {
+    const next = form.contacts.map((c, i) => i === idx ? { ...c, [key]: val } : c);
+    setForm({ ...form, contacts: next });
+  };
+
+  const addContact = () => setForm({ ...form, contacts: [...form.contacts, { label: "T", value: "", href: "" }] });
+  const removeContact = (idx) => setForm({ ...form, contacts: form.contacts.filter((_, i) => i !== idx) });
+
+  const inputS = { width: "100%", padding: "8px 12px", borderRadius: 8, border: `1px solid ${C.border}`, background: C.bg, color: C.t1, fontSize: 13, fontFamily: ff, outline: "none", minHeight: 38 };
+  const labelS = { ...T.caption, marginBottom: 4, display: "block" };
+  const btnS = { padding: "8px 16px", borderRadius: 8, border: "none", fontSize: 12, fontWeight: 500, fontFamily: ff, cursor: "pointer", display: "flex", alignItems: "center", gap: 6, minHeight: 36 };
+
+  if (!authed) {
+    return (
+      <div>
+        <PageHeader title="Team" desc="Mitarbeiter verwalten für die Signatur-Generierung." mobile={mobile} />
+        <div style={{ ...cardS, padding: S.lg, maxWidth: 360 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 7, marginBottom: S.md }}>
+            <LuLock size={14} style={{ color: C.t2 }} />
+            <span style={T.bodyStrong}>Admin-Zugang</span>
+          </div>
+          <div style={{ marginBottom: S.md }}>
+            <label style={labelS}>Passwort</label>
+            <input type="password" value={pw} onChange={e => { setPw(e.target.value); setAuthError(false); }} onKeyDown={e => e.key === "Enter" && doLogin()} style={inputS} placeholder="Admin-Passwort eingeben" />
+          </div>
+          {authError && <p style={{ ...T.caption, color: "#ef4444", margin: `0 0 ${S.md}px` }}>Falsches Passwort.</p>}
+          <button onClick={doLogin} style={{ ...btnS, background: C.t1, color: C.bg }}>
+            Anmelden
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  if (editing !== null) {
+    return (
+      <div>
+        <PageHeader title={editing === "new" ? "Neue/r Mitarbeiter/in" : "Mitarbeiter bearbeiten"} desc="Felder ausfüllen und speichern." mobile={mobile} />
+        <div style={{ ...cardS, padding: S.lg, maxWidth: 480 }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: S.md }}>
+            <div>
+              <label style={labelS}>Name</label>
+              <input value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} style={inputS} placeholder="Max Mustermann" />
+            </div>
+            <div>
+              <label style={labelS}>Rolle / Position</label>
+              <input value={form.role} onChange={e => setForm({ ...form, role: e.target.value })} style={inputS} placeholder="Geschäftsführer" />
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: S.sm }}>
+              <div>
+                <label style={labelS}>Initialen</label>
+                <input value={form.initials} onChange={e => setForm({ ...form, initials: e.target.value.toUpperCase().slice(0, 4) })} style={inputS} placeholder="MM" maxLength={4} />
+              </div>
+              <div>
+                <label style={labelS}>Reihenfolge</label>
+                <input type="number" value={form.sort_order} onChange={e => setForm({ ...form, sort_order: Number(e.target.value) })} style={inputS} />
+              </div>
+            </div>
+            <div>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: S.sm }}>
+                <label style={{ ...labelS, margin: 0 }}>Kontakte</label>
+                <button onClick={addContact} style={{ ...btnS, padding: "4px 10px", background: "transparent", border: `1px solid ${C.border}`, color: C.t2, minHeight: 28, fontSize: 11 }}>
+                  <LuPlus size={11} /> Hinzufügen
+                </button>
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: S.sm }}>
+                {form.contacts.map((ct, ci) => (
+                  <div key={ci} style={{ display: "flex", gap: S.sm, alignItems: "center" }}>
+                    <select value={ct.label} onChange={e => updateContact(ci, "label", e.target.value)} style={{ ...inputS, width: 56, padding: "8px 4px", flexShrink: 0 }}>
+                      <option value="T">T</option>
+                      <option value="M">M</option>
+                      <option value="E">E</option>
+                    </select>
+                    <input value={ct.value} onChange={e => updateContact(ci, "value", e.target.value)} style={{ ...inputS, flex: 1 }} placeholder={ct.label === "E" ? "email@casago.de" : "+49 ..."} />
+                    {form.contacts.length > 1 && (
+                      <button onClick={() => removeContact(ci)} style={{ background: "none", border: "none", color: C.t3, cursor: "pointer", padding: 4, display: "flex" }}>
+                        <LuTrash size={13} />
+                      </button>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div style={{ display: "flex", gap: S.sm, marginTop: S.lg }}>
+            <button onClick={save} disabled={saving || !form.name.trim() || !form.role.trim()} style={{ ...btnS, background: C.t1, color: C.bg, opacity: saving || !form.name.trim() ? 0.5 : 1 }}>
+              {saving ? "Speichern..." : "Speichern"}
+            </button>
+            <button onClick={() => setEditing(null)} style={{ ...btnS, background: "transparent", border: `1px solid ${C.border}`, color: C.t2 }}>
+              Abbrechen
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      <PageHeader title="Team" desc="Mitarbeiter verwalten für die Signatur-Generierung." mobile={mobile} />
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: S.md }}>
+        <div style={T.sectionLabel}>{team.length} Mitarbeiter</div>
+        <button onClick={startNew} style={{ ...btnS, background: C.t1, color: C.bg }}>
+          <LuPlus size={13} /> Hinzufügen
+        </button>
+      </div>
+      <div style={{ display: "flex", flexDirection: "column", gap: S.sm }}>
+        {team.map(emp => (
+          <div key={emp.id || emp.ini} style={{ ...cardS, padding: `${S.md}px ${S.lg}px`, display: "flex", alignItems: "center", gap: S.md }}>
+            <div style={{ width: 40, height: 40, borderRadius: "50%", background: C.active, color: C.t2, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, fontWeight: 700, flexShrink: 0 }}>
+              {emp.initials || emp.ini}
+            </div>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ ...T.bodyStrong, marginBottom: 2 }}>{emp.name}</div>
+              <div style={T.caption}>{emp.role}</div>
+              <div style={{ ...T.caption, marginTop: 4 }}>
+                {(emp.contacts || []).map((ct, i) => (
+                  <span key={i}>{i > 0 && " · "}{ct.label}: {ct.value}</span>
+                ))}
+              </div>
+            </div>
+            <div style={{ display: "flex", gap: 4, flexShrink: 0 }}>
+              <button onClick={() => startEdit(emp)} style={{ background: "none", border: `1px solid ${C.border}`, borderRadius: 8, color: C.t2, cursor: "pointer", padding: 8, display: "flex", minWidth: 36, minHeight: 36, alignItems: "center", justifyContent: "center" }}>
+                <LuPencil size={13} />
+              </button>
+              <button onClick={() => remove(emp.id)} style={{ background: "none", border: `1px solid ${C.border}`, borderRadius: 8, color: C.t3, cursor: "pointer", padding: 8, display: "flex", minWidth: 36, minHeight: 36, alignItems: "center", justifyContent: "center" }}>
+                <LuTrash size={13} />
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 /* ═══ APP ═══ */
 export default function App() {
   const [page, setPage] = useState("home");
   const [drawerOpen, setDrawerOpen] = useState(false);
   const mobile = useIsMobile();
+  const [team, setTeam] = useState(TEAM);
+
+  const fetchTeam = () => {
+    fetch("/api/employees")
+      .then(r => r.ok ? r.json() : Promise.reject())
+      .then(data => {
+        if (Array.isArray(data) && data.length > 0) {
+          setTeam(data.map(d => ({ ...d, ini: d.initials || d.ini })));
+        }
+      })
+      .catch(() => { /* keep hardcoded fallback */ });
+  };
+  useEffect(() => { fetchTeam(); }, []);
+
   return (
     <div style={{ display: "flex", minHeight: "100vh", background: C.bg, fontFamily: ff, color: C.t1 }}>
       <style>{`@font-face{font-family:'TikTok Sans Variable';font-style:normal;font-display:swap;font-weight:300 900;src:url(https://cdn.jsdelivr.net/fontsource/fonts/tiktok-sans:vf@latest/latin-wght-normal.woff2) format('woff2-variations')}@font-face{font-family:'Aeonik Pro';font-style:normal;font-weight:400;font-display:swap;src:url(/assets/fonts/AeonikPro-Regular.otf) format('opentype')}@font-face{font-family:'Aeonik Pro';font-style:normal;font-weight:500;font-display:swap;src:url(/assets/fonts/AeonikPro-Medium.otf) format('opentype')}*{box-sizing:border-box}::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.08);border-radius:3px}::selection{background:rgba(255,255,255,0.15)}`}</style>
@@ -763,7 +973,8 @@ export default function App() {
           {page === "logo" && <LogoPage mobile={mobile} />}
           {page === "colors" && <ColorsPage mobile={mobile} />}
           {page === "type" && <TypePage mobile={mobile} />}
-          {page === "sig" && <SigPage mobile={mobile} />}
+          {page === "sig" && <SigPage mobile={mobile} team={team} />}
+          {page === "team" && <TeamPage mobile={mobile} team={team} onRefresh={fetchTeam} />}
         </main>
       </div>
     </div>
