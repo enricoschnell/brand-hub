@@ -11,6 +11,7 @@ export function BrandChat() {
   const transport = useMemo(() => new DefaultChatTransport({ api: "/api/agent" }), []);
   const { messages, sendMessage, status } = useChat({ transport });
   const [input, setInput] = useState("");
+  const [image, setImage] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const isLoading = status === "streaming" || status === "submitted";
 
@@ -22,10 +23,21 @@ export function BrandChat() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (!input.trim() || isLoading) return;
-    const text = input.trim();
+    if ((!input.trim() && !image) || isLoading) return;
+
+    const text = input.trim() || (image ? "Bitte überprüfe dieses Design auf Markenkonformität." : "");
     setInput("");
-    sendMessage({ text });
+
+    if (image) {
+      const imageData = image;
+      setImage(null);
+      sendMessage({
+        text,
+        files: [new File([dataURLtoBlob(imageData)], "design.png", { type: "image/png" })],
+      } as any);
+    } else {
+      sendMessage({ text });
+    }
   };
 
   const handleQuickAction = (prompt: string) => {
@@ -47,26 +59,23 @@ export function BrandChat() {
 
   return (
     <div className="flex flex-col h-full w-full">
-      {/* ── Scrollable area (messages or empty state) ── */}
       <div
         ref={hasMessages ? scrollRef : undefined}
         className="flex-1 overflow-y-auto flex flex-col"
       >
         {!hasMessages ? (
-          /* Empty state — push content to vertical center */
           <div className="flex-1 flex items-center justify-center">
             <div className="text-center">
               <div className="text-[28px] font-medium text-hub-t1 font-hub mb-2">
                 Wie kann ich helfen?
               </div>
               <div className="text-sm text-hub-t3 font-hub mb-6">
-                Frag mich zu Farben, Typografie, Logo-Regeln oder Assets
+                Farben, Typografie, Logo-Regeln, Design-Review oder markenkonforme Texte
               </div>
               <QuickActions onAction={handleQuickAction} visible />
             </div>
           </div>
         ) : (
-          /* Messages */
           <div className="max-w-[720px] w-full mx-auto px-6 pt-6 pb-4 flex flex-col gap-5">
             {messages
               .filter((m) => {
@@ -91,13 +100,15 @@ export function BrandChat() {
         )}
       </div>
 
-      {/* ── Input bar — always at bottom ── */}
       <div className="px-6 pt-3 pb-6 max-w-[720px] w-full mx-auto">
         <ChatInput
           value={input}
           onChange={setInput}
           onSubmit={handleSubmit}
           isLoading={isLoading}
+          image={image}
+          onImageSelect={setImage}
+          onImageClear={() => setImage(null)}
         />
         <div className="text-center mt-2 text-[11px] text-hub-t3 font-hub">
           Brand Agent kann Fehler machen. Angaben immer prüfen.
@@ -105,4 +116,14 @@ export function BrandChat() {
       </div>
     </div>
   );
+}
+
+/** Convert data URL to Blob for file upload */
+function dataURLtoBlob(dataURL: string): Blob {
+  const parts = dataURL.split(",");
+  const mime = parts[0].match(/:(.*?);/)?.[1] || "image/png";
+  const raw = atob(parts[1]);
+  const arr = new Uint8Array(raw.length);
+  for (let i = 0; i < raw.length; i++) arr[i] = raw.charCodeAt(i);
+  return new Blob([arr], { type: mime });
 }

@@ -1,6 +1,8 @@
 import { tool } from "ai";
 import { z } from "zod";
 import brandTokens from "@/data/casago-brand-tokens.json";
+import { buildSignatureHtml, findTeamMember } from "@/lib/signature";
+import { TEAM } from "@/lib/brand-data";
 
 // Flatten all brand colors for lookup
 const allColors: { name: string; hex: string; desc: string; group: string }[] = [];
@@ -184,5 +186,117 @@ export const agentTools = {
         };
       });
     },
+  }),
+
+  generate_signature: tool({
+    description: "Generate an email signature HTML for a CASAGO team member. Returns ready-to-use HTML.",
+    inputSchema: z.object({
+      employeeName: z.string().describe("Name or initials of the employee (e.g. 'Fred Fröhlich' or 'FF')"),
+      showClaim: z.boolean().optional().describe("Include the PLANEN. UMSETZEN. LEBEN. claim (default: true)"),
+      showAddress: z.boolean().optional().describe("Include the company address (default: true)"),
+      logoSize: z.enum(["regular", "large"]).optional().describe("Logo width: regular (100px) or large (140px)"),
+    }),
+    execute: async ({ employeeName, showClaim, showAddress, logoSize }: {
+      employeeName: string;
+      showClaim?: boolean;
+      showAddress?: boolean;
+      logoSize?: "regular" | "large";
+    }) => {
+      const person = findTeamMember(employeeName);
+      if (!person) {
+        return {
+          found: false,
+          message: `Kein Mitarbeiter gefunden für "${employeeName}". Verfügbar: ${TEAM.map((t) => t.name).join(", ")}`,
+        };
+      }
+      const html = buildSignatureHtml(person, { showClaim, showAddress, logoSize });
+      return {
+        found: true,
+        name: person.name,
+        role: person.role,
+        html,
+        instructions: "HTML in die Zwischenablage kopieren → In Outlook/Gmail/Apple Mail als Signatur einfügen. Bei Apple Mail 'Standardschrift für E-Mails verwenden' deaktivieren.",
+      };
+    },
+  }),
+
+  generate_copy: tool({
+    description: "Provide brand-compliant copy guidelines for a specific format and topic. The agent then writes the copy following these constraints.",
+    inputSchema: z.object({
+      format: z.enum(["social_post", "headline", "project_description", "email_subject", "tagline"]).describe("The type of copy to generate"),
+      topic: z.string().describe("What the copy should be about"),
+      tone: z.enum(["formal", "approachable", "technical"]).optional().describe("Tone override (default: based on format)"),
+      maxLength: z.number().optional().describe("Maximum character count"),
+    }),
+    execute: async ({ format, topic, tone, maxLength }: {
+      format: string;
+      topic: string;
+      tone?: string;
+      maxLength?: number;
+    }) => {
+      const guidelines: Record<string, any> = {
+        social_post: {
+          font: "Aeonik Pro Regular",
+          casing: "Sentence case",
+          hashtags: "Max 3, deutsch bevorzugt",
+          maxLength: maxLength || 280,
+          tone: tone || "approachable",
+          rules: "Keine Superlative, keine Ausrufezeichen-Ketten, sachlich-warm",
+        },
+        headline: {
+          font: "Aeonik Pro Medium",
+          casing: "Sentence case, kein ALL CAPS (außer Claim)",
+          maxLength: maxLength || 60,
+          tone: tone || "formal",
+          rules: "Klar, direkt, technische Kompetenz zeigen",
+        },
+        project_description: {
+          font: "Aeonik Pro Regular für Fließtext",
+          casing: "Standard",
+          maxLength: maxLength || 500,
+          tone: tone || "technical",
+          rules: "Planung, Umsetzung, Qualität, Nachhaltigkeit betonen. Aktive Sprache.",
+        },
+        email_subject: {
+          font: "N/A (System-Font)",
+          casing: "Sentence case",
+          maxLength: maxLength || 50,
+          tone: tone || "formal",
+          rules: "Prägnant, informativ, kein Clickbait",
+        },
+        tagline: {
+          font: "Aeonik Pro Medium",
+          casing: "Sentence case",
+          maxLength: maxLength || 40,
+          tone: tone || "approachable",
+          rules: "Kurz, einprägsam, markenkonform. Referenz: 'Planen. Umsetzen. Leben.'",
+        },
+      };
+      return {
+        format,
+        topic,
+        guidelines: guidelines[format] || guidelines.headline,
+        brandClaim: "PLANEN. UMSETZEN. LEBEN.",
+        brandValues: "Präzision, Nachhaltigkeit, ganzheitliche Betrachtung",
+      };
+    },
+  }),
+
+  review_design: tool({
+    description: "Format a structured design compliance review after analyzing an uploaded image. Call this tool to present review results in a structured format.",
+    inputSchema: z.object({
+      criteria: z.array(z.object({
+        name: z.string().describe("Criterion name (e.g. 'Farbkonformität', 'Typografie', 'Logo-Platzierung')"),
+        status: z.enum(["pass", "fail", "warning"]).describe("Assessment result"),
+        detail: z.string().describe("Explanation of what was found"),
+      })).describe("List of evaluated criteria"),
+      overallScore: z.number().describe("Overall compliance score from 1 (poor) to 5 (perfect)"),
+      summary: z.string().describe("Brief summary with actionable suggestions"),
+    }),
+    execute: async (input: {
+      criteria: { name: string; status: "pass" | "fail" | "warning"; detail: string }[];
+      overallScore: number;
+      summary: string;
+    }) => input,
   }),
 };

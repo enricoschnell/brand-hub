@@ -1,6 +1,6 @@
 "use client";
 
-import { Palette, Shield, Search, Contrast } from "lucide-react";
+import { Palette, Shield, Search, Contrast, PenLine, Mail } from "lucide-react";
 
 interface QuickActionsProps {
   onAction: (text: string) => void;
@@ -12,6 +12,8 @@ const actions = [
   { icon: <Shield size={13} />, label: "Logo-Regeln", prompt: "Was sind die wichtigsten Logo-Regeln?" },
   { icon: <Search size={13} />, label: "Asset finden", prompt: "Wo finde ich das weiße Logo als SVG?" },
   { icon: <Contrast size={13} />, label: "Kontrast prüfen", prompt: "Hat #868c95 auf weißem Hintergrund genug Kontrast?" },
+  { icon: <PenLine size={13} />, label: "Text schreiben", prompt: "Schreibe einen Social-Media-Post über unser neues Bauprojekt in Prutting." },
+  { icon: <Mail size={13} />, label: "Signatur erstellen", prompt: "Erstelle die Email-Signatur für Fred Fröhlich." },
 ];
 
 export function QuickActions({ onAction, visible }: QuickActionsProps) {
