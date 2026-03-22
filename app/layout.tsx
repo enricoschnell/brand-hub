@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
+import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import { BrandProvider } from "@/lib/brand-context";
+
+const clerkKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
 
 export const metadata: Metadata = {
   title: "CASAGO Brand Hub",
@@ -8,16 +11,39 @@ export const metadata: Metadata = {
   icons: { icon: "/favicon.ico" },
 };
 
+function Providers({ children }: { children: React.ReactNode }) {
+  return <BrandProvider>{children}</BrandProvider>;
+}
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return (
+  const content = (
     <html lang="de" className="dark">
       <body style={{ margin: 0, padding: 0 }}>
-        <BrandProvider>{children}</BrandProvider>
+        <Providers>{children}</Providers>
       </body>
     </html>
+  );
+
+  if (!clerkKey) return content;
+
+  return (
+    <ClerkProvider
+      publishableKey={clerkKey}
+      appearance={{
+        variables: {
+          colorPrimary: "#eeeff1",
+          colorBackground: "#141416",
+          colorInputBackground: "#0a0a0b",
+          colorInputText: "#eeeff1",
+          borderRadius: "10px",
+        },
+      }}
+    >
+      {content}
+    </ClerkProvider>
   );
 }

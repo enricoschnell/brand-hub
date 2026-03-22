@@ -1,17 +1,22 @@
 import { neon } from "@neondatabase/serverless";
 import { NextRequest, NextResponse } from "next/server";
+import { auth } from "@clerk/nextjs/server";
 
 function getDb() {
   return neon(process.env.DATABASE_URL!);
 }
 
-function checkAuth(req: NextRequest) {
+async function checkAdmin(req: NextRequest): Promise<boolean> {
+  try {
+    const session = await auth();
+    if (session?.userId) return true;
+  } catch {}
   const pw = req.headers.get("x-admin-password");
   return pw === process.env.ADMIN_PASSWORD;
 }
 
 export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
-  if (!checkAuth(req)) {
+  if (!(await checkAdmin(req))) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
   try {
@@ -35,7 +40,7 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
 }
 
 export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
-  if (!checkAuth(req)) {
+  if (!(await checkAdmin(req))) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
   try {

@@ -6,6 +6,7 @@ import {
   Home, Image, Palette, Type, Mail, Users, X, Menu,
   FileText, Presentation, Construction, BookOpen,
 } from "lucide-react";
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
 import { Wm } from "@/components/brand/wortmarke";
 
@@ -116,8 +117,22 @@ export function Sidebar({ mobile, open, setOpen }: SidebarProps) {
       </nav>
 
       {/* Footer */}
-      <div className="px-3.5 py-3 border-t border-border text-[11px] text-muted-foreground">
-        &copy; CASAGO GmbH
+      <div className="px-3.5 py-3 border-t border-border flex items-center justify-between">
+        <span className="text-[11px] text-muted-foreground">&copy; CASAGO GmbH</span>
+        <SignedIn>
+          <UserButton
+            appearance={{
+              elements: { avatarBox: "w-6 h-6" },
+            }}
+          />
+        </SignedIn>
+        <SignedOut>
+          <SignInButton mode="modal">
+            <button className="text-[11px] text-muted-foreground hover:text-foreground cursor-pointer bg-transparent border-none font-hub transition-colors">
+              Anmelden
+            </button>
+          </SignInButton>
+        </SignedOut>
       </div>
     </>
   );

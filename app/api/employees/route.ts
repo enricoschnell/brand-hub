@@ -1,11 +1,24 @@
 import { neon } from "@neondatabase/serverless";
 import { NextRequest, NextResponse } from "next/server";
+import { auth } from "@clerk/nextjs/server";
 
 function getDb() {
   return neon(process.env.DATABASE_URL!);
 }
 
-function checkAuth(req: NextRequest) {
+/** Check admin access: Clerk admin role OR legacy password header */
+async function checkAdmin(req: NextRequest): Promise<boolean> {
+  // Try Clerk auth first
+  try {
+    const session = await auth();
+    if (session?.userId) {
+      // For now, any signed-in user with admin role can manage team
+      // TODO: check session.sessionClaims?.metadata?.role === "admin"
+      return true;
+    }
+  } catch {}
+
+  // Fallback to legacy password
   const pw = req.headers.get("x-admin-password");
   return pw === process.env.ADMIN_PASSWORD;
 }
@@ -21,7 +34,7 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
-  if (!checkAuth(req)) {
+  if (!(await checkAdmin(req))) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
   try {

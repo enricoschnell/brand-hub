@@ -3,11 +3,18 @@
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
 import { useRef, useEffect, useState, useMemo, type FormEvent } from "react";
+import { SignInButton, useUser } from "@clerk/nextjs";
+import { LogIn } from "lucide-react";
+
+const clerkConfigured = !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
 import { Message } from "@/components/agent/message";
 import { ChatInput } from "@/components/agent/chat-input";
 import { QuickActions } from "@/components/agent/quick-actions";
 
 export function BrandChat() {
+  const clerkUser = clerkConfigured ? useUser() : null;
+  const isSignedIn = clerkConfigured ? clerkUser?.isSignedIn : true;
+  const isLoaded = clerkConfigured ? clerkUser?.isLoaded : true;
   const transport = useMemo(() => new DefaultChatTransport({ api: "/api/agent" }), []);
   const { messages, sendMessage, status } = useChat({ transport });
   const [input, setInput] = useState("");
@@ -101,18 +108,33 @@ export function BrandChat() {
       </div>
 
       <div className="px-6 pt-3 pb-6 max-w-[720px] w-full mx-auto">
-        <ChatInput
-          value={input}
-          onChange={setInput}
-          onSubmit={handleSubmit}
-          isLoading={isLoading}
-          image={image}
-          onImageSelect={setImage}
-          onImageClear={() => setImage(null)}
-        />
-        <div className="text-center mt-2 text-[11px] text-hub-t3 font-hub">
-          Brand Agent kann Fehler machen. Angaben immer prüfen.
-        </div>
+        {isLoaded && !isSignedIn ? (
+          /* Auth gate — show sign-in prompt */
+          <div className="flex items-center justify-center gap-3 py-3 px-4 rounded-card bg-hub-surface border border-hub-border">
+            <span className="text-sm text-hub-t2 font-hub">Anmelden, um den Brand Agent zu nutzen</span>
+            <SignInButton mode="modal">
+              <button className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-swatch bg-hub-t1 text-hub-bg text-xs font-medium font-hub cursor-pointer border-none transition-opacity hover:opacity-90">
+                <LogIn size={13} />
+                Anmelden
+              </button>
+            </SignInButton>
+          </div>
+        ) : (
+          <>
+            <ChatInput
+              value={input}
+              onChange={setInput}
+              onSubmit={handleSubmit}
+              isLoading={isLoading}
+              image={image}
+              onImageSelect={setImage}
+              onImageClear={() => setImage(null)}
+            />
+            <div className="text-center mt-2 text-[11px] text-hub-t3 font-hub">
+              Brand Agent kann Fehler machen. Angaben immer prüfen.
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
