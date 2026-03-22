@@ -5,7 +5,8 @@ import {
   Users, Sliders, Sun, Moon, Copy, Code, Check, ChevronRight, Info,
 } from "lucide-react";
 import { useIsMobile } from "@/lib/hooks";
-import { C, S, T, ff, monoF, cardS } from "@/lib/tokens";
+import { cn } from "@/lib/utils";
+import { C } from "@/lib/tokens";
 import { META, TEAM, SC, LOGO_SIZES, type TeamMember } from "@/lib/brand-data";
 import { PageHeader } from "@/components/shared/page-header";
 import { Pill } from "@/components/shared/pill";
@@ -132,113 +133,188 @@ export default function SigPage() {
   return (
     <div>
       <PageHeader title="Email Signatur" desc="On-brand Signaturen für das Team." mobile={mobile} />
-      <div style={{ display: mobile ? "block" : "grid", gridTemplateColumns: "280px 1fr", gap: S.lg }}>
-        <div style={{ display: "flex", flexDirection: "column", gap: S.sm, marginBottom: mobile ? S.md : 0, minWidth: 0 }}>
-          <div style={{ ...cardS, padding: S.md + 4, minWidth: 0 }}>
-            <div style={{ ...T.sectionLabel, marginBottom: S.md, display: "flex", alignItems: "center", gap: 5 }}><Users size={11} strokeWidth={2} /> Person</div>
-            <div style={{ display: mobile ? "flex" : "block", gap: 6, overflowX: mobile ? "auto" : "visible", paddingBottom: mobile ? 4 : 0, margin: mobile ? "0 -4px" : 0 }}>
+      <div className={cn(
+        mobile ? "block" : "grid grid-cols-[280px_1fr]",
+        "gap-6"
+      )}>
+        {/* Left column — person picker & options */}
+        <div className={cn("flex flex-col gap-2 min-w-0", mobile && "mb-4")}>
+          <div className="rounded-xl border border-border bg-card overflow-hidden p-5 min-w-0">
+            <div className="text-[11px] font-semibold text-muted-foreground uppercase tracking-[0.06em] leading-none mb-4 flex items-center gap-[5px]">
+              <Users size={11} strokeWidth={2} /> Person
+            </div>
+            <div className={cn(
+              mobile ? "flex gap-1.5 overflow-x-auto pb-1 -mx-1" : "block"
+            )}>
               {team.map((t, i) => (
                 <button
                   key={i}
                   onClick={() => setPi(i)}
-                  style={{
-                    display: "flex", alignItems: "center", gap: 10, width: mobile ? "auto" : "100%", flexShrink: 0,
-                    padding: "10px 12px", borderRadius: 10,
-                    border: pi === i ? `1.5px solid ${C.borderActive}` : `1px solid ${C.border}`,
-                    background: pi === i ? C.active : "transparent",
-                    cursor: "pointer", fontFamily: ff, textAlign: "left", marginBottom: mobile ? 0 : 6, minHeight: 48,
-                  }}
+                  className={cn(
+                    "flex items-center gap-2.5 font-hub text-left min-h-[48px] rounded-[10px] cursor-pointer",
+                    mobile ? "w-auto shrink-0 px-3 py-2.5" : "w-full px-3 py-2.5 mb-1.5",
+                    pi === i
+                      ? "border-[1.5px] border-hub-border-active bg-hub-active"
+                      : "border border-border bg-transparent"
+                  )}
                 >
-                  <div style={{ width: 32, height: 32, borderRadius: "50%", background: pi === i ? C.t1 : C.active, color: pi === i ? C.bg : C.t3, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 700, flexShrink: 0 }}>{t.ini}</div>
-                  <div style={{ minWidth: 0 }}>
-                    <div style={{ ...T.bodyStrong, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{t.name}</div>
-                    <div style={{ ...T.caption, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{t.role}</div>
+                  <div className={cn(
+                    "w-8 h-8 rounded-full flex items-center justify-center text-[11px] font-bold shrink-0",
+                    pi === i
+                      ? "bg-hub-t1 text-hub-bg"
+                      : "bg-hub-active text-hub-t3"
+                  )}>
+                    {t.ini}
+                  </div>
+                  <div className="min-w-0">
+                    <div className="text-[13px] font-medium text-foreground whitespace-nowrap overflow-hidden text-ellipsis">{t.name}</div>
+                    <div className="text-[11px] text-hub-t3 whitespace-nowrap overflow-hidden text-ellipsis">{t.role}</div>
                   </div>
                 </button>
               ))}
             </div>
           </div>
-          <div style={{ ...cardS, padding: S.md + 4 }}>
-            <div style={{ ...T.sectionLabel, marginBottom: S.md, display: "flex", alignItems: "center", gap: 5 }}><Sliders size={11} strokeWidth={2} /> Optionen</div>
-            <div style={{ marginBottom: S.md + 2 }}>
-              <div style={{ ...T.body, marginBottom: S.sm }}>Logo</div>
+
+          <div className="rounded-xl border border-border bg-card overflow-hidden p-5">
+            <div className="text-[11px] font-semibold text-muted-foreground uppercase tracking-[0.06em] leading-none mb-4 flex items-center gap-[5px]">
+              <Sliders size={11} strokeWidth={2} /> Optionen
+            </div>
+            <div className="mb-[18px]">
+              <div className="text-[13px] text-muted-foreground mb-2">Logo</div>
               <Pill options={[{ value: "regular", label: "Regular" }, { value: "large", label: "Large" }]} value={logoSize} onChange={(v) => setLogoSize(v as "regular" | "large")} />
             </div>
-            <div onClick={() => setShowClaim(!showClaim)} style={{ display: "flex", alignItems: "center", gap: 10, cursor: "pointer", ...T.body, minHeight: 36 }}>
-              <div style={{ width: 40, height: 22, borderRadius: 11, padding: 2, background: showClaim ? C.t1 : C.active, transition: "background 0.15s", display: "flex", justifyContent: showClaim ? "flex-end" : "flex-start", alignItems: "center" }}>
-                <div style={{ width: 18, height: 18, borderRadius: "50%", background: showClaim ? C.bg : C.t3, transition: "all 0.15s" }} />
+            <div
+              onClick={() => setShowClaim(!showClaim)}
+              className="flex items-center gap-2.5 cursor-pointer text-[13px] text-muted-foreground min-h-[36px]"
+            >
+              <div
+                className="flex items-center rounded-full p-0.5 transition-colors duration-150"
+                style={{
+                  width: 40, height: 22,
+                  background: showClaim ? C.t1 : C.active,
+                  justifyContent: showClaim ? "flex-end" : "flex-start",
+                  display: "flex",
+                }}
+              >
+                <div
+                  className="rounded-full transition-all duration-150"
+                  style={{ width: 18, height: 18, background: showClaim ? C.bg : C.t3 }}
+                />
               </div>
               Claim
             </div>
-            <div onClick={() => setShowAddress(!showAddress)} style={{ display: "flex", alignItems: "center", gap: 10, cursor: "pointer", ...T.body, minHeight: 36, marginTop: 4 }}>
-              <div style={{ width: 40, height: 22, borderRadius: 11, padding: 2, background: showAddress ? C.t1 : C.active, transition: "background 0.15s", display: "flex", justifyContent: showAddress ? "flex-end" : "flex-start", alignItems: "center" }}>
-                <div style={{ width: 18, height: 18, borderRadius: "50%", background: showAddress ? C.bg : C.t3, transition: "all 0.15s" }} />
+            <div
+              onClick={() => setShowAddress(!showAddress)}
+              className="flex items-center gap-2.5 cursor-pointer text-[13px] text-muted-foreground min-h-[36px] mt-1"
+            >
+              <div
+                className="flex items-center rounded-full p-0.5 transition-colors duration-150"
+                style={{
+                  width: 40, height: 22,
+                  background: showAddress ? C.t1 : C.active,
+                  justifyContent: showAddress ? "flex-end" : "flex-start",
+                  display: "flex",
+                }}
+              >
+                <div
+                  className="rounded-full transition-all duration-150"
+                  style={{ width: 18, height: 18, background: showAddress ? C.bg : C.t3 }}
+                />
               </div>
               Adresse
             </div>
           </div>
+
           {!mobile && (
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 3 }}>
+            <div className="flex flex-wrap gap-[3px]">
               {["Outlook", "Gmail", "Apple Mail", "iOS"].map((c) => (
-                <span key={c} style={{ fontSize: 10, padding: "3px 7px", borderRadius: 4, background: C.surface, border: `1px solid ${C.border}`, color: C.t3 }}>{c}</span>
+                <span key={c} className="text-[10px] px-[7px] py-[3px] rounded-[4px] bg-hub-surface border border-border text-hub-t3">{c}</span>
               ))}
             </div>
           )}
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: S.sm, minWidth: 0 }}>
+        {/* Right column — preview & actions */}
+        <div className="flex flex-col gap-2 min-w-0">
           <Pill options={[{ value: "light", label: "Light", icon: <Sun size={11} /> }, { value: "dark", label: "Dark", icon: <Moon size={11} /> }]} value={mode} onChange={(v) => setMode(v as "light" | "dark")} />
-          <div style={{ ...cardS, minWidth: 0 }}>
+
+          <div className="rounded-xl border border-border bg-card overflow-hidden min-w-0">
             {!mobile && (
-              <div style={{ borderBottom: `1px solid ${C.border}` }}>
+              <div className="border-b border-border">
                 {[
                   { l: "Von", v: `${p.name} <${email}>` },
                   { l: "An", v: "kunde@beispiel.de" },
                   { l: "Betreff", v: "Projektupdate" },
                 ].map((r, i) => (
-                  <div key={i} style={{ padding: "7px 18px", fontSize: 12, color: C.t3, borderBottom: i < 2 ? `1px solid ${C.border}` : "none" }}>
-                    <span style={{ display: "inline-block", width: 50 }}>{r.l}</span>
-                    <span style={{ color: r.l === "Betreff" ? C.t1 : C.t2, fontWeight: r.l === "Betreff" ? 500 : 400 }}>{r.v}</span>
+                  <div key={i} className={cn(
+                    "px-[18px] py-[7px] text-xs text-hub-t3",
+                    i < 2 && "border-b border-border"
+                  )}>
+                    <span className="inline-block w-[50px]">{r.l}</span>
+                    <span className={cn(
+                      r.l === "Betreff" ? "text-hub-t1 font-medium" : "text-hub-t2 font-normal"
+                    )}>{r.v}</span>
                   </div>
                 ))}
               </div>
             )}
-            <div style={{ padding: mobile ? S.md : S.lg, background: mode === "light" ? "#fff" : "#1c1c1e", overflow: "hidden" }}>
+            <div
+              className={cn("overflow-hidden", mobile ? "p-4" : "p-6")}
+              style={{ background: mode === "light" ? "#fff" : "#1c1c1e" }}
+            >
               {!mobile && (
-                <div style={{ fontSize: 14, lineHeight: 1.8, marginBottom: S.lg, color: mode === "light" ? "#555" : "#9a9da4", fontFamily: "Helvetica,Arial,sans-serif" }}>
+                <div className="text-sm leading-[1.8] mb-6" style={{ color: mode === "light" ? "#555" : "#9a9da4", fontFamily: "Helvetica,Arial,sans-serif" }}>
                   Sehr geehrter Herr M{"ü"}ller,<br /><br />anbei das aktuelle Projektupdate.<br /><br />Mit freundlichen Gr{"ü"}{"ß"}en
                 </div>
               )}
-              <div style={!mobile ? { borderTop: `1px solid ${mode === "light" ? "#e5e5e5" : "rgba(255,255,255,0.06)"}`, paddingTop: S.lg } : {}}>
+              <div className={cn(!mobile && "pt-6")} style={!mobile ? { borderTop: `1px solid ${mode === "light" ? "#e5e5e5" : "rgba(255,255,255,0.06)"}` } : {}}>
                 <SigRender m={mode} innerRef={sigRef} />
               </div>
             </div>
           </div>
-          <div style={{ display: "flex", gap: S.sm }}>
-            <button onClick={() => doCopy("rich")} style={{ flex: 1, padding: "10px 14px", borderRadius: 10, border: "none", background: C.t1, color: C.bg, ...T.body, fontWeight: 500, fontFamily: ff, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 6, minHeight: 44 }}>
+
+          <div className="flex gap-2">
+            <button
+              onClick={() => doCopy("rich")}
+              className="flex-1 py-2.5 px-3.5 rounded-[10px] border-none bg-hub-t1 text-hub-bg text-[13px] font-medium font-hub cursor-pointer flex items-center justify-center gap-1.5 min-h-[44px]"
+            >
               {copied === "rich" ? <Check size={14} /> : <Copy size={14} />}{copied === "rich" ? "Kopiert" : mobile ? "Kopieren" : "Formatiert kopieren"}
             </button>
-            <button onClick={() => doCopy("html")} style={{ flex: 1, padding: "10px 14px", borderRadius: 10, border: `1px solid ${C.border}`, background: "transparent", color: C.t2, ...T.body, fontWeight: 500, fontFamily: ff, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 6, minHeight: 44 }}>
+            <button
+              onClick={() => doCopy("html")}
+              className="flex-1 py-2.5 px-3.5 rounded-[10px] border border-border bg-transparent text-hub-t2 text-[13px] font-medium font-hub cursor-pointer flex items-center justify-center gap-1.5 min-h-[44px]"
+            >
               {copied === "html" ? <Check size={14} /> : <Code size={14} />}{copied === "html" ? "Kopiert" : "HTML"}
             </button>
           </div>
-          <div style={{ display: "flex", alignItems: "flex-start", gap: S.sm, padding: `${S.sm + 2}px ${S.md}px`, borderRadius: 10, background: C.bg, border: `1px solid ${C.border}` }}>
-            <Info size={13} style={{ color: C.t3, marginTop: 1, flexShrink: 0 }} />
-            <p style={{ ...T.caption, margin: 0, lineHeight: 1.6 }}>Apple Mail: Deaktiviere „Standardschrift für E-Mails verwenden" in den Mail-Einstellungen, damit die Formatierung erhalten bleibt.</p>
+
+          <div className="flex items-start gap-2 py-[10px] px-4 rounded-[10px] bg-background border border-border">
+            <Info size={13} className="text-hub-t3 mt-px shrink-0" />
+            <p className="text-[11px] text-hub-t3 m-0 leading-[1.6]">Apple Mail: Deaktiviere &bdquo;Standardschrift f&uuml;r E-Mails verwenden&ldquo; in den Mail-Einstellungen, damit die Formatierung erhalten bleibt.</p>
           </div>
+
           {!mobile && (
             <>
-              <button onClick={() => setShowSrc(!showSrc)} style={{ width: "100%", padding: "9px 14px", borderRadius: 10, border: `1px solid ${C.border}`, background: "transparent", cursor: "pointer", fontFamily: ff, fontSize: 12, textAlign: "left", display: "flex", alignItems: "center", gap: 6, color: C.t3, minHeight: 40 }}>
-                <span style={{ display: "flex", transform: showSrc ? "rotate(90deg)" : "none", transition: "transform 0.15s" }}><ChevronRight size={12} /></span>HTML Source
+              <button
+                onClick={() => setShowSrc(!showSrc)}
+                className="w-full py-[9px] px-3.5 rounded-[10px] border border-border bg-transparent cursor-pointer font-hub text-xs text-left flex items-center gap-1.5 text-hub-t3 min-h-[40px]"
+              >
+                <span className={cn(
+                  "flex transition-transform duration-150",
+                  showSrc && "rotate-90"
+                )}>
+                  <ChevronRight size={12} />
+                </span>
+                HTML Source
               </button>
               {showSrc && (
-                <div style={{ ...cardS, padding: S.md + 2, maxHeight: 200, overflow: "auto" }}>
-                  <pre style={{ margin: 0, fontSize: 10, color: C.t3, fontFamily: monoF, whiteSpace: "pre-wrap", wordBreak: "break-all", lineHeight: 1.6 }}>{buildHtml()}</pre>
+                <div className="rounded-xl border border-border bg-card overflow-hidden p-[18px] max-h-[200px] overflow-auto">
+                  <pre className="m-0 text-[10px] text-hub-t3 font-mono whitespace-pre-wrap break-all leading-[1.6]">{buildHtml()}</pre>
                 </div>
               )}
-              <div style={{ display: "flex", gap: 12, fontSize: 11, color: C.t3, flexWrap: "wrap" }}>
+              <div className="flex gap-3 text-[11px] text-hub-t3 flex-wrap">
                 {[["Gaps", "20·16·16"], ["Name", "17/600"], ["Contact", "14/400"], ["Addr", "13/400"], ["Claim", "12/400 UC"], ["Logo", `${logoW}px`]].map(([l, v]) => (
-                  <span key={l}>{l} <span style={{ fontFamily: monoF, color: C.t2 }}>{v}</span></span>
+                  <span key={l}>{l} <span className="font-mono text-hub-t2">{v}</span></span>
                 ))}
               </div>
             </>

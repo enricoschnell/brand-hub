@@ -2,16 +2,14 @@
 
 import { useState } from "react";
 import { useIsMobile } from "@/lib/hooks";
-import { C, S, T } from "@/lib/tokens";
 import { BRAND_COLORS } from "@/lib/brand-data";
 import { PageHeader } from "@/components/shared/page-header";
 import { Sect } from "@/components/shared/section";
-import { needsRing } from "@/lib/utils";
+import { cn, needsRing } from "@/lib/utils";
 
 export default function ColorsPage() {
   const mobile = useIsMobile();
   const [copied, setCopied] = useState<string | null>(null);
-  const monoF = "ui-monospace,'SF Mono',Monaco,monospace";
 
   const copy = (hex: string) => {
     navigator.clipboard.writeText(hex);
@@ -24,33 +22,52 @@ export default function ColorsPage() {
       <PageHeader title="Farben" desc="Farbpalette aus dem Figma Design-System. Klicke auf einen Wert zum Kopieren." mobile={mobile} />
       {BRAND_COLORS.map((group, gi) => (
         <Sect key={group.group} label={group.group} mobile={mobile} last={gi === BRAND_COLORS.length - 1}>
-          <div style={{ display: "grid", gridTemplateColumns: mobile ? "1fr 1fr" : `repeat(${Math.min(group.colors.length, 5)}, 1fr)`, gap: mobile ? S.sm : S.sm + 4 }}>
+          <div
+            className={cn(
+              "grid gap-3",
+              mobile
+                ? "grid-cols-2"
+                : {
+                    1: "grid-cols-1",
+                    2: "grid-cols-2",
+                    3: "grid-cols-3",
+                    4: "grid-cols-4",
+                  }[Math.min(group.colors.length, 4)] ?? "grid-cols-5"
+            )}
+          >
             {group.colors.map((c) => {
               const dark = needsRing(c.hex);
               const isAccent = c.accent;
-              const swatchBg = isAccent ? C.bg : c.hex;
               const active = copied === c.hex;
               return (
-                <div key={c.hex + c.name} onClick={() => copy(c.hex)} style={{ cursor: "pointer" }}>
+                <div key={c.hex + c.name} onClick={() => copy(c.hex)} className="cursor-pointer">
                   <div
-                    style={{
-                      aspectRatio: "1 / 1", borderRadius: 8,
-                      background: swatchBg,
-                      boxShadow: dark ? "inset 0 0 0 1px rgba(255,255,255,0.08)" : "none",
-                      display: "flex", alignItems: "center", justifyContent: "center",
-                      transition: "transform 0.12s, box-shadow 0.15s",
-                      transform: active ? "scale(0.97)" : "none",
-                    }}
+                    className={cn(
+                      "aspect-square rounded-swatch flex items-center justify-center transition-transform duration-100",
+                      dark && "ring-1 ring-inset ring-white/[0.08]",
+                      active && "scale-[0.97]"
+                    )}
+                    style={{ background: isAccent ? "#0a0a0b" : c.hex }}
                   >
-                    {isAccent && <div style={{ width: 32, height: 32, borderRadius: "50%", background: c.hex }} />}
+                    {isAccent && (
+                      <div
+                        className="w-8 h-8 rounded-full"
+                        style={{ background: c.hex }}
+                      />
+                    )}
                   </div>
-                  <div style={{ padding: `${S.sm}px 2px 0`, display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-                    <span style={{ fontSize: 12, fontWeight: 500, color: C.t1 }}>{c.name}</span>
-                    <span style={{ fontSize: 11, fontFamily: monoF, color: active ? C.t1 : C.t3, transition: "color 0.15s" }}>
+                  <div className="pt-2 px-0.5 flex justify-between items-baseline">
+                    <span className="text-xs font-medium text-hub-t1">{c.name}</span>
+                    <span
+                      className={cn(
+                        "text-[11px] font-mono transition-colors duration-150",
+                        active ? "text-hub-t1" : "text-hub-t3"
+                      )}
+                    >
                       {active ? "Kopiert" : c.hex}
                     </span>
                   </div>
-                  <div style={{ padding: "2px 2px 0", fontSize: 11, color: C.t3 }}>{c.desc}</div>
+                  <div className="px-0.5 pt-0.5 text-[11px] text-hub-t3">{c.desc}</div>
                 </div>
               );
             })}

@@ -2,7 +2,6 @@
 
 import { Download, Image, Type as TypeIcon, FileText, Package } from "lucide-react";
 import { useIsMobile } from "@/lib/hooks";
-import { C, S, T, cardS } from "@/lib/tokens";
 import { PageHeader } from "@/components/shared/page-header";
 import { Sect } from "@/components/shared/section";
 import { FormatChip } from "@/components/shared/format-chip";
@@ -48,20 +47,15 @@ export default function DownloadsPage() {
       />
 
       <Sect label="Brand Kit" icon={<Package size={12} />} mobile={mobile}>
-        <div style={{ ...cardS, padding: S.lg, display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: S.md }}>
+        <div className="rounded-xl border border-border bg-card overflow-hidden p-6 flex items-center justify-between flex-wrap gap-4">
           <div>
-            <div style={T.bodyStrong}>CASAGO Brand Kit</div>
-            <p style={{ ...T.body, margin: `4px 0 0` }}>Komplettes Asset-Paket: Logos, Schriften, Farbpalette. ZIP-Download.</p>
+            <div className="text-[13px] font-medium text-foreground">CASAGO Brand Kit</div>
+            <p className="text-[13px] text-muted-foreground mt-1 mb-0">Komplettes Asset-Paket: Logos, Schriften, Farbpalette. ZIP-Download.</p>
           </div>
           <button
             disabled
             title="Bald verfügbar"
-            style={{
-              display: "flex", alignItems: "center", gap: 6,
-              padding: "10px 20px", borderRadius: 10, border: "none",
-              background: C.t1, color: C.bg,
-              fontSize: 13, fontWeight: 500, cursor: "not-allowed", opacity: 0.4,
-            }}
+            className="flex items-center gap-1.5 px-5 py-2.5 rounded-[10px] border-none bg-foreground text-background text-[13px] font-medium cursor-not-allowed opacity-40"
           >
             <Download size={14} /> ZIP herunterladen
           </button>
@@ -69,22 +63,22 @@ export default function DownloadsPage() {
       </Sect>
 
       <Sect label="Einzelne Assets" icon={<Download size={12} />} mobile={mobile} last>
-        <div style={{ display: "grid", gridTemplateColumns: mobile ? "1fr" : "1fr 1fr 1fr", gap: S.sm + 2 }}>
+        <div className={`grid gap-2.5 ${mobile ? "grid-cols-1" : "grid-cols-3"}`}>
           {assetCategories.map((cat) => (
-            <div key={cat.title} style={{ ...cardS, padding: S.lg }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: S.md }}>
-                <span style={{ color: C.t2, display: "flex" }}>{cat.icon}</span>
-                <span style={T.bodyStrong}>{cat.title}</span>
+            <div key={cat.title} className="rounded-xl border border-border bg-card overflow-hidden p-6">
+              <div className="flex items-center gap-2 mb-4">
+                <span className="text-muted-foreground flex">{cat.icon}</span>
+                <span className="text-[13px] font-medium text-foreground">{cat.title}</span>
               </div>
-              <p style={{ ...T.body, margin: `0 0 ${S.md}px`, lineHeight: 1.6 }}>{cat.desc}</p>
+              <p className="text-[13px] text-muted-foreground leading-relaxed mb-4">{cat.desc}</p>
               {cat.files.length > 0 ? (
-                <div style={{ display: "flex", flexDirection: "column", gap: S.xs }}>
+                <div className="flex flex-col gap-1">
                   {cat.files.map((f) => (
                     <FormatChip key={f.file} label={f.label} filename={f.file} href={f.href} />
                   ))}
                 </div>
               ) : (
-                <p style={{ ...T.caption, margin: 0, fontStyle: "italic" }}>In Vorbereitung</p>
+                <p className="text-[11px] text-muted-foreground italic m-0">In Vorbereitung</p>
               )}
             </div>
           ))}

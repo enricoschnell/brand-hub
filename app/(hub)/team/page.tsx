@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { Lock, Users, Plus, Trash, Pencil } from "lucide-react";
 import { useIsMobile } from "@/lib/hooks";
-import { C, S, T, ff, cardS } from "@/lib/tokens";
+import { cn } from "@/lib/utils";
 import { TEAM, type TeamMember } from "@/lib/brand-data";
 import { PageHeader } from "@/components/shared/page-header";
 
@@ -97,25 +97,21 @@ export default function TeamPage() {
   const addContact = () => setForm({ ...form, contacts: [...form.contacts, { label: "T", value: "", href: "" }] });
   const removeContact = (idx: number) => setForm({ ...form, contacts: form.contacts.filter((_, i) => i !== idx) });
 
-  const inputS: React.CSSProperties = { width: "100%", padding: "8px 12px", borderRadius: 8, border: `1px solid ${C.border}`, background: C.bg, color: C.t1, fontSize: 13, fontFamily: ff, outline: "none", minHeight: 38 };
-  const labelS: React.CSSProperties = { ...T.caption, marginBottom: 4, display: "block" };
-  const btnS: React.CSSProperties = { padding: "8px 16px", borderRadius: 8, border: "none", fontSize: 12, fontWeight: 500, fontFamily: ff, cursor: "pointer", display: "flex", alignItems: "center", gap: 6, minHeight: 36 };
-
   if (!authed) {
     return (
       <div>
         <PageHeader title="Team" desc="Mitarbeiter verwalten für die Signatur-Generierung." mobile={mobile} />
-        <div style={{ ...cardS, padding: S.lg, maxWidth: 360 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 7, marginBottom: S.md }}>
-            <Lock size={14} style={{ color: C.t2 }} />
-            <span style={T.bodyStrong}>Admin-Zugang</span>
+        <div className="rounded-xl border border-border bg-card overflow-hidden p-6 max-w-[360px]">
+          <div className="flex items-center gap-[7px] mb-4">
+            <Lock size={14} className="text-muted-foreground" />
+            <span className="text-[13px] font-medium text-foreground">Admin-Zugang</span>
           </div>
-          <div style={{ marginBottom: S.md }}>
-            <label style={labelS}>Passwort</label>
-            <input type="password" value={pw} onChange={(e) => { setPw(e.target.value); setAuthError(false); }} onKeyDown={(e) => e.key === "Enter" && doLogin()} style={inputS} placeholder="Admin-Passwort eingeben" />
+          <div className="mb-4">
+            <label className="text-[11px] text-hub-t3 mb-1 block">Passwort</label>
+            <input type="password" value={pw} onChange={(e) => { setPw(e.target.value); setAuthError(false); }} onKeyDown={(e) => e.key === "Enter" && doLogin()} className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground text-[13px] font-hub outline-none min-h-[38px]" placeholder="Admin-Passwort eingeben" />
           </div>
-          {authError && <p style={{ ...T.caption, color: "#ef4444", margin: `0 0 ${S.md}px` }}>Falsches Passwort.</p>}
-          <button onClick={doLogin} style={{ ...btnS, background: C.t1, color: C.bg }}>Anmelden</button>
+          {authError && <p className="text-[11px] text-red-500 mb-4">Falsches Passwort.</p>}
+          <button onClick={doLogin} className="px-4 py-2 rounded-lg border-none text-xs font-medium font-hub cursor-pointer flex items-center gap-1.5 min-h-[36px] bg-foreground text-background">Anmelden</button>
         </div>
       </div>
     );
@@ -125,44 +121,44 @@ export default function TeamPage() {
     return (
       <div>
         <PageHeader title={editing === "new" ? "Neue/r Mitarbeiter/in" : "Mitarbeiter bearbeiten"} desc="Felder ausfüllen und speichern." mobile={mobile} />
-        <div style={{ ...cardS, padding: S.lg, maxWidth: 480 }}>
-          <div style={{ display: "flex", flexDirection: "column", gap: S.md }}>
+        <div className="rounded-xl border border-border bg-card overflow-hidden p-6 max-w-[480px]">
+          <div className="flex flex-col gap-4">
             <div>
-              <label style={labelS}>Name</label>
-              <input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} style={inputS} placeholder="Max Mustermann" />
+              <label className="text-[11px] text-hub-t3 mb-1 block">Name</label>
+              <input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground text-[13px] font-hub outline-none min-h-[38px]" placeholder="Max Mustermann" />
             </div>
             <div>
-              <label style={labelS}>Rolle / Position</label>
-              <input value={form.role} onChange={(e) => setForm({ ...form, role: e.target.value })} style={inputS} placeholder="Geschäftsführer" />
+              <label className="text-[11px] text-hub-t3 mb-1 block">Rolle / Position</label>
+              <input value={form.role} onChange={(e) => setForm({ ...form, role: e.target.value })} className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground text-[13px] font-hub outline-none min-h-[38px]" placeholder="Geschäftsführer" />
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: S.sm }}>
+            <div className="grid grid-cols-2 gap-2">
               <div>
-                <label style={labelS}>Initialen</label>
-                <input value={form.initials} onChange={(e) => setForm({ ...form, initials: e.target.value.toUpperCase().slice(0, 4) })} style={inputS} placeholder="MM" maxLength={4} />
+                <label className="text-[11px] text-hub-t3 mb-1 block">Initialen</label>
+                <input value={form.initials} onChange={(e) => setForm({ ...form, initials: e.target.value.toUpperCase().slice(0, 4) })} className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground text-[13px] font-hub outline-none min-h-[38px]" placeholder="MM" maxLength={4} />
               </div>
               <div>
-                <label style={labelS}>Reihenfolge</label>
-                <input type="number" value={form.sort_order} onChange={(e) => setForm({ ...form, sort_order: Number(e.target.value) })} style={inputS} />
+                <label className="text-[11px] text-hub-t3 mb-1 block">Reihenfolge</label>
+                <input type="number" value={form.sort_order} onChange={(e) => setForm({ ...form, sort_order: Number(e.target.value) })} className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground text-[13px] font-hub outline-none min-h-[38px]" />
               </div>
             </div>
             <div>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: S.sm }}>
-                <label style={{ ...labelS, margin: 0 }}>Kontakte</label>
-                <button onClick={addContact} style={{ ...btnS, padding: "4px 10px", background: "transparent", border: `1px solid ${C.border}`, color: C.t2, minHeight: 28, fontSize: 11 }}>
+              <div className="flex items-center justify-between mb-2">
+                <label className="text-[11px] text-hub-t3 block">Kontakte</label>
+                <button onClick={addContact} className="px-2.5 py-1 rounded-lg border border-border text-muted-foreground text-[11px] font-medium font-hub cursor-pointer flex items-center gap-1.5 min-h-[28px] bg-transparent">
                   <Plus size={11} /> Hinzufügen
                 </button>
               </div>
-              <div style={{ display: "flex", flexDirection: "column", gap: S.sm }}>
+              <div className="flex flex-col gap-2">
                 {form.contacts.map((ct, ci) => (
-                  <div key={ci} style={{ display: "flex", gap: S.sm, alignItems: "center" }}>
-                    <select value={ct.label} onChange={(e) => updateContact(ci, "label", e.target.value)} style={{ ...inputS, width: 56, padding: "8px 4px", flexShrink: 0 }}>
+                  <div key={ci} className="flex gap-2 items-center">
+                    <select value={ct.label} onChange={(e) => updateContact(ci, "label", e.target.value)} className="w-14 px-1 py-2 rounded-lg border border-border bg-background text-foreground text-[13px] font-hub outline-none min-h-[38px] shrink-0">
                       <option value="T">T</option>
                       <option value="M">M</option>
                       <option value="E">E</option>
                     </select>
-                    <input value={ct.value} onChange={(e) => updateContact(ci, "value", e.target.value)} style={{ ...inputS, flex: 1 }} placeholder={ct.label === "E" ? "email@casago.de" : "+49 ..."} />
+                    <input value={ct.value} onChange={(e) => updateContact(ci, "value", e.target.value)} className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground text-[13px] font-hub outline-none min-h-[38px] flex-1" placeholder={ct.label === "E" ? "email@casago.de" : "+49 ..."} />
                     {form.contacts.length > 1 && (
-                      <button onClick={() => removeContact(ci)} style={{ background: "none", border: "none", color: C.t3, cursor: "pointer", padding: 4, display: "flex" }}>
+                      <button onClick={() => removeContact(ci)} className="bg-transparent border-none text-hub-t3 cursor-pointer p-1 flex">
                         <Trash size={13} />
                       </button>
                     )}
@@ -171,11 +167,11 @@ export default function TeamPage() {
               </div>
             </div>
           </div>
-          <div style={{ display: "flex", gap: S.sm, marginTop: S.lg }}>
-            <button onClick={save} disabled={saving || !form.name.trim() || !form.role.trim()} style={{ ...btnS, background: C.t1, color: C.bg, opacity: saving || !form.name.trim() ? 0.5 : 1 }}>
+          <div className="flex gap-2 mt-6">
+            <button onClick={save} disabled={saving || !form.name.trim() || !form.role.trim()} className={cn("px-4 py-2 rounded-lg border-none text-xs font-medium font-hub cursor-pointer flex items-center gap-1.5 min-h-[36px] bg-foreground text-background", (saving || !form.name.trim()) && "opacity-50")}>
               {saving ? "Speichern..." : "Speichern"}
             </button>
-            <button onClick={() => setEditing(null)} style={{ ...btnS, background: "transparent", border: `1px solid ${C.border}`, color: C.t2 }}>
+            <button onClick={() => setEditing(null)} className="px-4 py-2 rounded-lg border border-border text-xs font-medium font-hub cursor-pointer flex items-center gap-1.5 min-h-[36px] bg-transparent text-muted-foreground">
               Abbrechen
             </button>
           </div>
@@ -187,32 +183,32 @@ export default function TeamPage() {
   return (
     <div>
       <PageHeader title="Team" desc="Mitarbeiter verwalten für die Signatur-Generierung." mobile={mobile} />
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: S.md }}>
-        <div style={T.sectionLabel}>{team.length} Mitarbeiter</div>
-        <button onClick={startNew} style={{ ...btnS, background: C.t1, color: C.bg }}>
+      <div className="flex justify-between items-center mb-4">
+        <div className="text-[11px] font-semibold text-muted-foreground uppercase tracking-[0.06em] leading-none">{team.length} Mitarbeiter</div>
+        <button onClick={startNew} className="px-4 py-2 rounded-lg border-none text-xs font-medium font-hub cursor-pointer flex items-center gap-1.5 min-h-[36px] bg-foreground text-background">
           <Plus size={13} /> Hinzufügen
         </button>
       </div>
-      <div style={{ display: "flex", flexDirection: "column", gap: S.sm }}>
+      <div className="flex flex-col gap-2">
         {team.map((emp) => (
-          <div key={emp.id || emp.ini} style={{ ...cardS, padding: `${S.md}px ${S.lg}px`, display: "flex", alignItems: "center", gap: S.md }}>
-            <div style={{ width: 40, height: 40, borderRadius: "50%", background: C.active, color: C.t2, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, fontWeight: 700, flexShrink: 0 }}>
+          <div key={emp.id || emp.ini} className="rounded-xl border border-border bg-card overflow-hidden py-4 px-6 flex items-center gap-4">
+            <div className="w-10 h-10 rounded-full bg-foreground/[0.08] text-muted-foreground flex items-center justify-center text-[13px] font-bold shrink-0">
               {emp.initials || emp.ini}
             </div>
-            <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ ...T.bodyStrong, marginBottom: 2 }}>{emp.name}</div>
-              <div style={T.caption}>{emp.role}</div>
-              <div style={{ ...T.caption, marginTop: 4 }}>
+            <div className="flex-1 min-w-0">
+              <div className="text-[13px] font-medium text-foreground mb-0.5">{emp.name}</div>
+              <div className="text-[11px] text-hub-t3">{emp.role}</div>
+              <div className="text-[11px] text-hub-t3 mt-1">
                 {(emp.contacts || []).map((ct, i) => (
                   <span key={i}>{i > 0 && " · "}{ct.label}: {ct.value}</span>
                 ))}
               </div>
             </div>
-            <div style={{ display: "flex", gap: 4, flexShrink: 0 }}>
-              <button onClick={() => startEdit(emp)} style={{ background: "none", border: `1px solid ${C.border}`, borderRadius: 8, color: C.t2, cursor: "pointer", padding: 8, display: "flex", minWidth: 36, minHeight: 36, alignItems: "center", justifyContent: "center" }}>
+            <div className="flex gap-1 shrink-0">
+              <button onClick={() => startEdit(emp)} className="bg-transparent border border-border rounded-lg text-muted-foreground cursor-pointer p-2 flex min-w-[36px] min-h-[36px] items-center justify-center">
                 <Pencil size={13} />
               </button>
-              <button onClick={() => remove(emp.id!)} style={{ background: "none", border: `1px solid ${C.border}`, borderRadius: 8, color: C.t3, cursor: "pointer", padding: 8, display: "flex", minWidth: 36, minHeight: 36, alignItems: "center", justifyContent: "center" }}>
+              <button onClick={() => remove(emp.id!)} className="bg-transparent border border-border rounded-lg text-muted-foreground cursor-pointer p-2 flex min-w-[36px] min-h-[36px] items-center justify-center">
                 <Trash size={13} />
               </button>
             </div>

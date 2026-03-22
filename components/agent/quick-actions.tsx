@@ -1,7 +1,6 @@
 "use client";
 
 import { Palette, Shield, Search, Contrast } from "lucide-react";
-import { C, ff } from "@/lib/tokens";
 
 interface QuickActionsProps {
   onAction: (text: string) => void;
@@ -19,20 +18,12 @@ export function QuickActions({ onAction, visible }: QuickActionsProps) {
   if (!visible) return null;
 
   return (
-    <div style={{ display: "flex", gap: 6, flexWrap: "wrap", justifyContent: "center" }}>
+    <div className="flex gap-1.5 flex-wrap justify-center">
       {actions.map((a) => (
         <button
           key={a.label}
           onClick={() => onAction(a.prompt)}
-          style={{
-            display: "flex", alignItems: "center", gap: 6,
-            padding: "8px 14px", borderRadius: 10,
-            border: `1px solid ${C.border}`, background: C.surface,
-            color: C.t2, fontSize: 12, fontWeight: 500, fontFamily: ff,
-            cursor: "pointer", transition: "all 0.15s",
-          }}
-          onMouseEnter={(e) => { e.currentTarget.style.borderColor = C.borderActive; e.currentTarget.style.color = C.t1; }}
-          onMouseLeave={(e) => { e.currentTarget.style.borderColor = C.border; e.currentTarget.style.color = C.t2; }}
+          className="flex items-center gap-1.5 px-3.5 py-2 rounded-button border border-hub-border bg-hub-surface text-hub-t2 text-xs font-medium font-hub cursor-pointer transition-all duration-150 hover:border-hub-border-active hover:text-hub-t1"
         >
           {a.icon}
           {a.label}

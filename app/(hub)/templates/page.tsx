@@ -2,7 +2,6 @@
 
 import { Presentation, FileText } from "lucide-react";
 import { useIsMobile } from "@/lib/hooks";
-import { C, S, T, cardS } from "@/lib/tokens";
 import { PageHeader } from "@/components/shared/page-header";
 import { Sect } from "@/components/shared/section";
 
@@ -42,17 +41,17 @@ export default function TemplatesPage() {
       />
 
       <Sect label="Verfügbare Vorlagen" icon={<Presentation size={12} />} mobile={mobile} last>
-        <div style={{ display: "grid", gridTemplateColumns: mobile ? "1fr" : "1fr 1fr 1fr", gap: S.sm + 2 }}>
+        <div className={`grid gap-2.5 ${mobile ? "grid-cols-1" : "grid-cols-3"}`}>
           {templateCategories.map((t) => (
-            <div key={t.title} style={{ ...cardS, padding: S.lg }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: S.md }}>
-                <span style={{ color: C.t2, display: "flex" }}>{t.icon}</span>
-                <span style={T.bodyStrong}>{t.title}</span>
+            <div key={t.title} className="rounded-xl border border-border bg-card overflow-hidden p-6">
+              <div className="flex items-center gap-2 mb-4">
+                <span className="text-muted-foreground flex">{t.icon}</span>
+                <span className="text-[13px] font-medium text-foreground">{t.title}</span>
               </div>
-              <p style={{ ...T.body, margin: `0 0 ${S.md}px`, lineHeight: 1.6 }}>{t.desc}</p>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <span style={{ ...T.caption, fontFamily: "ui-monospace,'SF Mono',Monaco,monospace" }}>{t.format}</span>
-                <span style={{ ...T.caption, color: C.t3, fontStyle: "italic" }}>{t.status}</span>
+              <p className="text-[13px] text-muted-foreground leading-relaxed mb-4">{t.desc}</p>
+              <div className="flex justify-between items-center">
+                <span className="text-[11px] font-mono text-muted-foreground">{t.format}</span>
+                <span className="text-[11px] text-muted-foreground italic">{t.status}</span>
               </div>
             </div>
           ))}

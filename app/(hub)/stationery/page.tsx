@@ -2,7 +2,6 @@
 
 import { FileText, Mail as MailIcon, CreditCard } from "lucide-react";
 import { useIsMobile } from "@/lib/hooks";
-import { C, S, T, cardS } from "@/lib/tokens";
 import { PageHeader } from "@/components/shared/page-header";
 import { Sect } from "@/components/shared/section";
 
@@ -39,18 +38,18 @@ export default function StationeryPage() {
       />
 
       <Sect label="Formate" icon={<FileText size={12} />} mobile={mobile} last>
-        <div style={{ display: "grid", gridTemplateColumns: mobile ? "1fr" : "1fr 1fr 1fr", gap: S.sm + 2 }}>
+        <div className={`grid gap-2.5 ${mobile ? "grid-cols-1" : "grid-cols-3"}`}>
           {items.map((item) => (
-            <div key={item.title} style={{ ...cardS, padding: S.lg }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: S.md }}>
-                <span style={{ color: C.t2, display: "flex" }}>{item.icon}</span>
-                <span style={T.bodyStrong}>{item.title}</span>
+            <div key={item.title} className="rounded-xl border border-border bg-card overflow-hidden p-6">
+              <div className="flex items-center gap-2 mb-4">
+                <span className="text-muted-foreground flex">{item.icon}</span>
+                <span className="text-[13px] font-medium text-foreground">{item.title}</span>
               </div>
-              <p style={{ ...T.body, margin: `0 0 ${S.md}px`, lineHeight: 1.6 }}>{item.desc}</p>
-              <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+              <p className="text-[13px] text-muted-foreground leading-relaxed mb-4">{item.desc}</p>
+              <div className="flex flex-col gap-1">
                 {item.specs.map((s) => (
-                  <div key={s} style={{ ...T.caption, display: "flex", alignItems: "center", gap: 6 }}>
-                    <div style={{ width: 4, height: 4, borderRadius: 2, background: C.t3, flexShrink: 0 }} />
+                  <div key={s} className="text-[11px] text-muted-foreground flex items-center gap-1.5">
+                    <div className="w-1 h-1 rounded-full bg-muted-foreground flex-shrink-0" />
                     {s}
                   </div>
                 ))}
@@ -58,8 +57,8 @@ export default function StationeryPage() {
             </div>
           ))}
         </div>
-        <div style={{ marginTop: S.lg, padding: S.md, borderRadius: 10, background: C.bg, border: `1px solid ${C.border}` }}>
-          <p style={{ ...T.caption, margin: 0, color: C.t3, lineHeight: 1.6 }}>
+        <div className="mt-6 p-4 rounded-[10px] bg-background border border-border">
+          <p className="text-[11px] text-muted-foreground leading-relaxed m-0">
             Druckfertige Vorlagen (PDF, InDesign) werden hier bereitgestellt, sobald die Abstimmung abgeschlossen ist. Kontaktiere das Design-Team für dringende Anfragen.
           </p>
         </div>

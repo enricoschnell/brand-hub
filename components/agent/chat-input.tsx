@@ -2,7 +2,7 @@
 
 import { type FormEvent, type KeyboardEvent } from "react";
 import { ArrowUp } from "lucide-react";
-import { C, ff } from "@/lib/tokens";
+import { cn } from "@/lib/utils";
 
 interface ChatInputProps {
   value: string;
@@ -24,52 +24,25 @@ export function ChatInput({ value, onChange, onSubmit, isLoading }: ChatInputPro
   const canSend = value.trim() && !isLoading;
 
   return (
-    <form onSubmit={onSubmit} style={{ width: "100%" }}>
-      <div
-        style={{
-          display: "flex", alignItems: "center", gap: 10,
-          padding: "12px 12px 12px 16px", borderRadius: 12,
-          background: C.surface, border: `1px solid ${C.border}`,
-        }}
-      >
+    <form onSubmit={onSubmit} className="w-full">
+      <div className="flex items-center gap-2.5 py-3 pl-4 pr-3 rounded-card bg-hub-surface border border-hub-border">
         <textarea
           value={value}
           onChange={(e) => onChange(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder="Nachricht an Brand Agent..."
           rows={1}
-          style={{
-            flex: 1,
-            background: "transparent",
-            border: "none",
-            outline: "none",
-            color: C.t1,
-            fontSize: 15,
-            fontFamily: ff,
-            resize: "none",
-            lineHeight: "22px",
-            height: 22,
-            maxHeight: 150,
-            padding: 0,
-            margin: 0,
-            display: "block",
-            verticalAlign: "middle",
-          }}
+          className="flex-1 bg-transparent border-none outline-none text-hub-t1 text-[15px] font-hub resize-none leading-[22px] h-[22px] max-h-[150px] p-0 m-0 block align-middle placeholder:text-hub-t3"
         />
         <button
           type="submit"
           disabled={!canSend}
-          style={{
-            display: "flex", alignItems: "center", justifyContent: "center",
-            width: 30, height: 30, borderRadius: 8,
-            background: canSend ? C.t1 : C.active,
-            color: canSend ? C.bg : C.t3,
-            border: "none",
-            cursor: canSend ? "pointer" : "default",
-            flexShrink: 0,
-            padding: 0,
-            transition: "all 0.15s",
-          }}
+          className={cn(
+            "flex items-center justify-center w-[30px] h-[30px] rounded-swatch border-none shrink-0 p-0 transition-all duration-150",
+            canSend
+              ? "bg-hub-t1 text-hub-bg cursor-pointer"
+              : "bg-hub-active text-hub-t3 cursor-default"
+          )}
         >
           <ArrowUp size={16} strokeWidth={2.5} />
         </button>

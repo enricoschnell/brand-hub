@@ -1,5 +1,5 @@
 import { Download } from "lucide-react";
-import { C, T, ff } from "@/lib/tokens";
+import { cn } from "@/lib/utils";
 
 interface FormatChipProps {
   label: string;
@@ -9,37 +9,32 @@ interface FormatChipProps {
 }
 
 export function FormatChip({ label, sublabel, filename, href }: FormatChipProps) {
-  const available = !!href;
-  const monoF = "ui-monospace,'SF Mono',Monaco,monospace";
-  const baseStyle = {
-    display: "flex",
-    alignItems: "center",
-    gap: 6,
-    padding: "5px 10px",
-    borderRadius: 8,
-    border: `1px solid ${C.border}`,
-    background: "transparent",
-    fontSize: 12,
-    fontFamily: ff,
-    minHeight: 30,
-    textDecoration: "none" as const,
-  };
+  const base = "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-border bg-transparent text-xs font-hub min-h-[30px] no-underline transition-colors";
 
-  if (available) {
+  if (href) {
     return (
-      <a href={href} download={filename} title={filename} style={{ ...baseStyle, color: C.t2, cursor: "pointer" }}>
+      <a
+        href={href}
+        download={filename}
+        title={filename}
+        className={cn(base, "text-muted-foreground hover:border-foreground/20 hover:text-foreground cursor-pointer")}
+      >
         <Download size={11} />
-        <span style={{ fontWeight: 500, color: C.t1 }}>{label}</span>
-        {sublabel && <span style={{ ...T.caption, fontFamily: monoF }}>{sublabel}</span>}
+        <span className="font-medium text-foreground">{label}</span>
+        {sublabel && <span className="text-[11px] font-mono text-muted-foreground">{sublabel}</span>}
       </a>
     );
   }
 
   return (
-    <button disabled title="Bald verfügbar" style={{ ...baseStyle, color: C.t3, cursor: "not-allowed", opacity: 0.4 }}>
+    <button
+      disabled
+      title="Bald verfügbar"
+      className={cn(base, "text-muted-foreground/40 cursor-not-allowed opacity-40")}
+    >
       <Download size={11} />
-      <span style={{ fontWeight: 500, color: C.t3 }}>{label}</span>
-      {sublabel && <span style={{ ...T.caption, fontFamily: monoF }}>{sublabel}</span>}
+      <span className="font-medium">{label}</span>
+      {sublabel && <span className="text-[11px] font-mono">{sublabel}</span>}
     </button>
   );
 }

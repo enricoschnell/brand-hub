@@ -1,8 +1,7 @@
 "use client";
 
-import { Construction, Ruler, MapPin } from "lucide-react";
+import { Construction, Ruler } from "lucide-react";
 import { useIsMobile } from "@/lib/hooks";
-import { C, S, T, cardS, monoF } from "@/lib/tokens";
 import { PageHeader } from "@/components/shared/page-header";
 import { Sect } from "@/components/shared/section";
 
@@ -41,22 +40,22 @@ export default function SignagePage() {
       />
 
       <Sect label="Formate & Maße" icon={<Ruler size={12} />} mobile={mobile}>
-        <div style={{ display: "grid", gridTemplateColumns: mobile ? "1fr" : "1fr 1fr", gap: S.sm + 2 }}>
+        <div className={`grid gap-2.5 ${mobile ? "grid-cols-1" : "grid-cols-2"}`}>
           {formats.map((f) => (
-            <div key={f.title} style={{ ...cardS, padding: S.lg }}>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: S.md }}>
-                <span style={T.bodyStrong}>{f.title}</span>
-                <span style={{ ...T.caption, fontFamily: monoF }}>{f.dimensions}</span>
+            <div key={f.title} className="rounded-xl border border-border bg-card overflow-hidden p-6">
+              <div className="flex items-center justify-between mb-4">
+                <span className="text-[13px] font-medium text-foreground">{f.title}</span>
+                <span className="text-[11px] font-mono text-muted-foreground">{f.dimensions}</span>
               </div>
-              <p style={{ ...T.body, margin: 0, lineHeight: 1.6 }}>{f.desc}</p>
+              <p className="text-[13px] text-muted-foreground leading-relaxed m-0">{f.desc}</p>
             </div>
           ))}
         </div>
       </Sect>
 
       <Sect label="Gestaltungsregeln" icon={<Construction size={12} />} mobile={mobile} last>
-        <div style={{ ...cardS, padding: S.lg }}>
-          <div style={{ display: "flex", flexDirection: "column", gap: S.md }}>
+        <div className="rounded-xl border border-border bg-card overflow-hidden p-6">
+          <div className="flex flex-col gap-4">
             {[
               { label: "Wortmarke", value: "Mindestens 400 mm Breite auf Standard-Bauzaun. Immer zentriert oder oben links." },
               { label: "Farben", value: "Anthrazit (#353b43) auf weiß, oder weiß auf Bild. Keine Farbverläufe." },
@@ -64,8 +63,8 @@ export default function SignagePage() {
               { label: "Druck", value: "Mesh-Banner (300 dpi), Alu-Dibond (CMYK). UV-beständige Tinte." },
             ].map((rule) => (
               <div key={rule.label}>
-                <div style={T.bodyStrong}>{rule.label}</div>
-                <p style={{ ...T.body, margin: `4px 0 0`, lineHeight: 1.6 }}>{rule.value}</p>
+                <div className="text-[13px] font-medium text-foreground">{rule.label}</div>
+                <p className="text-[13px] text-muted-foreground leading-relaxed mt-1 mb-0">{rule.value}</p>
               </div>
             ))}
           </div>

@@ -6,7 +6,6 @@ import { useRef, useEffect, useState, useMemo, type FormEvent } from "react";
 import { Message } from "@/components/agent/message";
 import { ChatInput } from "@/components/agent/chat-input";
 import { QuickActions } from "@/components/agent/quick-actions";
-import { C, ff } from "@/lib/tokens";
 
 export function BrandChat() {
   const transport = useMemo(() => new DefaultChatTransport({ api: "/api/agent" }), []);
@@ -47,35 +46,20 @@ export function BrandChat() {
   };
 
   return (
-    <div style={{
-      display: "flex", flexDirection: "column",
-      height: "100%", width: "100%",
-    }}>
+    <div className="flex flex-col h-full w-full">
       {/* ── Scrollable area (messages or empty state) ── */}
       <div
         ref={hasMessages ? scrollRef : undefined}
-        style={{
-          flex: 1, overflowY: "auto",
-          display: "flex", flexDirection: "column",
-        }}
+        className="flex-1 overflow-y-auto flex flex-col"
       >
         {!hasMessages ? (
           /* Empty state — push content to vertical center */
-          <div style={{
-            flex: 1, display: "flex",
-            alignItems: "center", justifyContent: "center",
-          }}>
-            <div style={{ textAlign: "center" }}>
-              <div style={{
-                fontSize: 28, fontWeight: 500, color: C.t1,
-                fontFamily: ff, marginBottom: 8,
-              }}>
+          <div className="flex-1 flex items-center justify-center">
+            <div className="text-center">
+              <div className="text-[28px] font-medium text-hub-t1 font-hub mb-2">
                 Wie kann ich helfen?
               </div>
-              <div style={{
-                fontSize: 14, color: C.t3, fontFamily: ff,
-                marginBottom: 24,
-              }}>
+              <div className="text-sm text-hub-t3 font-hub mb-6">
                 Frag mich zu Farben, Typografie, Logo-Regeln oder Assets
               </div>
               <QuickActions onAction={handleQuickAction} visible />
@@ -83,28 +67,23 @@ export function BrandChat() {
           </div>
         ) : (
           /* Messages */
-          <div style={{
-            maxWidth: 720, width: "100%",
-            margin: "0 auto",
-            padding: "24px 24px 16px",
-            display: "flex", flexDirection: "column", gap: 20,
-          }}>
+          <div className="max-w-[720px] w-full mx-auto px-6 pt-6 pb-4 flex flex-col gap-5">
             {messages
               .filter((m) => {
                 const text = getTextContent(m);
                 return (m.role === "user" || m.role === "assistant") && text;
               })
               .map((m) => (
-                <div key={m.id} style={{ animation: "fadeInUp 0.25s ease-out both" }}>
+                <div key={m.id} className="animate-[fadeInUp_0.25s_ease-out_both]">
                   <Message role={m.role as "user" | "assistant"} content={getTextContent(m)} />
                 </div>
               ))}
             {isLoading && messages.length > 0 && messages[messages.length - 1]?.role === "user" && (
-              <div style={{ color: C.t3, fontSize: 14, fontFamily: ff }}>
-                <span style={{ display: "inline-flex", gap: 3 }}>
-                  <span style={{ animation: "pulse 1.4s infinite" }}>.</span>
-                  <span style={{ animation: "pulse 1.4s infinite 0.2s" }}>.</span>
-                  <span style={{ animation: "pulse 1.4s infinite 0.4s" }}>.</span>
+              <div className="text-hub-t3 text-sm font-hub">
+                <span className="inline-flex gap-[3px]">
+                  <span className="animate-[pulse_1.4s_infinite]">.</span>
+                  <span className="animate-[pulse_1.4s_infinite_0.2s]">.</span>
+                  <span className="animate-[pulse_1.4s_infinite_0.4s]">.</span>
                 </span>
               </div>
             )}
@@ -113,21 +92,14 @@ export function BrandChat() {
       </div>
 
       {/* ── Input bar — always at bottom ── */}
-      <div style={{
-        padding: "12px 24px 24px",
-        maxWidth: 720, width: "100%",
-        margin: "0 auto",
-      }}>
+      <div className="px-6 pt-3 pb-6 max-w-[720px] w-full mx-auto">
         <ChatInput
           value={input}
           onChange={setInput}
           onSubmit={handleSubmit}
           isLoading={isLoading}
         />
-        <div style={{
-          textAlign: "center", marginTop: 8,
-          fontSize: 11, color: C.t3, fontFamily: ff,
-        }}>
+        <div className="text-center mt-2 text-[11px] text-hub-t3 font-hub">
           Brand Agent kann Fehler machen. Angaben immer prüfen.
         </div>
       </div>

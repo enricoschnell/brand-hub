@@ -1,7 +1,7 @@
 "use client";
 
 import { type ReactNode } from "react";
-import { C, ff } from "@/lib/tokens";
+import { cn } from "@/lib/utils";
 
 interface PillOption {
   value: string;
@@ -17,35 +17,18 @@ interface PillProps {
 
 export function Pill({ options, value, onChange }: PillProps) {
   return (
-    <div
-      style={{
-        display: "inline-flex",
-        gap: 1,
-        background: C.bg,
-        borderRadius: 8,
-        padding: 2,
-        border: `1px solid ${C.border}`,
-      }}
-    >
+    <div className="inline-flex gap-px bg-background rounded-lg p-0.5 border border-border">
       {options.map((o) => (
         <button
           key={o.value}
           onClick={() => onChange(o.value)}
-          style={{
-            padding: "6px 14px",
-            borderRadius: 6,
-            border: "none",
-            cursor: "pointer",
-            fontFamily: ff,
-            fontSize: 12,
-            fontWeight: 500,
-            display: "flex",
-            alignItems: "center",
-            gap: 4,
-            background: value === o.value ? C.active : "transparent",
-            color: value === o.value ? C.t1 : C.t3,
-            minHeight: 32,
-          }}
+          className={cn(
+            "px-3.5 py-1.5 rounded-md border-none cursor-pointer font-hub text-xs font-medium",
+            "flex items-center gap-1 min-h-[32px] transition-colors",
+            value === o.value
+              ? "bg-foreground/[0.08] text-foreground"
+              : "bg-transparent text-muted-foreground hover:text-foreground/70"
+          )}
         >
           {o.icon}
           {o.label}

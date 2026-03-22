@@ -1,5 +1,3 @@
-import { T, S } from "@/lib/tokens";
-
 interface PageHeaderProps {
   title: string;
   desc: string;
@@ -8,9 +6,11 @@ interface PageHeaderProps {
 
 export function PageHeader({ title, desc, mobile }: PageHeaderProps) {
   return (
-    <div style={{ marginBottom: mobile ? S.lg : S.xl }}>
-      <h1 style={{ ...T.pageTitle, marginBottom: S.sm }}>{title}</h1>
-      <p style={T.pageDesc}>{desc}</p>
+    <div className={mobile ? "mb-6" : "mb-10"}>
+      <h1 className="text-2xl font-semibold tracking-tight text-foreground mb-2 leading-tight">
+        {title}
+      </h1>
+      <p className="text-[15px] text-muted-foreground leading-relaxed">{desc}</p>
     </div>
   );
 }

@@ -2,7 +2,7 @@
 
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { C, ff, monoF } from "@/lib/tokens";
+import { cn } from "@/lib/utils";
 
 interface MessageProps {
   role: "user" | "assistant";
@@ -14,23 +14,16 @@ export function Message({ role, content }: MessageProps) {
 
   return (
     <div
-      style={{
-        display: "flex",
-        justifyContent: isUser ? "flex-end" : "flex-start",
-        width: "100%",
-      }}
+      className={cn(
+        "flex w-full",
+        isUser ? "justify-end" : "justify-start"
+      )}
     >
       <div
-        style={{
-          maxWidth: "85%",
-          padding: "10px 14px",
-          borderRadius: 12,
-          background: isUser ? C.active : "transparent",
-          color: C.t1,
-          fontSize: 14,
-          fontFamily: ff,
-          lineHeight: 1.6,
-        }}
+        className={cn(
+          "max-w-[85%] px-3.5 py-2.5 rounded-card text-hub-t1 text-sm font-hub leading-relaxed",
+          isUser ? "bg-hub-active" : "bg-transparent"
+        )}
       >
         {isUser ? (
           <span>{content}</span>
@@ -38,34 +31,35 @@ export function Message({ role, content }: MessageProps) {
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             components={{
-              p: ({ children }) => <p style={{ margin: "0 0 8px", lineHeight: 1.6, color: C.t1 }}>{children}</p>,
-              strong: ({ children }) => <strong style={{ color: C.t1, fontWeight: 500 }}>{children}</strong>,
+              p: ({ children }) => (
+                <p className="mb-2 leading-relaxed text-hub-t1">{children}</p>
+              ),
+              strong: ({ children }) => (
+                <strong className="text-hub-t1 font-medium">{children}</strong>
+              ),
               code: ({ children }) => (
-                <code
-                  style={{
-                    background: C.active, padding: "2px 6px", borderRadius: 4,
-                    fontFamily: monoF, fontSize: 13,
-                  }}
-                >
+                <code className="bg-hub-active px-1.5 py-0.5 rounded font-mono text-[13px]">
                   {children}
                 </code>
               ),
               pre: ({ children }) => (
-                <pre
-                  style={{
-                    background: C.bg, padding: 12, borderRadius: 8,
-                    border: `1px solid ${C.border}`, overflow: "auto",
-                    fontFamily: monoF, fontSize: 12, lineHeight: 1.5,
-                    margin: "8px 0",
-                  }}
-                >
+                <pre className="bg-hub-bg p-3 rounded-swatch border border-hub-border overflow-auto font-mono text-xs leading-normal my-2">
                   {children}
                 </pre>
               ),
-              ul: ({ children }) => <ul style={{ margin: "4px 0 8px", paddingLeft: 20 }}>{children}</ul>,
-              li: ({ children }) => <li style={{ margin: "2px 0", color: C.t2 }}>{children}</li>,
+              ul: ({ children }) => (
+                <ul className="my-1 mb-2 pl-5">{children}</ul>
+              ),
+              li: ({ children }) => (
+                <li className="my-0.5 text-hub-t2">{children}</li>
+              ),
               a: ({ children, href }) => (
-                <a href={href} style={{ color: "#59eded", textDecoration: "none" }} target="_blank" rel="noopener">
+                <a
+                  href={href}
+                  className="text-brand-cyan no-underline"
+                  target="_blank"
+                  rel="noopener"
+                >
                   {children}
                 </a>
               ),

@@ -1,5 +1,5 @@
 import { type ReactNode } from "react";
-import { T, S } from "@/lib/tokens";
+import { cn } from "@/lib/utils";
 
 interface SectProps {
   label?: ReactNode;
@@ -11,16 +11,14 @@ interface SectProps {
 
 export function Sect({ label, icon, children, last = false, mobile }: SectProps) {
   return (
-    <div style={{ paddingBottom: last ? 0 : mobile ? S.xl : S.xxl }}>
+    <div className={cn(!last && (mobile ? "pb-10" : "pb-14"))}>
       {label && (
         <div
-          style={{
-            ...T.sectionLabel,
-            marginBottom: mobile ? S.md : 20,
-            display: "flex",
-            alignItems: "center",
-            gap: 6,
-          }}
+          className={cn(
+            "text-[11px] font-semibold text-muted-foreground uppercase tracking-[0.06em] leading-none",
+            "flex items-center gap-1.5",
+            mobile ? "mb-4" : "mb-5"
+          )}
         >
           {icon}
           {label}
