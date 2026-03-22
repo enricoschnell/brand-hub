@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import "./globals.css";
+import { BrandProvider } from "@/lib/brand-context";
 
 export const metadata: Metadata = {
   title: "CASAGO Brand Hub",
@@ -14,7 +16,7 @@ export default function RootLayout({
   return (
     <html lang="de">
       <body style={{ margin: 0, padding: 0, background: "#0a0a0b" }}>
-        {children}
+        <BrandProvider>{children}</BrandProvider>
       </body>
     </html>
   );
