@@ -5,6 +5,8 @@ import {
   signageSpecs,
   stationerySpecs,
   applicationRules,
+  brandStrategy,
+  photographyGuidelines,
 } from "@/data/casago-guidelines";
 
 export function buildSystemPrompt(): string {
@@ -24,6 +26,13 @@ You never invent brand values — only use what is documented below.
 - **Tagline**: ${brandMeta.tagline}
 - **Claim**: ${brandMeta.claim} (uppercase, letter-spacing 0.84px)
 - **Website**: ${brandMeta.website}
+
+## Brand Strategy
+- **Vision**: ${brandStrategy.vision}
+- **Mission**: ${brandStrategy.mission}
+- **Markenwerte**: ${brandStrategy.values.join(", ")}
+- **Positionierung**: ${brandStrategy.positioning}
+- **Zielgruppen**: ${brandStrategy.targetGroups.join(", ")}
 
 ## Color System
 
@@ -101,6 +110,11 @@ ${applicationRules.logoPlacement.map((r) => `- ${r}`).join("\n")}
 
 ## Application Rules — Don'ts
 ${applicationRules.forbidden.map((r) => `- ⛔ ${r}`).join("\n")}
+
+## Photography & Imagery
+${photographyGuidelines.style}
+${photographyGuidelines.rules.map((r) => `- ${r}`).join("\n")}
+Forbidden: ${photographyGuidelines.forbidden.join("; ")}
 
 ## Available Assets (at brand.casago.de)
 - Logos: /assets/logos/CASAGO-Wortmarke-{Black,Anthrazit,White,Outline}.{svg,png}

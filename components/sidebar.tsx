@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import {
   Home, Image, Palette, Type, Mail, Users, X, Menu,
   FileText, Presentation, Construction, BookOpen,
+  Target, Camera,
 } from "lucide-react";
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
@@ -36,9 +37,11 @@ const nav = [
     ],
   },
   {
-    label: "Anwendung",
+    label: "Marke",
     items: [
+      { id: "/strategy", label: "Markenstrategie", icon: <Target size={15} /> },
       { id: "/guidelines", label: "Markenrichtlinien", icon: <BookOpen size={15} /> },
+      { id: "/photography", label: "Bildsprache", icon: <Camera size={15} /> },
     ],
   },
 ];
@@ -176,7 +179,9 @@ const pageLabels: Record<string, string> = {
   "/signage": "Beschilderung",
   "/sig": "Email Signatur",
   "/team": "Team",
+  "/strategy": "Markenstrategie",
   "/guidelines": "Markenrichtlinien",
+  "/photography": "Bildsprache",
   "/downloads": "Downloads",
 };
 

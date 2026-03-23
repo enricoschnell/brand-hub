@@ -93,6 +93,37 @@ export const stationerySpecs = {
   ],
 };
 
+export const brandStrategy = {
+  vision: "CASAGO gestaltet Lebensräume, die Bestand haben — durch durchdachte Planung, präzise Umsetzung und den Anspruch, dass jedes Projekt die Lebensqualität seiner Nutzer nachhaltig verbessert.",
+  mission: "Wir begleiten Bauprojekte ganzheitlich — von der ersten Idee über die Planung und Konstruktion bis zur Übergabe. Unser Team vereint Architektur, Bauingenieurwesen und nachhaltige Konzepte unter einem Dach.",
+  values: ["Präzision", "Ganzheitlichkeit", "Nachhaltigkeit"],
+  positioning: "Ganzheitlicher Partner für anspruchsvolle Bauprojekte — nicht reiner GU und nicht reines Planungsbüro, sondern integrierter Anbieter aus Architektur, Bauingenieurwesen und nachhaltiger Innovation.",
+  targetGroups: [
+    "Bauherren & Projektentwickler",
+    "Kommunen & öffentliche Träger",
+    "Architekten & Planungsbüros",
+    "Investoren & Immobiliengesellschaften",
+  ],
+};
+
+export const photographyGuidelines = {
+  style: "Klar, authentisch, sachlich. Echte Projektdokumentation, keine Stock-Fotos.",
+  rules: [
+    "Natürliches Licht bevorzugen (Golden Hour, bewölkt)",
+    "Entsättigte, ruhige Farben — keine knalligen Filter oder HDR",
+    "Geometrische Komposition, gerade Linien, bewusster Weißraum",
+    "Menschen im Kontext des Projekts, nie isoliert",
+    "Logo auf Bildern: White-Variante, unten rechts/links, mit Schutzzone",
+    "Social Media: Hochformat (9:16 / 4:5), Text-Overlays in Aeonik Pro Medium",
+  ],
+  forbidden: [
+    "Stock-Fotos mit gestellten Szenen",
+    "Übersättigte Farben oder HDR-Look",
+    "Personen ohne Einverständnis",
+    "Logo auf unruhigem Hintergrund ohne Kontrast",
+  ],
+};
+
 export const applicationRules = {
   logoPlacement: [
     "Wortmarke immer mit Schutzzone (= Höhe des Buchstaben C) verwenden",
