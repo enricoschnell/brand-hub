@@ -22,7 +22,7 @@ const templateCategories = [
   },
   {
     icon: <FileText size={16} />,
-    title: "Angebot / Proposal",
+    title: "Angebotsvorlage",
     desc: "Deckblatt und Angebotsvorlage mit professionellem Layout. Markenfarben und Logo korrekt platziert.",
     format: ".dotx",
     status: "In Vorbereitung",

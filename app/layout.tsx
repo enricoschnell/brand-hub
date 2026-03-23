@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
+import { deDE } from "@clerk/localizations";
 import "./globals.css";
 import { BrandProvider } from "@/lib/brand-context";
 
@@ -33,6 +34,7 @@ export default function RootLayout({
   return (
     <ClerkProvider
       publishableKey={clerkKey}
+      localization={deDE}
       appearance={{
         variables: {
           colorPrimary: "#eeeff1",

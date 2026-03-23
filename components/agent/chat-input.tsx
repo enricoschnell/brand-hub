@@ -73,7 +73,7 @@ export function ChatInput({ value, onChange, onSubmit, isLoading, image, onImage
               type="button"
               onClick={() => fileRef.current?.click()}
               className="flex items-center justify-center w-[30px] h-[30px] rounded-swatch border-none shrink-0 p-0 bg-transparent text-hub-t3 hover:text-hub-t1 cursor-pointer transition-colors"
-              title="Bild hochladen für Design-Review"
+              title="Bild hochladen zur Markenprüfung"
             >
               <Paperclip size={16} />
             </button>
@@ -83,7 +83,7 @@ export function ChatInput({ value, onChange, onSubmit, isLoading, image, onImage
           value={value}
           onChange={(e) => onChange(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="Nachricht an Brand Agent..."
+          placeholder="Nachricht an den Marken-Assistenten..."
           rows={1}
           className="flex-1 bg-transparent border-none outline-none text-hub-t1 text-[15px] font-hub resize-none leading-[22px] h-[22px] max-h-[150px] p-0 m-0 block align-middle placeholder:text-hub-t3"
         />

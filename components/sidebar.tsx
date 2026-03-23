@@ -12,9 +12,9 @@ import { cn } from "@/lib/utils";
 import { Wm } from "@/components/brand/wortmarke";
 
 const nav = [
-  { items: [{ id: "/", label: "Home", icon: <Home size={15} /> }] },
+  { items: [{ id: "/", label: "Startseite", icon: <Home size={15} /> }] },
   {
-    label: "Assets",
+    label: "Markenelemente",
     items: [
       { id: "/logo", label: "Logo", icon: <Image size={15} /> },
       { id: "/colors", label: "Farben", icon: <Palette size={15} /> },
@@ -30,7 +30,7 @@ const nav = [
     ],
   },
   {
-    label: "Tools",
+    label: "Werkzeuge",
     items: [
       { id: "/sig", label: "Email Signatur", icon: <Mail size={15} /> },
       { id: "/team", label: "Team", icon: <Users size={15} /> },
@@ -170,7 +170,7 @@ export function Sidebar({ mobile, open, setOpen }: SidebarProps) {
 }
 
 const pageLabels: Record<string, string> = {
-  "/": "Home",
+  "/": "Startseite",
   "/logo": "Logo",
   "/colors": "Farben",
   "/type": "Typografie",

@@ -77,7 +77,7 @@ export function BrandChat() {
                 Wie kann ich helfen?
               </div>
               <div className="text-sm text-hub-t3 font-hub mb-6">
-                Farben, Typografie, Logo-Regeln, Design-Review oder markenkonforme Texte
+                Farben, Typografie, Logo-Regeln, Markenprüfung oder markenkonforme Texte
               </div>
               <QuickActions onAction={handleQuickAction} visible />
             </div>
@@ -111,7 +111,7 @@ export function BrandChat() {
         {isLoaded && !isSignedIn ? (
           /* Auth gate — show sign-in prompt */
           <div className="flex items-center justify-center gap-3 py-3 px-4 rounded-card bg-hub-surface border border-hub-border">
-            <span className="text-sm text-hub-t2 font-hub">Anmelden, um den Brand Agent zu nutzen</span>
+            <span className="text-sm text-hub-t2 font-hub">Anmelden, um den Marken-Assistenten zu nutzen</span>
             <SignInButton mode="modal">
               <button className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-swatch bg-hub-t1 text-hub-bg text-xs font-medium font-hub cursor-pointer border-none transition-opacity hover:opacity-90">
                 <LogIn size={13} />
@@ -131,7 +131,7 @@ export function BrandChat() {
               onImageClear={() => setImage(null)}
             />
             <div className="text-center mt-2 text-[11px] text-hub-t3 font-hub">
-              Brand Agent kann Fehler machen. Angaben immer prüfen.
+              Der Marken-Assistent kann Fehler machen. Angaben immer prüfen.
             </div>
           </>
         )}

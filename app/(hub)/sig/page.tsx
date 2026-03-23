@@ -181,7 +181,7 @@ export default function SigPage() {
             </div>
             <div className="mb-[18px]">
               <div className="text-[13px] text-muted-foreground mb-2">Logo</div>
-              <Pill options={[{ value: "regular", label: "Regular" }, { value: "large", label: "Large" }]} value={logoSize} onChange={(v) => setLogoSize(v as "regular" | "large")} />
+              <Pill options={[{ value: "regular", label: "Normal" }, { value: "large", label: "Groß" }]} value={logoSize} onChange={(v) => setLogoSize(v as "regular" | "large")} />
             </div>
             <div
               onClick={() => setShowClaim(!showClaim)}
@@ -236,7 +236,7 @@ export default function SigPage() {
 
         {/* Right column — preview & actions */}
         <div className="flex flex-col gap-2 min-w-0">
-          <Pill options={[{ value: "light", label: "Light", icon: <Sun size={11} /> }, { value: "dark", label: "Dark", icon: <Moon size={11} /> }]} value={mode} onChange={(v) => setMode(v as "light" | "dark")} />
+          <Pill options={[{ value: "light", label: "Hell", icon: <Sun size={11} /> }, { value: "dark", label: "Dunkel", icon: <Moon size={11} /> }]} value={mode} onChange={(v) => setMode(v as "light" | "dark")} />
 
           <div className="rounded-xl border border-border bg-card overflow-hidden min-w-0">
             {!mobile && (
@@ -305,7 +305,7 @@ export default function SigPage() {
                 )}>
                   <ChevronRight size={12} />
                 </span>
-                HTML Source
+                HTML-Quellcode
               </button>
               {showSrc && (
                 <div className="rounded-xl border border-border bg-card overflow-hidden p-[18px] max-h-[200px] overflow-auto">

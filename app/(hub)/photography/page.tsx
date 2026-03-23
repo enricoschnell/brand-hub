@@ -93,13 +93,13 @@ export default function PhotographyPage() {
         </div>
       </Sect>
 
-      {/* Do's & Don'ts */}
-      <Sect label="Do's & Don'ts" mobile={mobile}>
+      {/* Richtig & Falsch */}
+      <Sect label="Richtig & Falsch" mobile={mobile}>
         <div className={`grid gap-2.5 ${mobile ? "grid-cols-1" : "grid-cols-2"}`}>
           <div className="rounded-xl border border-border bg-card overflow-hidden p-6">
             <div className="flex items-center gap-2 mb-4">
               <Check size={14} className="text-green-500" />
-              <span className="text-[13px] font-medium text-green-500">Do</span>
+              <span className="text-[13px] font-medium text-green-500">Richtig</span>
             </div>
             <div className="flex flex-col gap-2">
               {[
@@ -121,7 +121,7 @@ export default function PhotographyPage() {
           <div className="rounded-xl border border-border bg-card overflow-hidden p-6">
             <div className="flex items-center gap-2 mb-4">
               <X size={14} className="text-red-500" />
-              <span className="text-[13px] font-medium text-red-500">Don't</span>
+              <span className="text-[13px] font-medium text-red-500">Falsch</span>
             </div>
             <div className="flex flex-col gap-2">
               {[
