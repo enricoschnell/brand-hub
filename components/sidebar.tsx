@@ -103,14 +103,14 @@ export function Sidebar({ mobile, open, setOpen }: SidebarProps) {
                   href={n.id}
                   onClick={() => mobile && setOpen(false)}
                   className={cn(
-                    "flex items-center gap-2 w-full px-2.5 py-[7px] rounded-[7px] no-underline",
+                    "group/nav flex items-center gap-2 w-full px-2.5 py-[7px] rounded-[7px] no-underline",
                     "text-[13px] font-hub cursor-pointer text-left mb-px min-h-[40px] transition-colors",
                     active
-                      ? "bg-foreground/[0.08] text-foreground font-medium"
-                      : "bg-transparent text-muted-foreground hover:text-foreground hover:bg-foreground/[0.04]"
+                      ? "bg-hub-active text-hub-t1 font-medium"
+                      : "bg-transparent text-hub-t2 hover:text-hub-t1 hover:bg-hub-hover"
                   )}
                 >
-                  <span className={cn("flex", active ? "opacity-90" : "opacity-45")}>{n.icon}</span>
+                  <span className={cn("flex transition-opacity", active ? "opacity-90" : "opacity-40 group-hover/nav:opacity-70")}>{n.icon}</span>
                   {n.label}
                 </Link>
               );

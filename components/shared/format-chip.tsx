@@ -17,7 +17,7 @@ export function FormatChip({ label, sublabel, filename, href }: FormatChipProps)
         href={href}
         download={filename}
         title={filename}
-        className={cn(base, "text-muted-foreground hover:border-foreground/20 hover:text-foreground cursor-pointer")}
+        className={cn(base, "text-hub-t2 hover:border-hub-border-active hover:text-hub-t1 cursor-pointer")}
       >
         <Download size={11} />
         <span className="font-medium text-foreground">{label}</span>
@@ -30,7 +30,7 @@ export function FormatChip({ label, sublabel, filename, href }: FormatChipProps)
     <button
       disabled
       title="Bald verfügbar"
-      className={cn(base, "text-muted-foreground/40 cursor-not-allowed opacity-40")}
+      className={cn(base, "text-hub-t3 cursor-not-allowed opacity-40")}
     >
       <Download size={11} />
       <span className="font-medium">{label}</span>

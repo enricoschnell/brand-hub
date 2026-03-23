@@ -192,7 +192,7 @@ export default function TeamPage() {
       <div className="flex flex-col gap-2">
         {team.map((emp) => (
           <div key={emp.id || emp.ini} className="rounded-xl border border-border bg-card overflow-hidden py-4 px-6 flex items-center gap-4">
-            <div className="w-10 h-10 rounded-full bg-foreground/[0.08] text-muted-foreground flex items-center justify-center text-[13px] font-bold shrink-0">
+            <div className="w-10 h-10 rounded-full bg-hub-active text-muted-foreground flex items-center justify-center text-[13px] font-bold shrink-0">
               {emp.initials || emp.ini}
             </div>
             <div className="flex-1 min-w-0">

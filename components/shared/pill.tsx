@@ -26,8 +26,8 @@ export function Pill({ options, value, onChange }: PillProps) {
             "px-3.5 py-1.5 rounded-md border-none cursor-pointer font-hub text-xs font-medium",
             "flex items-center gap-1 min-h-[32px] transition-colors",
             value === o.value
-              ? "bg-foreground/[0.08] text-foreground"
-              : "bg-transparent text-muted-foreground hover:text-foreground/70"
+              ? "bg-hub-active text-hub-t1"
+              : "bg-transparent text-hub-t3 hover:text-hub-t2"
           )}
         >
           {o.icon}
