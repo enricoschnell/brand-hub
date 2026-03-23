@@ -74,15 +74,13 @@ textarea {
   }
 }
 
-/* ── shadcn/ui theme — always dark, mapped to hub tokens ── */
+/* ── Theme: always dark — set on :root to override shadcn defaults ── */
 @layer base {
-  :root {
+  :root,
+  .dark {
     --font-sans: "TikTok Sans Variable", "TikTok Sans", system-ui, sans-serif;
     --font-heading: var(--font-sans);
     --radius: 0.75rem;
-  }
-
-  .dark {
     --background: #0a0a0b;
     --foreground: #eeeff1;
     --card: #141416;
@@ -116,4 +114,57 @@ textarea {
     color: var(--foreground);
     font-family: var(--font-sans);
   }
+}
+
+/* ── Clerk modal overrides — force dark appearance ── */
+.cl-modalBackdrop {
+  background: rgba(0, 0, 0, 0.7) !important;
+  backdrop-filter: blur(4px);
+}
+
+.cl-card,
+.cl-modalContent {
+  background: #141416 !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+  border-radius: 12px !important;
+  color: #eeeff1 !important;
+}
+
+.cl-headerTitle,
+.cl-headerSubtitle,
+.cl-socialButtonsBlockButtonText,
+.cl-formFieldLabel,
+.cl-footerActionText,
+.cl-footerActionLink,
+.cl-dividerText,
+.cl-identityPreviewText,
+.cl-formFieldSuccessText,
+.cl-alertText {
+  color: #eeeff1 !important;
+}
+
+.cl-formFieldInput,
+.cl-phoneNumberInput {
+  background: #0a0a0b !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  color: #eeeff1 !important;
+}
+
+.cl-formButtonPrimary {
+  background: #eeeff1 !important;
+  color: #0a0a0b !important;
+}
+
+.cl-socialButtonsBlockButton {
+  background: #0a0a0b !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  color: #eeeff1 !important;
+}
+
+.cl-internal-b {
+  color: #8b8d94 !important;
+}
+
+.cl-footerAction {
+  color: #8b8d94 !important;
 }
