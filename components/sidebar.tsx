@@ -64,34 +64,34 @@ export function Sidebar({ mobile, open, setOpen }: SidebarProps) {
       {/* Header — Wortmarke + BETA badge */}
       <Link
         href="/"
-        className="flex flex-col gap-0 no-underline px-4 pt-5 pb-4"
+        className="flex flex-col gap-0 no-underline px-5 pt-6 pb-0"
         onClick={() => mobile && setOpen(false)}
       >
         <div className="flex items-center justify-between">
           <Wm fill="var(--foreground)" w={120} />
           <div className="flex items-center gap-1.5">
-            <span className="text-[9px] font-semibold tracking-wider uppercase text-muted-foreground border border-border rounded px-1.5 py-0.5 leading-none">
+            <span className="text-[9px] font-semibold tracking-wider uppercase text-hub-t3 border border-hub-border rounded px-1.5 py-0.5 leading-none">
               Beta
             </span>
             {mobile && (
               <button
                 onClick={(e) => { e.preventDefault(); e.stopPropagation(); setOpen(false); }}
-                className="bg-transparent border-none text-muted-foreground cursor-pointer p-1 flex"
+                className="bg-transparent border-none text-hub-t2 cursor-pointer p-1 flex"
               >
                 <X size={18} />
               </button>
             )}
           </div>
         </div>
-        <span className="text-[11px] text-muted-foreground mt-1.5">Brand Hub</span>
+        <span className="text-[11px] text-hub-t3 mt-2">Brand Hub</span>
       </Link>
 
       {/* Navigation */}
-      <nav className="flex-1 px-2 overflow-auto">
+      <nav className="flex-1 px-3 pt-6 overflow-auto">
         {nav.map((s, si) => (
           <div key={si}>
             {s.label && (
-              <div className="text-[11px] font-semibold text-muted-foreground uppercase tracking-[0.06em] leading-none px-2 pt-4 pb-1.5">
+              <div className="text-[11px] font-semibold text-hub-t3 uppercase tracking-[0.06em] leading-none px-2 pt-5 pb-2">
                 {s.label}
               </div>
             )}
@@ -120,8 +120,8 @@ export function Sidebar({ mobile, open, setOpen }: SidebarProps) {
       </nav>
 
       {/* Footer */}
-      <div className="px-3.5 py-3 border-t border-border flex items-center justify-between">
-        <span className="text-[11px] text-muted-foreground">&copy; CASAGO GmbH</span>
+      <div className="px-5 py-3.5 border-t border-hub-border flex items-center justify-between">
+        <span className="text-[11px] text-hub-t3">&copy; CASAGO GmbH</span>
         <SignedIn>
           <UserButton
             appearance={{
