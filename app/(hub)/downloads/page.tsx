@@ -14,8 +14,12 @@ const assetCategories = [
     files: [
       { label: "Black SVG", file: "CASAGO-Wortmarke-Black.svg", href: "/assets/logos/CASAGO-Wortmarke-Black.svg" },
       { label: "Black PNG", file: "CASAGO-Wortmarke-Black.png", href: "/assets/logos/CASAGO-Wortmarke-Black.png" },
+      { label: "Anthrazit SVG", file: "CASAGO-Wortmarke-Anthrazit.svg", href: "/assets/logos/CASAGO-Wortmarke-Anthrazit.svg" },
+      { label: "Anthrazit PNG", file: "CASAGO-Wortmarke-Anthrazit.png", href: "/assets/logos/CASAGO-Wortmarke-Anthrazit.png" },
       { label: "White SVG", file: "CASAGO-Wortmarke-White.svg", href: "/assets/logos/CASAGO-Wortmarke-White.svg" },
       { label: "White PNG", file: "CASAGO-Wortmarke-White.png", href: "/assets/logos/CASAGO-Wortmarke-White.png" },
+      { label: "Outline SVG", file: "CASAGO-Wortmarke-Outline.svg", href: "/assets/logos/CASAGO-Wortmarke-Outline.svg" },
+      { label: "Outline PNG", file: "CASAGO-Wortmarke-Outline.png", href: "/assets/logos/CASAGO-Wortmarke-Outline.png" },
     ],
   },
   {
@@ -52,13 +56,13 @@ export default function DownloadsPage() {
             <div className="text-[13px] font-medium text-foreground">CASAGO Brand Kit</div>
             <p className="text-[13px] text-muted-foreground mt-1 mb-0">Komplettes Asset-Paket: Logos, Schriften, Farbpalette. ZIP-Download.</p>
           </div>
-          <button
-            disabled
-            title="Bald verfügbar"
-            className="flex items-center gap-1.5 px-5 py-2.5 rounded-[10px] border-none bg-foreground text-background text-[13px] font-medium cursor-not-allowed opacity-40"
+          <a
+            href="/api/download/brand-kit"
+            className="flex items-center gap-1.5 px-5 py-2.5 rounded-button border-none bg-foreground text-background text-[13px] font-medium cursor-pointer no-underline transition-opacity hover:opacity-90 min-h-[44px]"
+            aria-label="CASAGO Brand Kit als ZIP herunterladen"
           >
-            <Download size={14} /> ZIP herunterladen
-          </button>
+            <Download size={14} aria-hidden="true" /> ZIP herunterladen
+          </a>
         </div>
       </Sect>
 
