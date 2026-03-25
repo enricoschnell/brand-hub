@@ -50,6 +50,7 @@ export default function HomePage() {
   const drawDur = 1.6;
   const logoW = mobile ? 340 : 620;
   const showIntro = !hasPlayed && phase < 4;
+  const sidebarW = mobile ? 0 : 220;
 
   const css = `
     @keyframes draw { to { stroke-dashoffset: 0; } }
@@ -63,21 +64,21 @@ export default function HomePage() {
   `;
 
   return (
-    <div style={{ display: "flex", minHeight: "100vh", background: C.bg, fontFamily: ff, color: C.t1 }}>
+    <div className="flex h-screen overflow-hidden" style={{ background: C.bg, fontFamily: ff, color: C.t1 }}>
       <Sidebar mobile={mobile} open={drawerOpen} setOpen={setDrawerOpen} />
-      <div style={{
-        flex: 1, marginLeft: mobile ? 0 : 220,
-        display: "flex", flexDirection: "column",
-        minWidth: 0, height: "100vh", overflow: "hidden",
-      }}>
+      <div
+        className="flex flex-1 flex-col min-w-0 h-screen overflow-hidden"
+        style={{ marginLeft: sidebarW }}
+      >
         {mobile && <MobileHeader onMenu={() => setDrawerOpen(true)} />}
 
-        {/* Intro overlay */}
+        {/* Intro overlay — uses left offset instead of marginLeft */}
         {showIntro && (
           <div
             style={{
-              position: "fixed", inset: 0,
-              marginLeft: mobile ? 0 : 220,
+              position: "fixed",
+              top: 0, right: 0, bottom: 0,
+              left: sidebarW,
               display: "flex", flexDirection: "column",
               alignItems: "center", justifyContent: "center",
               textAlign: "center",
@@ -128,13 +129,14 @@ export default function HomePage() {
           </div>
         )}
 
-        {/* Chat — full height, ChatGPT layout */}
-        <div style={{
-          flex: 1, display: "flex", flexDirection: "column",
-          opacity: phase >= 4 ? 1 : (phase >= 3 ? 1 : 0),
-          transition: hasPlayed ? "none" : "opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.3s",
-          overflow: "hidden",
-        }}>
+        {/* Chat — full height */}
+        <div
+          className="flex flex-1 flex-col overflow-hidden"
+          style={{
+            opacity: phase >= 4 ? 1 : (phase >= 3 ? 1 : 0),
+            transition: hasPlayed ? "none" : "opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.3s",
+          }}
+        >
           <BrandChat />
         </div>
       </div>

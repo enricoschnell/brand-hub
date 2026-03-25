@@ -23,7 +23,7 @@ export default function RootLayout({
 }) {
   const content = (
     <html lang="de" className="dark">
-      <body style={{ margin: 0, padding: 0 }}>
+      <body style={{ margin: 0, padding: 0, overflowX: "hidden" }}>
         <Providers>{children}</Providers>
       </body>
     </html>
