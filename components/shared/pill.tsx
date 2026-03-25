@@ -17,14 +17,16 @@ interface PillProps {
 
 export function Pill({ options, value, onChange }: PillProps) {
   return (
-    <div className="inline-flex gap-px bg-background rounded-lg p-0.5 border border-border">
+    <div className="inline-flex gap-px bg-background rounded-lg p-0.5 border border-border" role="tablist">
       {options.map((o) => (
         <button
           key={o.value}
           onClick={() => onChange(o.value)}
+          role="tab"
+          aria-selected={value === o.value}
           className={cn(
-            "px-3.5 py-1.5 rounded-md border-none cursor-pointer font-hub text-xs font-medium",
-            "flex items-center gap-1 min-h-[32px] transition-colors",
+            "px-3.5 py-2 rounded-md border-none cursor-pointer font-hub text-xs font-medium",
+            "flex items-center gap-1 min-h-[44px] transition-colors",
             value === o.value
               ? "bg-hub-active text-hub-t1"
               : "bg-transparent text-hub-t3 hover:text-hub-t2"

@@ -76,9 +76,10 @@ export function Sidebar({ mobile, open, setOpen }: SidebarProps) {
             {mobile && (
               <button
                 onClick={(e) => { e.preventDefault(); e.stopPropagation(); setOpen(false); }}
+                aria-label="Menü schließen"
                 className="bg-transparent border-none text-hub-t2 cursor-pointer p-1 flex"
               >
-                <X size={18} />
+                <X size={18} aria-hidden="true" />
               </button>
             )}
           </div>
@@ -103,7 +104,7 @@ export function Sidebar({ mobile, open, setOpen }: SidebarProps) {
                   href={n.id}
                   onClick={() => mobile && setOpen(false)}
                   className={cn(
-                    "group/nav flex items-center gap-2 w-full px-2.5 py-[7px] rounded-[7px] no-underline",
+                    "group/nav flex items-center gap-2 w-full px-2.5 py-[7px] rounded-swatch no-underline",
                     "text-[13px] font-hub cursor-pointer text-left mb-px min-h-[40px] transition-colors",
                     active
                       ? "bg-hub-active text-hub-t1 font-medium"
@@ -193,9 +194,10 @@ export function MobileHeader({ onMenu }: { onMenu: () => void }) {
     <div className="sticky top-0 z-20 bg-background border-b border-border px-4 h-[52px] flex items-center gap-3">
       <button
         onClick={onMenu}
+        aria-label="Menü öffnen"
         className="bg-transparent border-none text-foreground cursor-pointer p-2 -m-2 flex min-w-[44px] min-h-[44px] items-center justify-center"
       >
-        <Menu size={20} />
+        <Menu size={20} aria-hidden="true" />
       </button>
       <div className="text-[13px] font-medium text-foreground">{title}</div>
     </div>

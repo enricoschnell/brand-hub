@@ -111,7 +111,7 @@ export default function TeamPage() {
             <input type="password" value={pw} onChange={(e) => { setPw(e.target.value); setAuthError(false); }} onKeyDown={(e) => e.key === "Enter" && doLogin()} className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground text-[13px] font-hub outline-none min-h-[38px]" placeholder="Admin-Passwort eingeben" />
           </div>
           {authError && <p className="text-[11px] text-red-500 mb-4">Falsches Passwort.</p>}
-          <button onClick={doLogin} className="px-4 py-2 rounded-lg border-none text-xs font-medium font-hub cursor-pointer flex items-center gap-1.5 min-h-[36px] bg-foreground text-background">Anmelden</button>
+          <button onClick={doLogin} className="px-4 py-2 rounded-lg border-none text-xs font-medium font-hub cursor-pointer flex items-center gap-1.5 min-h-[44px] bg-foreground text-background">Anmelden</button>
         </div>
       </div>
     );
@@ -168,10 +168,10 @@ export default function TeamPage() {
             </div>
           </div>
           <div className="flex gap-2 mt-6">
-            <button onClick={save} disabled={saving || !form.name.trim() || !form.role.trim()} className={cn("px-4 py-2 rounded-lg border-none text-xs font-medium font-hub cursor-pointer flex items-center gap-1.5 min-h-[36px] bg-foreground text-background", (saving || !form.name.trim()) && "opacity-50")}>
+            <button onClick={save} disabled={saving || !form.name.trim() || !form.role.trim()} className={cn("px-4 py-2 rounded-lg border-none text-xs font-medium font-hub cursor-pointer flex items-center gap-1.5 min-h-[44px] bg-foreground text-background", (saving || !form.name.trim()) && "opacity-50")}>
               {saving ? "Speichern..." : "Speichern"}
             </button>
-            <button onClick={() => setEditing(null)} className="px-4 py-2 rounded-lg border border-border text-xs font-medium font-hub cursor-pointer flex items-center gap-1.5 min-h-[36px] bg-transparent text-muted-foreground">
+            <button onClick={() => setEditing(null)} className="px-4 py-2 rounded-lg border border-border text-xs font-medium font-hub cursor-pointer flex items-center gap-1.5 min-h-[44px] bg-transparent text-muted-foreground">
               Abbrechen
             </button>
           </div>
@@ -185,7 +185,7 @@ export default function TeamPage() {
       <PageHeader title="Team" desc="Mitarbeiter verwalten für die Signatur-Generierung." mobile={mobile} />
       <div className="flex justify-between items-center mb-4">
         <div className="text-[11px] font-semibold text-muted-foreground uppercase tracking-[0.06em] leading-none">{team.length} Mitarbeiter</div>
-        <button onClick={startNew} className="px-4 py-2 rounded-lg border-none text-xs font-medium font-hub cursor-pointer flex items-center gap-1.5 min-h-[36px] bg-foreground text-background">
+        <button onClick={startNew} className="px-4 py-2 rounded-lg border-none text-xs font-medium font-hub cursor-pointer flex items-center gap-1.5 min-h-[44px] bg-foreground text-background">
           <Plus size={13} /> Hinzufügen
         </button>
       </div>
@@ -205,10 +205,10 @@ export default function TeamPage() {
               </div>
             </div>
             <div className="flex gap-1 shrink-0">
-              <button onClick={() => startEdit(emp)} className="bg-transparent border border-border rounded-lg text-muted-foreground cursor-pointer p-2 flex min-w-[36px] min-h-[36px] items-center justify-center">
+              <button onClick={() => startEdit(emp)} className="bg-transparent border border-border rounded-lg text-muted-foreground cursor-pointer p-2 flex min-w-[44px] min-h-[44px] items-center justify-center">
                 <Pencil size={13} />
               </button>
-              <button onClick={() => remove(emp.id!)} className="bg-transparent border border-border rounded-lg text-muted-foreground cursor-pointer p-2 flex min-w-[36px] min-h-[36px] items-center justify-center">
+              <button onClick={() => remove(emp.id!)} className="bg-transparent border border-border rounded-lg text-muted-foreground cursor-pointer p-2 flex min-w-[44px] min-h-[44px] items-center justify-center">
                 <Trash size={13} />
               </button>
             </div>

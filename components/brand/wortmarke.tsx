@@ -1,7 +1,6 @@
 "use client";
 
-import { C } from "@/lib/tokens";
-import { WP, WORTMARKE_VIEWBOX } from "@/lib/brand-data";
+import { WP } from "@/lib/brand-data";
 
 interface WmProps {
   fill?: string;
@@ -11,12 +10,13 @@ interface WmProps {
 /** Padded viewBox to prevent stroke clipping at edges */
 const PADDED_VIEWBOX = "-2 -2 990.77 178.91";
 
-export function Wm({ fill = C.t1, w = 100 }: WmProps) {
+export function Wm({ fill = "var(--foreground)", w = 100 }: WmProps) {
   return (
     <svg
       viewBox={PADDED_VIEWBOX}
       width={w}
-      style={{ display: "block", maxWidth: "100%", height: "auto", overflow: "visible" }}
+      className="block max-w-full h-auto overflow-visible"
+      aria-hidden="true"
     >
       {WP.map((d, i) => (
         <path key={i} d={d} fill={fill} />
@@ -27,7 +27,7 @@ export function Wm({ fill = C.t1, w = 100 }: WmProps) {
 
 export function WmOutline({ stroke = "#fff", w = 100 }: { stroke?: string; w?: number }) {
   return (
-    <svg viewBox={PADDED_VIEWBOX} width={w} style={{ display: "block", overflow: "visible" }}>
+    <svg viewBox={PADDED_VIEWBOX} width={w} className="block overflow-visible" aria-hidden="true">
       {WP.map((d, i) => (
         <path key={i} d={d} fill="none" stroke={stroke} strokeWidth="3" />
       ))}

@@ -8,6 +8,7 @@ import { useIsMobile } from "@/lib/hooks";
 import { cn } from "@/lib/utils";
 import { C } from "@/lib/tokens";
 import { META, TEAM, SC, LOGO_SIZES, type TeamMember } from "@/lib/brand-data";
+import { buildSignatureHtml } from "@/lib/signature";
 import { PageHeader } from "@/components/shared/page-header";
 import { Pill } from "@/components/shared/pill";
 import { Wm } from "@/components/brand/wortmarke";
@@ -38,36 +39,8 @@ export default function SigPage() {
   const p = team[pi] || team[0];
   const logoW = LOGO_SIZES[logoSize];
 
-  const buildHtml = () => {
-    const c = SC.light;
-    const contactRows = p.contacts
-      .map(
-        (ct) =>
-          `<tr><td style="font-size:14px;line-height:1.4;padding:2px 0;"><span style="display:inline-block;width:18px;color:${c.lbl};font-weight:500;">${ct.label}</span><a href="${ct.href}" style="color:${ct.label === "E" ? c.p : c.s};text-decoration:none;">${ct.value}</a></td></tr>`
-      )
-      .join("");
-    const hasClosing = showAddress || showClaim;
-    return [
-      `<table cellpadding="0" cellspacing="0" border="0" style="font-family:Helvetica,Arial,sans-serif;color:${c.p};">`,
-      `<tr><td style="padding-bottom:20px;"><a href="https://${META.website}" style="text-decoration:none;"><img src="https://brand.casago.de/sig/wortmarke.png" alt="${META.name}" width="${logoW}" style="display:block;border:0;"/></a></td></tr>`,
-      `<tr><td style="padding-bottom:16px;"><p style="margin:0;font-size:17px;font-weight:600;color:${c.p};line-height:1.3;">${p.name}</p><p style="margin:4px 0 0;font-size:14px;color:${c.s};line-height:1.4;">${p.role}</p></td></tr>`,
-      `<tr><td><table cellpadding="0" cellspacing="0" border="0">${contactRows}</table></td></tr>`,
-      hasClosing
-        ? `<tr><td style="padding-top:16px;border-top:1px solid #e5e5e5;">` +
-          (showAddress
-            ? `<p style="margin:0 0 ${showClaim ? "12" : "0"}px;font-size:13px;color:${c.s};line-height:1.5;"><a href="${META.mapsUrl}" style="color:${c.s};text-decoration:none;">${META.legal}<br/>${META.address.replace(/\n/g, "<br/>")}</a></p>`
-            : "") +
-          (showClaim
-            ? `<p style="margin:0;font-size:12px;font-weight:400;color:${c.q};letter-spacing:1.2px;text-transform:uppercase;line-height:1;">${META.claim}</p>`
-            : "") +
-          `</td></tr>`
-        : "",
-      `</table>`,
-    ].join("");
-  };
-
   const doCopy = (type: string) => {
-    const html = buildHtml();
+    const html = buildSignatureHtml(p, { showClaim, showAddress, logoSize });
     if (type === "html") {
       navigator.clipboard.writeText(html);
     } else {
@@ -150,6 +123,7 @@ export default function SigPage() {
                 <button
                   key={i}
                   onClick={() => setPi(i)}
+                  aria-label={t.name}
                   className={cn(
                     "flex items-center gap-2.5 font-hub text-left min-h-[48px] rounded-[10px] cursor-pointer",
                     mobile ? "w-auto shrink-0 px-3 py-2.5" : "w-full px-3 py-2.5 mb-1.5",
@@ -185,7 +159,10 @@ export default function SigPage() {
             </div>
             <div
               onClick={() => setShowClaim(!showClaim)}
-              className="flex items-center gap-2.5 cursor-pointer text-[13px] text-muted-foreground min-h-[36px]"
+              role="switch"
+              aria-checked={showClaim}
+              aria-label="Claim"
+              className="flex items-center gap-2.5 cursor-pointer text-[13px] text-muted-foreground min-h-[44px]"
             >
               <div
                 className="flex items-center rounded-full p-0.5 transition-colors duration-150"
@@ -205,7 +182,10 @@ export default function SigPage() {
             </div>
             <div
               onClick={() => setShowAddress(!showAddress)}
-              className="flex items-center gap-2.5 cursor-pointer text-[13px] text-muted-foreground min-h-[36px] mt-1"
+              role="switch"
+              aria-checked={showAddress}
+              aria-label="Adresse"
+              className="flex items-center gap-2.5 cursor-pointer text-[13px] text-muted-foreground min-h-[44px] mt-1"
             >
               <div
                 className="flex items-center rounded-full p-0.5 transition-colors duration-150"
@@ -276,12 +256,14 @@ export default function SigPage() {
           <div className="flex gap-2">
             <button
               onClick={() => doCopy("rich")}
+              aria-label="Formatiert kopieren"
               className="flex-1 py-2.5 px-3.5 rounded-[10px] border-none bg-hub-t1 text-hub-bg text-[13px] font-medium font-hub cursor-pointer flex items-center justify-center gap-1.5 min-h-[44px]"
             >
               {copied === "rich" ? <Check size={14} /> : <Copy size={14} />}{copied === "rich" ? "Kopiert" : mobile ? "Kopieren" : "Formatiert kopieren"}
             </button>
             <button
               onClick={() => doCopy("html")}
+              aria-label="HTML kopieren"
               className="flex-1 py-2.5 px-3.5 rounded-[10px] border border-border bg-transparent text-hub-t2 text-[13px] font-medium font-hub cursor-pointer flex items-center justify-center gap-1.5 min-h-[44px]"
             >
               {copied === "html" ? <Check size={14} /> : <Code size={14} />}{copied === "html" ? "Kopiert" : "HTML"}
@@ -309,7 +291,7 @@ export default function SigPage() {
               </button>
               {showSrc && (
                 <div className="rounded-xl border border-border bg-card overflow-hidden p-[18px] max-h-[200px] overflow-auto">
-                  <pre className="m-0 text-[10px] text-hub-t3 font-mono whitespace-pre-wrap break-all leading-[1.6]">{buildHtml()}</pre>
+                  <pre className="m-0 text-[10px] text-hub-t3 font-mono whitespace-pre-wrap break-all leading-[1.6]">{buildSignatureHtml(p, { showClaim, showAddress, logoSize })}</pre>
                 </div>
               )}
               <div className="flex gap-3 text-[11px] text-hub-t3 flex-wrap">

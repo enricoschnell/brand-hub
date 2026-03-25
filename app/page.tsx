@@ -4,10 +4,13 @@ import { useState, useRef, useEffect } from "react";
 import { Sidebar, MobileHeader } from "@/components/sidebar";
 import { BrandChat } from "@/components/agent/chat";
 import { useIsMobile } from "@/lib/hooks";
-import { C, ff } from "@/lib/tokens";
 import { META, WP } from "@/lib/brand-data";
 
 const ANIM_KEY = "casago_anim_played";
+const FG = "var(--foreground)";
+const FG_HEX = "#eeeff1";
+const T2_HEX = "#8b8d94";
+const BG_HEX = "#0a0a0b";
 
 export default function HomePage() {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -64,7 +67,7 @@ export default function HomePage() {
   `;
 
   return (
-    <div className="flex h-screen overflow-hidden" style={{ background: C.bg, fontFamily: ff, color: C.t1 }}>
+    <div className="flex h-screen overflow-hidden bg-background font-hub text-foreground">
       <Sidebar mobile={mobile} open={drawerOpen} setOpen={setDrawerOpen} />
       <div
         className="flex flex-1 flex-col min-w-0 h-screen overflow-hidden"
@@ -72,18 +75,13 @@ export default function HomePage() {
       >
         {mobile && <MobileHeader onMenu={() => setDrawerOpen(true)} />}
 
-        {/* Intro overlay — uses left offset instead of marginLeft */}
+        {/* Intro overlay */}
         {showIntro && (
           <div
+            className="fixed top-0 right-0 bottom-0 flex flex-col items-center justify-center text-center z-[5] bg-background"
             style={{
-              position: "fixed",
-              top: 0, right: 0, bottom: 0,
               left: sidebarW,
-              display: "flex", flexDirection: "column",
-              alignItems: "center", justifyContent: "center",
-              textAlign: "center",
               padding: mobile ? "40px 20px" : 0,
-              zIndex: 5, background: C.bg,
               opacity: phase >= 3 ? 0 : 1,
               transition: "opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1)",
               pointerEvents: phase >= 3 ? "none" : "auto",
@@ -91,12 +89,18 @@ export default function HomePage() {
           >
             <style>{css}</style>
             <div style={{ animation: phase >= 1 ? "breathe 2.4s cubic-bezier(0.37, 0, 0.63, 1) 0.3s 1" : "none" }}>
-              <svg ref={svgRef} viewBox="-2 -2 990.77 178.91" width={logoW} style={{ display: "block", overflow: "visible", maxWidth: "100%" }}>
+              <svg
+                ref={svgRef}
+                viewBox="-2 -2 990.77 178.91"
+                width={logoW}
+                className="block overflow-visible max-w-full"
+                aria-hidden="true"
+              >
                 {WP.map((d, i) => {
                   const len = lengths ? lengths[i] : 2400;
                   const delay = staggerDelays[order[i]];
                   return (
-                    <path key={i} d={d} fill={C.t1} stroke={C.t1}
+                    <path key={i} d={d} fill={FG_HEX} stroke={FG_HEX}
                       strokeWidth={mobile ? "2.8" : "1.6"} strokeLinecap="round" strokeLinejoin="round"
                       style={{
                         strokeDasharray: len, strokeDashoffset: lengths ? len : 0,
@@ -114,10 +118,10 @@ export default function HomePage() {
                 })}
               </svg>
             </div>
-            <div style={{ display: "flex", gap: mobile ? 6 : 8, marginTop: mobile ? 20 : 28, justifyContent: "center" }}>
+            <div className={`flex justify-center ${mobile ? "gap-1.5 mt-5" : "gap-2 mt-7"}`}>
               {META.tagline.split(" ").map((word, wi) => (
-                <span key={wi} style={{
-                  fontSize: mobile ? 17 : 20, fontWeight: 400, color: C.t2, letterSpacing: "0.04em",
+                <span key={wi} className={`font-normal tracking-[0.04em] ${mobile ? "text-[17px]" : "text-xl"}`} style={{
+                  color: T2_HEX,
                   opacity: phase >= 2 ? 1 : 0,
                   transform: phase >= 2 ? "translateY(0)" : "translateY(10px)",
                   transition: `opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1) ${wi * 0.12}s, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) ${wi * 0.12}s`,
@@ -129,7 +133,7 @@ export default function HomePage() {
           </div>
         )}
 
-        {/* Chat — full height */}
+        {/* Chat */}
         <div
           className="flex flex-1 flex-col overflow-hidden"
           style={{
