@@ -234,6 +234,14 @@ export const agentTools = {
       tone?: string;
       maxLength?: number;
     }) => {
+      // Shared brand voice constraints for all copy formats
+      const sharedVoice = {
+        address: "Immer 'Sie' und 'Wir' — niemals 'du' oder 'ich'",
+        framing: "Partner auf Augenhöhe — nie Dienstleister-Sprache",
+        vocabulary: "Kernvokabular: 'ganzheitlich', 'aus einer Hand', 'Partnerschaft auf Augenhöhe', 'Herzblut', 'lösungsorientiert', 'nicht von der Stange'",
+        avoid: "Keine Superlative ohne Substanz, keine Ausrufezeichenketten, kein Passiv",
+      };
+
       const guidelines: Record<string, any> = {
         social_post: {
           font: "Aeonik Pro Regular",
@@ -241,43 +249,50 @@ export const agentTools = {
           hashtags: "Max 3, deutsch bevorzugt",
           maxLength: maxLength || 280,
           tone: tone || "approachable",
-          rules: "Keine Superlative, keine Ausrufezeichen-Ketten, sachlich-warm",
+          rules: "Sachlich-warm, authentisch. Konkrete Referenzen statt leere Superlative.",
+          example: "Wir betrachten Projekte nicht nur in einer Dimension. Sondern ganzheitlich.",
         },
         headline: {
-          font: "Aeonik Pro Medium",
-          casing: "Sentence case, kein ALL CAPS (außer Claim)",
+          font: "Aeonik Pro Medium (500)",
+          casing: "Sentence case — kein ALL CAPS außer Claim",
           maxLength: maxLength || 60,
           tone: tone || "formal",
-          rules: "Klar, direkt, technische Kompetenz zeigen",
+          rules: "Klar, direkt, Kompetenz durch Substanz zeigen. Aktive Sprache.",
+          example: "Von der ersten Idee bis zur Übergabe — alles aus einer Hand.",
         },
         project_description: {
           font: "Aeonik Pro Regular für Fließtext",
           casing: "Standard",
           maxLength: maxLength || 500,
           tone: tone || "technical",
-          rules: "Planung, Umsetzung, Qualität, Nachhaltigkeit betonen. Aktive Sprache.",
+          rules: "Partnerschaft, ganzheitlichen Ansatz, Qualität und Zukunftssicherheit betonen. Langer Satz → kurzer Anker.",
+          example: "Mit Partnerschaften auf Augenhöhe zum gemeinsamen Projekt.",
         },
         email_subject: {
           font: "N/A (System-Font)",
           casing: "Sentence case",
           maxLength: maxLength || 50,
           tone: tone || "formal",
-          rules: "Prägnant, informativ, kein Clickbait",
+          rules: "Prägnant, informativ, kein Clickbait. Sachlich-professionell.",
+          example: "Ihr Projekt — unser gemeinsames Anliegen",
         },
         tagline: {
-          font: "Aeonik Pro Medium",
+          font: "Aeonik Pro Medium (500)",
           casing: "Sentence case",
           maxLength: maxLength || 40,
           tone: tone || "approachable",
-          rules: "Kurz, einprägsam, markenkonform. Referenz: 'Planen. Umsetzen. Leben.'",
+          rules: "Kurz, einprägsam, markenkonform. Rhythmus wie 'Planen. Umsetzen. Leben.'",
+          example: "Schaffen wir etwas Besonderes zusammen.",
         },
       };
+
       return {
         format,
         topic,
         guidelines: guidelines[format] || guidelines.headline,
+        voice: sharedVoice,
         brandClaim: "PLANEN. UMSETZEN. LEBEN.",
-        brandValues: "Präzision, Nachhaltigkeit, ganzheitliche Betrachtung",
+        brandValues: "Partnerschaftlich, Kompetent & erfahren, Leidenschaftlich, Zukunftsorientiert, Lösungsorientiert, Wertschätzend",
       };
     },
   }),
