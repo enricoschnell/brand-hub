@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "CASAGO Brand Hub",
   description: "Planen. Umsetzen. Leben. — Brand Guidelines & Assets",
   icons: { icon: "/favicon.ico" },
+  robots: { index: true, follow: true },
 };
 
 function Providers({ children }: { children: React.ReactNode }) {
