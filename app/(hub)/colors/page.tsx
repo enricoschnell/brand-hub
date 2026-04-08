@@ -24,7 +24,7 @@ export default function ColorsPage() {
         <Sect key={group.group} label={group.group} mobile={mobile} last={gi === BRAND_COLORS.length - 1}>
           <div
             className={cn(
-              "grid gap-3",
+              "grid gap-4",
               mobile
                 ? "grid-cols-2"
                 : {
@@ -57,7 +57,7 @@ export default function ColorsPage() {
                     )}
                   </div>
                   <div className="pt-2 px-0.5 flex justify-between items-baseline">
-                    <span className="text-xs font-medium text-hub-t1">{c.name}</span>
+                    <span className="text-[13px] font-medium text-hub-t1 font-hub">{c.name}</span>
                     <span
                       className={cn(
                         "text-[11px] font-mono transition-colors duration-150",

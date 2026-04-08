@@ -1,3 +1,5 @@
+import { cn } from "@/lib/utils";
+
 interface PageHeaderProps {
   title: string;
   desc: string;
@@ -6,11 +8,18 @@ interface PageHeaderProps {
 
 export function PageHeader({ title, desc, mobile }: PageHeaderProps) {
   return (
-    <div className={mobile ? "mb-6" : "mb-10"}>
-      <h1 className="text-2xl font-semibold tracking-tight text-foreground mb-2 leading-tight">
+    <div className={cn(mobile ? "mb-8" : "mb-12")}>
+      <h1
+        className={cn(
+          "font-brand font-normal text-hub-t1 leading-tight tracking-tight",
+          mobile ? "text-[28px] mb-2" : "text-[34px] mb-3"
+        )}
+      >
         {title}
       </h1>
-      <p className="text-[15px] text-muted-foreground leading-relaxed">{desc}</p>
+      <p className={cn("text-hub-t2 leading-relaxed max-w-[540px]", mobile ? "text-[14px]" : "text-[15px]")}>
+        {desc}
+      </p>
     </div>
   );
 }

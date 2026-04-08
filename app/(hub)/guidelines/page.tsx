@@ -1,7 +1,8 @@
 "use client";
 
-import { BookOpen, CheckCircle, XCircle, Shield } from "lucide-react";
+import { BookOpen, Shield } from "lucide-react";
 import { useIsMobile } from "@/lib/hooks";
+import { cn } from "@/lib/utils";
 import { PageHeader } from "@/components/shared/page-header";
 import { Sect } from "@/components/shared/section";
 import { Wm } from "@/components/brand/wortmarke";
@@ -34,16 +35,16 @@ export default function GuidelinesPage() {
       />
 
       <Sect label="Markenzeichen" icon={<Shield size={12} />} mobile={mobile}>
-        <div className="rounded-xl border border-border bg-card overflow-hidden p-6">
-          <div className={`${mobile ? "" : "flex gap-10 items-center"}`}>
-            <div className={`bg-background rounded-[10px] p-6 flex items-center justify-center ${mobile ? "mb-4" : ""} min-w-[200px]`}>
-              <Wm fill="var(--foreground)" w={160} />
+        <div className="rounded-xl border border-hub-border bg-hub-surface overflow-hidden p-6">
+          <div className={cn(mobile ? "block" : "flex gap-10 items-center")}>
+            <div className={cn("bg-hub-bg rounded-[10px] p-6 flex items-center justify-center min-w-[200px]", mobile && "mb-5")}>
+              <Wm fill="var(--hub-t1, #eeeff1)" w={160} />
             </div>
             <div>
-              <p className="text-[13px] text-muted-foreground leading-relaxed mb-2">
-                Die <strong className="text-foreground">Wortmarke</strong> ist das einzige Markenzeichen von CASAGO. Es gibt keine Bildmarke und keine Wort-Bildmarke.
+              <p className="text-[14px] text-hub-t2 leading-relaxed mb-2">
+                Die <strong className="text-hub-t1 font-medium">Wortmarke</strong> ist das einzige Markenzeichen von CASAGO. Es gibt keine Bildmarke und keine Wort-Bildmarke.
               </p>
-              <p className="text-[13px] text-muted-foreground leading-relaxed m-0">
+              <p className="text-[14px] text-hub-t2 leading-relaxed m-0">
                 Die Wortmarke wird stets als Ganzes verwendet. Sie darf nicht beschnitten, verzerrt oder in Einzelbuchstaben zerlegt werden.
               </p>
             </div>
@@ -52,44 +53,46 @@ export default function GuidelinesPage() {
       </Sect>
 
       <Sect label="Schrift" icon={<BookOpen size={12} />} mobile={mobile}>
-        <div className="rounded-xl border border-border bg-card overflow-hidden p-6">
+        <div className="rounded-xl border border-hub-border bg-hub-surface overflow-hidden p-6">
           <div className="mb-4">
-            <span className="text-[28px] font-medium text-foreground font-brand">Aeonik Pro</span>
+            <span className={cn("font-medium text-hub-t1 font-brand", mobile ? "text-[24px]" : "text-[28px]")}>Aeonik Pro</span>
           </div>
-          <p className="text-[13px] text-muted-foreground leading-relaxed mb-4">
-            Zwei Gewichte — nicht mehr: <strong className="text-foreground">Regular (400)</strong> für Fließtext und UI-Elemente, <strong className="text-foreground">Medium (500)</strong> für Headlines und Akzente. Kein Bold, kein SemiBold, kein Light. Die Ruhe der Marke entsteht durch diesen bewussten Verzicht.
+          <p className="text-[14px] text-hub-t2 leading-relaxed mb-4">
+            Zwei Gewichte — nicht mehr: <strong className="text-hub-t1 font-medium">Regular (400)</strong> für Fließtext und UI-Elemente, <strong className="text-hub-t1 font-medium">Medium (500)</strong> für Headlines und Akzente. Kein Bold, kein SemiBold, kein Light. Die Ruhe der Marke entsteht durch diesen bewussten Verzicht.
           </p>
-          <p className="text-[11px] text-muted-foreground m-0">Lizenz: CoType Foundry — nur für CASAGO-Mitarbeiter und beauftragte Dienstleister.</p>
+          <p className="text-[12px] text-hub-t3 m-0">Lizenz: CoType Foundry — nur für CASAGO-Mitarbeiter und beauftragte Dienstleister.</p>
         </div>
       </Sect>
 
       <Sect label="Richtig & Falsch" mobile={mobile} last>
-        <div className={`grid gap-2.5 ${mobile ? "grid-cols-1" : "grid-cols-2"}`}>
-          <div className="rounded-xl border border-border bg-card overflow-hidden p-6">
-            <div className="flex items-center gap-[7px] mb-4">
-              <CheckCircle size={14} className="text-green-500" />
-              <span className="text-[13px] font-medium text-green-500">Richtig</span>
+        <div className={cn("grid gap-4", mobile ? "grid-cols-1" : "grid-cols-2")}>
+          {/* Richtig */}
+          <div className="rounded-xl border border-hub-border bg-hub-surface overflow-hidden p-6">
+            <div className="flex items-center gap-2 mb-5">
+              <span className="w-1.5 h-1.5 rounded-full bg-brand-cyan block" />
+              <span className="text-[12px] font-semibold text-hub-t1 uppercase tracking-[0.08em]">Richtig</span>
             </div>
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-3">
               {dos.map((d, i) => (
-                <div key={i} className="text-[13px] text-muted-foreground leading-relaxed flex gap-2">
-                  <span className="text-green-500 flex-shrink-0 mt-0.5">+</span>
+                <div key={i} className="flex gap-3 text-[14px] text-hub-t2 leading-relaxed">
+                  <span className="text-brand-cyan shrink-0 mt-0.5 font-medium">+</span>
                   {d}
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="rounded-xl border border-border bg-card overflow-hidden p-6">
-            <div className="flex items-center gap-[7px] mb-4">
-              <XCircle size={14} className="text-red-500" />
-              <span className="text-[13px] font-medium text-red-500">Falsch</span>
+          {/* Falsch */}
+          <div className="rounded-xl border border-hub-border bg-hub-surface overflow-hidden p-6">
+            <div className="flex items-center gap-2 mb-5">
+              <span className="w-1.5 h-1.5 rounded-full bg-destructive block" />
+              <span className="text-[12px] font-semibold text-hub-t3 uppercase tracking-[0.08em]">Falsch</span>
             </div>
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-3">
               {donts.map((d, i) => (
-                <div key={i} className="text-[13px] text-muted-foreground leading-relaxed flex gap-2">
-                  <span className="text-red-500 flex-shrink-0 mt-0.5">-</span>
-                  {d}
+                <div key={i} className="flex gap-3 text-[14px] text-hub-t3 leading-relaxed">
+                  <span className="text-destructive shrink-0 mt-0.5">—</span>
+                  <span className="line-through decoration-hub-t3/40">{d}</span>
                 </div>
               ))}
             </div>

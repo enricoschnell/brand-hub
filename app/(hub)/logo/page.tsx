@@ -29,7 +29,7 @@ export default function LogoPage() {
       <PageHeader title="Logo" desc="Freigegebene Wortmarke in allen Varianten und Formaten." mobile={mobile} />
 
       <Sect label="Digital" icon={<ImageIcon size={12} />} mobile={mobile}>
-        <div className={cn("grid gap-2.5", mobile ? "grid-cols-1" : "grid-cols-2")}>
+        <div className={cn("grid gap-4", mobile ? "grid-cols-1" : "grid-cols-2")}>
           {variants.map((v) => (
             <div key={v.id} className="rounded-xl border border-border bg-card overflow-hidden">
               <div
@@ -41,7 +41,7 @@ export default function LogoPage() {
                   : <Wm fill={v.fill} w={mobile ? 160 : 180} />}
               </div>
               <div className="px-4 py-3 border-t border-border">
-                <div className="text-[13px] font-medium text-foreground leading-snug mb-2">Wortmarke — {v.label}</div>
+                <div className="text-[14px] font-medium text-hub-t1 leading-snug mb-2">Wortmarke — {v.label}</div>
                 <div className="flex flex-wrap gap-1">
                   {digitalFormats.map((f) => {
                     const file = fileName(v.label, f.ext);
@@ -68,15 +68,15 @@ export default function LogoPage() {
       </Sect>
 
       <Sect label="Verwendung" icon={<BookOpen size={12} />} mobile={mobile} last>
-        <p className="text-[13px] text-muted-foreground leading-normal mb-6 max-w-[520px]">
+        <p className="text-[14px] text-hub-t2 leading-relaxed mb-6 max-w-[520px]">
           Die Wortmarke ist das primäre Erkennungszeichen. Halte die Regeln ein, um eine konsistente Markendarstellung zu gewährleisten.
         </p>
-        <div className={cn("grid gap-2.5", mobile ? "grid-cols-1" : "grid-cols-2")}>
+        <div className={cn("grid gap-4", mobile ? "grid-cols-1" : "grid-cols-2")}>
           {/* Schutzzone card */}
           <div className="rounded-xl border border-border bg-background p-6">
             <div className="flex items-center gap-[7px] mb-4">
               <span className="text-hub-t2 flex"><Shield size={14} /></span>
-              <span className="text-[13px] font-medium text-foreground leading-snug">Schutzzone</span>
+              <span className="text-[13px] font-medium text-hub-t1 leading-snug">Schutzzone</span>
             </div>
             <div className="flex items-center justify-center mb-4 rounded-[10px] bg-hub-surface" style={{ height: 88, position: "relative" }}>
               <div className="relative rounded-md" style={{ padding: "14px 22px", border: "1.5px dashed var(--hub-t3, #4b4d55)" }}>
@@ -88,14 +88,14 @@ export default function LogoPage() {
                 </div>
               </div>
             </div>
-            <p className="text-[13px] text-muted-foreground leading-relaxed m-0">Mindestabstand um das Logo = Höhe des Buchstaben C. Gilt für alle Varianten und Hintergründe.</p>
+            <p className="text-[14px] text-hub-t2 leading-relaxed m-0">Mindestabstand um das Logo = Höhe des Buchstaben C. Gilt für alle Varianten und Hintergründe.</p>
           </div>
 
           {/* Mindestgröße card */}
           <div className="rounded-xl border border-border bg-background p-6">
             <div className="flex items-center gap-[7px] mb-4">
               <span className="text-hub-t2 flex"><Maximize size={14} /></span>
-              <span className="text-[13px] font-medium text-foreground leading-snug">Mindestgröße</span>
+              <span className="text-[13px] font-medium text-hub-t1 leading-snug">Mindestgröße</span>
             </div>
             <div className="flex items-center justify-center mb-4 rounded-[10px] bg-hub-surface gap-8" style={{ height: 88 }}>
               <div className="flex flex-col items-center gap-1.5">
@@ -115,7 +115,7 @@ export default function LogoPage() {
                 </div>
               </div>
             </div>
-            <p className="text-[13px] text-muted-foreground leading-relaxed m-0">Print: mindestens 25mm Breite. Digital: mindestens 80px Breite. Darunter wird das Logo unleserlich.</p>
+            <p className="text-[14px] text-hub-t2 leading-relaxed m-0">Print: mindestens 25mm Breite. Digital: mindestens 80px Breite. Darunter wird das Logo unleserlich.</p>
           </div>
         </div>
       </Sect>

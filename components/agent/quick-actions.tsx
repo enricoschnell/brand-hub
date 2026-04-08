@@ -1,6 +1,7 @@
 "use client";
 
 import { Palette, Shield, Search, Contrast, PenLine, Mail } from "lucide-react";
+import { motion } from "framer-motion";
 
 interface QuickActionsProps {
   onAction: (text: string) => void;
@@ -16,22 +17,41 @@ const actions = [
   { icon: <Mail size={13} />, label: "Signatur erstellen", prompt: "Erstelle die Email-Signatur für Fred Fröhlich." },
 ];
 
+const container = {
+  hidden: {},
+  show: {
+    transition: { staggerChildren: 0.05, delayChildren: 0.15 },
+  },
+};
+
+const item = {
+  hidden: { opacity: 0, y: 8 },
+  show: { opacity: 1, y: 0, transition: { type: "spring" as const, stiffness: 400, damping: 32 } },
+};
+
 export function QuickActions({ onAction, visible }: QuickActionsProps) {
   if (!visible) return null;
 
   return (
-    <div className="flex gap-1.5 flex-wrap justify-center">
-      {actions.map((a, i) => (
-        <button
+    <motion.div
+      variants={container}
+      initial="hidden"
+      animate="show"
+      className="flex gap-1.5 flex-wrap justify-center"
+    >
+      {actions.map((a) => (
+        <motion.button
           key={a.label}
+          variants={item}
           onClick={() => onAction(a.prompt)}
-          className="flex items-center gap-1.5 px-3.5 py-2 rounded-button border border-hub-border bg-hub-surface text-hub-t2 text-xs font-medium font-hub cursor-pointer transition-all duration-150 hover:border-hub-border-active hover:text-hub-t1 animate-[fadeInUp_0.4s_cubic-bezier(0.16,1,0.3,1)_both]"
-          style={{ animationDelay: `${i * 50}ms` }}
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.97 }}
+          className="flex items-center gap-1.5 px-3.5 py-2 rounded-button border border-hub-border bg-hub-surface text-hub-t2 text-xs font-medium font-hub cursor-pointer transition-colors duration-150 hover:border-hub-border-active hover:text-hub-t1"
         >
           {a.icon}
           {a.label}
-        </button>
+        </motion.button>
       ))}
-    </div>
+    </motion.div>
   );
 }
