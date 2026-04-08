@@ -20,7 +20,7 @@ export default function PhotographyPage() {
       <Sect label="Stilrichtung" icon={<Camera size={12} />} mobile={mobile}>
         <div className="rounded-xl border border-border bg-card overflow-hidden p-6">
           <p className="text-[14px] text-muted-foreground leading-relaxed mb-6">
-            Die Bildsprache von CASAGO ist <strong className="text-foreground">klar, authentisch und sachlich</strong>. Keine gestellten Stock-Fotos, sondern echte Projektdokumentation mit professionellem Anspruch. Die Bilder zeigen Kompetenz durch Substanz — nicht durch Inszenierung.
+            Unsere Bildsprache ist <strong className="text-foreground">klar, authentisch und sachlich</strong> — weil wir Kompetenz durch Substanz zeigen, nicht durch Inszenierung. Keine gestellten Stock-Fotos, sondern echte Projektdokumentation mit Herzblut. Unsere Bilder spiegeln wider, was uns ausmacht: Ganzheitlichkeit, Qualität und echte Partnerschaft auf Augenhöhe.
           </p>
           <div className={`grid gap-2.5 ${mobile ? "grid-cols-1" : "grid-cols-3"}`}>
             {[

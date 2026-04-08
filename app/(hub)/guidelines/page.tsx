@@ -29,7 +29,7 @@ export default function GuidelinesPage() {
     <div>
       <PageHeader
         title="Markenrichtlinien"
-        desc="Regeln für die korrekte Anwendung der CASAGO-Marke. Verbindlich für alle Materialien."
+        desc="So setzen wir die Marke CASAGO konsistent und richtig ein — in allen Materialien und Anwendungen."
         mobile={mobile}
       />
 

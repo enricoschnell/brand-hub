@@ -1,31 +1,67 @@
 /**
  * Consolidated brand knowledge — used by both pages and agent system prompt.
  * Single source of truth for all brand rules beyond color/typo tokens.
+ * Aligned with the CASAGO Brand Voice Skill (casago-brand-voice.skill).
  */
 
 export const toneOfVoice = {
-  summary: "Professionell, präzise, technisch kompetent. Deutsch-first.",
+  summary: "Professionell-warm, partnerschaftlich, wertschätzend. Wir kommunizieren auf Augenhöhe — mit Substanz und Herzblut.",
   rules: [
-    "Aktive Sprache bevorzugen, keine Passivkonstruktionen",
-    "Technische Kompetenz zeigen, ohne Fachjargon zu übertreiben",
-    "Klar und direkt formulieren — keine Marketing-Floskeln",
+    "Immer 'Sie' und 'Wir' — niemals 'du' oder 'ich'",
+    "Partner auf Augenhöhe, nicht Dienstleister — nie Auftragnehmer-Sprache",
+    "Professionell-warm: Kompetenz zeigen, aber mit menschlicher Wärme",
+    "Konkrete Referenzen statt leere Superlative — Substanz zeigt Kompetenz",
+    "Aktive Sprache, keine Passivkonstruktionen",
+    "Kernvokabular verwenden: 'ganzheitlich', 'aus einer Hand', 'Partnerschaft auf Augenhöhe', 'Herzblut', 'lösungsorientiert', 'wertschätzendes Miteinander'",
     "Sentence Case für Headlines, kein ALL CAPS außer dem Claim",
-    "Superlative vermeiden ('das beste', 'einzigartig')",
-    "Sachlich-warmer Ton — kompetent aber nicht kalt",
-    "Projektbeschreibungen betonen: Planung, Umsetzung, Qualität, Nachhaltigkeit",
+    "Langer Satz → kurzer Anker. Aufzählung → Statement. Detail → Verdichtung.",
+    "Lösungsorientiert: Probleme benennen, aber nie ohne Lösung stehen lassen",
+    "Projektbeschreibungen betonen: Partnerschaft, ganzheitlichen Ansatz, Qualität, Zukunftssicherheit",
   ],
   examples: {
     good: [
-      "Wir planen und realisieren Bauprojekte mit Präzision.",
+      "Wir betrachten Ihr Projekt ganzheitlich — von der ersten Idee bis zur Übergabe.",
+      "Mit Partnerschaften auf Augenhöhe zum gemeinsamen Projekt.",
+      "Es muss etwas Besonderes entstehen. Individuell und nicht von der Stange.",
       "Von der Idee bis zur Übergabe — alles aus einer Hand.",
-      "Nachhaltige Dachbegrünung für urbane Räume.",
+      "Lassen Sie uns über Ihr Projekt sprechen.",
     ],
     bad: [
-      "Wir sind die besten Bauunternehmer der Region!", // Superlativ
-      "JETZT ANFRAGEN!!!", // ALL CAPS, Ausrufezeichen
-      "Unsere einzigartigen Lösungen sind unvergleichlich.", // Floskeln
+      "Wir sind die besten Bauunternehmer der Region!",
+      "JETZT ANFRAGEN!!!",
+      "Unsere einzigartigen Lösungen sind unvergleichlich.",
+      "Ich freue mich auf deine Anfrage.", // ich + du
+      "CASAGO bietet seinen Kunden erstklassige Dienstleistungen.", // unpersönlich + Dienstleister
     ],
   },
+  signaturePhrases: [
+    "Wir betrachten Projekte nicht nur in einer Dimension. Sondern ganzheitlich.",
+    "Schaffen wir etwas Besonderes zusammen.",
+    "Wir unterscheiden nicht nach 'unseren' und 'Ihren' Projekten.",
+    "Mit Partnerschaften auf Augenhöhe zum gemeinsamen Projekt.",
+    "Es muss etwas Besonderes entstehen. Individuell und nicht von der Stange.",
+    "Das ist das, wofür wir mit Herz und Begeisterung arbeiten.",
+  ],
+};
+
+export const brandStrategy = {
+  vision: "Wir schaffen Lebensräume, die Bestand haben — gemeinsam mit unseren Partnern, mit einem ganzheitlichen 360-Grad-Blick und dem Anspruch, dass jedes Projekt etwas Besonderes wird. Nicht von der Stange, sondern individuell und zukunftssicher.",
+  mission: "Wir realisieren Bauprojekte ganzheitlich und aus einer Hand — von der ersten Idee über die Planung und Konstruktion bis zur Übergabe. Mit Herzblut und einem Team, das Architektur, Bauingenieurwesen und nachhaltige Konzepte vereint.",
+  values: [
+    { name: "Partnerschaftlich", desc: "Partnerschaft auf Augenhöhe. Wir arbeiten mit unseren Bauherren, nicht für sie. Aus 'Ihrem' Projekt wird 'unser gemeinsames' Projekt." },
+    { name: "Kompetent & erfahren", desc: "Jahrzehnte an Wissen in Architektur, Bauingenieurwesen und nachhaltiger Innovation — belegt durch konkrete Referenzen, nicht durch leere Worte." },
+    { name: "Leidenschaftlich", desc: "Herzblut in jedem Projekt. Es muss etwas Besonderes entstehen — individuell und nicht von der Stange." },
+    { name: "Zukunftsorientiert", desc: "Zukunftssichere Lösungen — von Dachbegrünung bis Schwammstadtkonzepte. Jede Entscheidung wird langfristig gedacht." },
+    { name: "Lösungsorientiert", desc: "Wir suchen Lösungen, nicht Schuldige. Obwohl es anfänglich unmöglich schien, ist es uns dennoch gelungen." },
+    { name: "Wertschätzend", desc: "Ein wertschätzendes Miteinander — mit dem Team, mit Partnern, mit Bauherren. Respektvoller Umgang auf Augenhöhe." },
+  ],
+  positioning: "Wir sind ganzheitlicher Partner für anspruchsvolle Bauprojekte — nicht reiner Generalunternehmer und nicht reines Planungsbüro, sondern ein integrierter Partner, der Architektur, Bauingenieurwesen und nachhaltige Innovation mit Herzblut vereint. Jedes Projekt ist individuell — nicht von der Stange.",
+  targetGroups: [
+    { name: "Bauherren & Projektentwickler", desc: "Partner, die ein Bauprojekt von der Planung bis zur Übergabe ganzheitlich und aus einer Hand realisieren möchten." },
+    { name: "Kommunen & öffentliche Träger", desc: "Partner mit Bedarf an nachhaltigen Baukonzepten, Dachbegrünung und Schwammstadt-Lösungen." },
+    { name: "Architekten & Planungsbüros", desc: "Partner, die uns für Bauingenieurleistungen, Bauleitung oder spezialisierte Gewerke an ihre Seite holen." },
+    { name: "Investoren & Immobiliengesellschaften", desc: "Partner, die Wert auf qualitätsgesicherte, nachhaltige und termingerechte Projektrealisierung legen." },
+  ],
 };
 
 export const signageSpecs = {
@@ -93,21 +129,8 @@ export const stationerySpecs = {
   ],
 };
 
-export const brandStrategy = {
-  vision: "CASAGO gestaltet Lebensräume, die Bestand haben — durch durchdachte Planung, präzise Umsetzung und den Anspruch, dass jedes Projekt die Lebensqualität seiner Nutzer nachhaltig verbessert.",
-  mission: "Wir begleiten Bauprojekte ganzheitlich — von der ersten Idee über die Planung und Konstruktion bis zur Übergabe. Unser Team vereint Architektur, Bauingenieurwesen und nachhaltige Konzepte unter einem Dach.",
-  values: ["Präzision", "Ganzheitlichkeit", "Nachhaltigkeit"],
-  positioning: "Ganzheitlicher Partner für anspruchsvolle Bauprojekte — nicht reiner GU und nicht reines Planungsbüro, sondern integrierter Anbieter aus Architektur, Bauingenieurwesen und nachhaltiger Innovation.",
-  targetGroups: [
-    "Bauherren & Projektentwickler",
-    "Kommunen & öffentliche Träger",
-    "Architekten & Planungsbüros",
-    "Investoren & Immobiliengesellschaften",
-  ],
-};
-
 export const photographyGuidelines = {
-  style: "Klar, authentisch, sachlich. Echte Projektdokumentation, keine Stock-Fotos.",
+  style: "Klar, authentisch und sachlich — weil wir Kompetenz durch Substanz zeigen, nicht durch Inszenierung. Unsere Bilder spiegeln wider, was uns ausmacht: Herzblut, Ganzheitlichkeit und echte Partnerschaft.",
   rules: [
     "Natürliches Licht bevorzugen (Golden Hour, bewölkt)",
     "Entsättigte, ruhige Farben — keine knalligen Filter oder HDR",
