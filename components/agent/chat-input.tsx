@@ -1,6 +1,7 @@
 "use client";
 
 import { type FormEvent, type KeyboardEvent, useRef } from "react";
+import React from "react";
 import { ArrowUp, Paperclip, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -16,6 +17,7 @@ interface ChatInputProps {
 
 export function ChatInput({ value, onChange, onSubmit, isLoading, image, onImageSelect, onImageClear }: ChatInputProps) {
   const fileRef = useRef<HTMLInputElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
@@ -25,6 +27,21 @@ export function ChatInput({ value, onChange, onSubmit, isLoading, image, onImage
       }
     }
   };
+
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    onChange(e.target.value);
+    // Auto-grow
+    const el = e.target;
+    el.style.height = "22px";
+    el.style.height = Math.min(el.scrollHeight, 150) + "px";
+  };
+
+  // Reset height when value is cleared externally (after submit)
+  const prevValue = useRef(value);
+  if (prevValue.current !== value && value === "" && textareaRef.current) {
+    textareaRef.current.style.height = "22px";
+  }
+  prevValue.current = value;
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -80,12 +97,13 @@ export function ChatInput({ value, onChange, onSubmit, isLoading, image, onImage
           </>
         )}
         <textarea
+          ref={textareaRef}
           value={value}
-          onChange={(e) => onChange(e.target.value)}
+          onChange={handleChange}
           onKeyDown={handleKeyDown}
           placeholder="Nachricht an den Marken-Assistenten..."
           rows={1}
-          className="flex-1 bg-transparent border-none outline-none text-hub-t1 text-[15px] font-hub resize-none leading-[22px] h-[22px] max-h-[150px] p-0 m-0 block align-middle placeholder:text-hub-t3"
+          className="flex-1 bg-transparent border-none outline-none text-hub-t1 text-[15px] font-hub resize-none leading-[22px] min-h-[22px] max-h-[150px] overflow-y-auto p-0 m-0 block align-middle placeholder:text-hub-t3 transition-[height] duration-100"
         />
         <button
           type="submit"

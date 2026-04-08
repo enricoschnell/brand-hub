@@ -90,17 +90,15 @@ export function BrandChat() {
                 return (m.role === "user" || m.role === "assistant") && text;
               })
               .map((m) => (
-                <div key={m.id} className="animate-[fadeInUp_0.25s_ease-out_both]">
+                <div key={m.id} className="animate-[fadeInUp_0.3s_cubic-bezier(0.16,1,0.3,1)_both]">
                   <Message role={m.role as "user" | "assistant"} content={getTextContent(m)} />
                 </div>
               ))}
             {isLoading && messages.length > 0 && messages[messages.length - 1]?.role === "user" && (
-              <div className="text-hub-t3 text-sm font-hub">
-                <span className="inline-flex gap-[3px]">
-                  <span className="animate-[pulse_1.4s_infinite]">.</span>
-                  <span className="animate-[pulse_1.4s_infinite_0.2s]">.</span>
-                  <span className="animate-[pulse_1.4s_infinite_0.4s]">.</span>
-                </span>
+              <div className="flex items-center gap-[5px] px-1 py-1">
+                <span className="w-[5px] h-[5px] rounded-full bg-hub-t3" style={{ animation: "bounceDot 1.2s ease-in-out infinite", animationDelay: "0ms" }} />
+                <span className="w-[5px] h-[5px] rounded-full bg-hub-t3" style={{ animation: "bounceDot 1.2s ease-in-out infinite", animationDelay: "150ms" }} />
+                <span className="w-[5px] h-[5px] rounded-full bg-hub-t3" style={{ animation: "bounceDot 1.2s ease-in-out infinite", animationDelay: "300ms" }} />
               </div>
             )}
           </div>

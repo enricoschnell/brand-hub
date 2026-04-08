@@ -41,6 +41,9 @@ export default function RootLayout({
           colorBackground: "#141416",
           colorInputBackground: "#0a0a0b",
           colorInputText: "#eeeff1",
+          colorText: "#eeeff1",
+          colorTextSecondary: "#8b8d94",
+          colorNeutral: "#8b8d94",
           borderRadius: "10px",
         },
       }}

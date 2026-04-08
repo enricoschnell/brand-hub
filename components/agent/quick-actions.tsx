@@ -21,11 +21,12 @@ export function QuickActions({ onAction, visible }: QuickActionsProps) {
 
   return (
     <div className="flex gap-1.5 flex-wrap justify-center">
-      {actions.map((a) => (
+      {actions.map((a, i) => (
         <button
           key={a.label}
           onClick={() => onAction(a.prompt)}
-          className="flex items-center gap-1.5 px-3.5 py-2 rounded-button border border-hub-border bg-hub-surface text-hub-t2 text-xs font-medium font-hub cursor-pointer transition-all duration-150 hover:border-hub-border-active hover:text-hub-t1"
+          className="flex items-center gap-1.5 px-3.5 py-2 rounded-button border border-hub-border bg-hub-surface text-hub-t2 text-xs font-medium font-hub cursor-pointer transition-all duration-150 hover:border-hub-border-active hover:text-hub-t1 animate-[fadeInUp_0.4s_cubic-bezier(0.16,1,0.3,1)_both]"
+          style={{ animationDelay: `${i * 50}ms` }}
         >
           {a.icon}
           {a.label}

@@ -7,9 +7,10 @@ import {
   FileText, Presentation, Construction, BookOpen,
   Target, Camera,
 } from "lucide-react";
-import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
+import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
 import { Wm } from "@/components/brand/wortmarke";
+import { SidebarAvatar } from "@/components/sidebar-avatar";
 
 const nav = [
   { items: [{ id: "/", label: "Startseite", icon: <Home size={15} /> }] },
@@ -124,11 +125,7 @@ export function Sidebar({ mobile, open, setOpen }: SidebarProps) {
       <div className="px-5 py-3.5 border-t border-hub-border flex items-center justify-between">
         <span className="text-[11px] text-hub-t3">&copy; CASAGO GmbH</span>
         <SignedIn>
-          <UserButton
-            appearance={{
-              elements: { avatarBox: "w-6 h-6" },
-            }}
-          />
+          <SidebarAvatar />
         </SignedIn>
         <SignedOut>
           <SignInButton mode="modal">
