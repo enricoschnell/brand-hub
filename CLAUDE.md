@@ -56,3 +56,13 @@ public/
   sig/
     wortmarke.png      # Hosted logo for email signatures
 ```
+
+## Session Learnings
+
+Distilled from past sessions — highest-signal rules for Claude and subagents.
+
+- **AI SDK v6**: `useChat` from `@ai-sdk/react`; tools use `inputSchema` not `parameters`; `streamText` uses `stopWhen: stepCountIs(N)` not `maxSteps`
+- **No inline styles** — Tailwind v3 classes only
+- **Max radius 12px** — no pill shapes; Aeonik Pro Regular + Medium only, never Bold
+- **Bildmarke removed by client** — Wortmarke is the only logo form; never suggest adding back an icon mark
+- **Clerk popover styling**: dark-theme overrides MUST go in `globals.css` with `!important` — appearance API alone doesn't reach popup/card elements

@@ -8,14 +8,14 @@ import { Sect } from "@/components/shared/section";
 import { FormatChip } from "@/components/shared/format-chip";
 
 const scale = [
-  { name: "Display", size: 82, weight: 400, tracking: "normal", sample: "50" },
-  { name: "Heading L", size: 40, weight: 400, tracking: "normal", sample: "Geschäftsfelder" },
-  { name: "Heading M", size: 34, weight: 500, tracking: "normal", sample: "Wir betrachten Projekte" },
-  { name: "Heading S", size: 32, weight: 500, tracking: "normal", sample: "Eckdaten" },
+  { name: "Display", size: 82, weight: 400, tracking: "normal", sample: "CASAGO." },
+  { name: "Heading L", size: 40, weight: 400, tracking: "normal", sample: "Wir bauen. Wir begrünen." },
+  { name: "Heading M", size: 34, weight: 500, tracking: "normal", sample: "Wir denken weiter." },
+  { name: "Heading S", size: 32, weight: 500, tracking: "normal", sample: "Dachbegrünung & Stadtplanung" },
   { name: "Title", size: 28, weight: 400, tracking: "-0.28px", sample: "Grundstücksankauf" },
-  { name: "Body L", size: 18, weight: 400, tracking: "0.36px", sample: "Das Team" },
-  { name: "Body", size: 16, weight: 400, tracking: "0.32px", sample: "Wir übernehmen" },
-  { name: "Caption", size: 14, weight: 400, tracking: "0.28px", sample: "Den ganzen Text lesen" },
+  { name: "Body L", size: 18, weight: 400, tracking: "0.36px", sample: "Präzise Planung. Klare Umsetzung." },
+  { name: "Body", size: 16, weight: 400, tracking: "0.32px", sample: "Das Team übernimmt Verantwortung." },
+  { name: "Caption", size: 14, weight: 400, tracking: "0.28px", sample: "Den ganzen Bericht lesen" },
   { name: "Claim", size: 14, weight: 400, tracking: "0.84px", sample: "PLANEN. UMSETZEN. LEBEN.", uc: true },
 ];
 
@@ -64,6 +64,31 @@ export default function TypePage() {
                   <div className="text-[11px] font-mono text-hub-t3 mt-2">Medium 500</div>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </Sect>
+
+      <Sect label="Schriftprobe" mobile={mobile}>
+        <div className={cn("rounded-xl border border-hub-border bg-hub-surface overflow-hidden", mobile ? "p-6" : "p-10")}>
+          <p
+            className="font-brand font-medium text-hub-t1 leading-[1.15] tracking-tight mb-6"
+            style={{ fontSize: mobile ? 28 : 40, letterSpacing: "-0.01em" }}
+          >
+            Wir bauen.<br />Wir begrünen.<br />Wir denken weiter.
+          </p>
+          <p className="font-brand font-normal text-hub-t2 leading-relaxed max-w-[520px]" style={{ fontSize: mobile ? 14 : 16 }}>
+            Aeonik Pro trägt die Stimme der Marke — sachlich, präzise, ohne Ornament. Regular für alles, was erklärt. Medium für alles, was führt. Diese zwei Gewichte reichen aus, weil die Klarheit in der Beschränkung liegt.
+          </p>
+          <div className="mt-6 pt-6 border-t border-hub-border flex items-center gap-8">
+            <div>
+              <p className="font-brand font-normal text-hub-t1 mb-1" style={{ fontSize: 24 }}>Regular</p>
+              <span className="text-[11px] font-mono text-hub-t3">400 — Fließtext, UI</span>
+            </div>
+            <div className="w-px h-8 bg-hub-border" />
+            <div>
+              <p className="font-brand font-medium text-hub-t1 mb-1" style={{ fontSize: 24 }}>Medium</p>
+              <span className="text-[11px] font-mono text-hub-t3">500 — Headlines, Akzente</span>
             </div>
           </div>
         </div>
