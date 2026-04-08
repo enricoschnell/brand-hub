@@ -1,4 +1,4 @@
-import { streamText, stepCountIs } from "ai";
+import { streamText, stepCountIs, convertToModelMessages } from "ai";
 import { anthropic } from "@ai-sdk/anthropic";
 import { auth } from "@clerk/nextjs/server";
 import { buildSystemPrompt } from "@/lib/agent/system-prompt";
@@ -73,7 +73,7 @@ export async function POST(req: Request) {
   const result = streamText({
     model: anthropic("claude-sonnet-4-6"),
     system: buildSystemPrompt(),
-    messages: trimmedMessages,
+    messages: await convertToModelMessages(trimmedMessages),
     tools: agentTools,
     stopWhen: stepCountIs(5),
     maxOutputTokens: 1024,
